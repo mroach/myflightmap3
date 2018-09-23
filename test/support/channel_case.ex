@@ -14,6 +14,7 @@ defmodule MyflightmapWeb.ChannelCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -25,13 +26,11 @@ defmodule MyflightmapWeb.ChannelCase do
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Myflightmap.Repo)
+    :ok = Sandbox.checkout(Myflightmap.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Myflightmap.Repo, {:shared, self()})
+      Sandbox.mode(Myflightmap.Repo, {:shared, self()})
     end
     :ok
   end
-
 end

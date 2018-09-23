@@ -1,5 +1,6 @@
 defmodule MyflightmapWeb.ErrorView do
   use MyflightmapWeb, :view
+  import Phoenix.Controller, only: [status_message_from_template: 1]
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.
@@ -11,6 +12,6 @@ defmodule MyflightmapWeb.ErrorView do
   # the template name. For example, "404.html" becomes
   # "Not Found".
   def template_not_found(template, _assigns) do
-    Phoenix.Controller.status_message_from_template(template)
+    status_message_from_template(template)
   end
 end
