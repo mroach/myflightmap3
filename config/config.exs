@@ -22,6 +22,16 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+# In dev env, use `mix test.watch` to automatically run tests and credo
+# every time a file is saved. Faster TDD response cycle.
+if Mix.env == :dev do
+  config :mix_test_watch,
+    tasks: [
+      "test",
+      "credo --strict",
+    ]
+end
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
