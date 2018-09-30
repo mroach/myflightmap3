@@ -14,6 +14,7 @@
   <body>
     <div class="container">
       <header class="header">
+        <h1>My Flight Map</h1>
         <nav role="navigation">
         </nav>
       </header>
