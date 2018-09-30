@@ -4,4 +4,6 @@ defmodule Myflightmap.Factory do
   defined in "test/factories/<schema>_factory.ex"
   """
   use ExMachina.Ecto, repo: Myflightmap.Repo
+
+  use Myflightmap.AirlineFactory
 end

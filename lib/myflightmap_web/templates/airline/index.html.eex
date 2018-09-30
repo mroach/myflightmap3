@@ -1,0 +1,37 @@
+<h2>Airlines</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>IATA</th>
+      <th>ICAO</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th>Commenced on</th>
+      <th>Ceased on</th>
+      <th>Alliance</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for airline <- @airlines do %>
+    <tr>
+      <td><%= airline.iata_code %></td>
+      <td><%= airline.icao_code %></td>
+      <td><%= link(airline.name, to: airline_path(@conn, :show, airline)) %></td>
+      <td><%= emoji_flag(airline.country) %></td>
+      <td><%= airline.commenced_on %></td>
+      <td><%= airline.ceased_on %></td>
+      <td><%= airline.alliance %></td>
+
+      <td class="text-right">
+        <span><%= link "Edit", to: airline_path(@conn, :edit, airline), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: airline_path(@conn, :delete, airline), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Airline", to: airline_path(@conn, :new) %></span>

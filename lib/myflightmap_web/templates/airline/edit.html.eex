@@ -1,0 +1,5 @@
+<h2>Edit Airline</h2>
+
+<%= render "form.html", Map.put(assigns, :action, airline_path(@conn, :update, @airline)) %>
+
+<span><%= link "Back", to: airline_path(@conn, :index) %></span>

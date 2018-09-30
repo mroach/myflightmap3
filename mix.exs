@@ -40,6 +40,8 @@ defmodule Myflightmap.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
+      {:countries, "~> 1.5"},
+
       # limited envs:
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},

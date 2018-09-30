@@ -1,0 +1,32 @@
+<h2><%= @airline.iata_code %> - <%= @airline.name %></h2>
+
+<ul>
+  <li>
+    <strong>Icao code:</strong>
+    <%= @airline.icao_code %>
+  </li>
+
+  <li>
+    <strong>Country:</strong>
+    <%= emoji_flag(@airline.country) %>
+  </li>
+
+  <li>
+    <strong>Commenced on:</strong>
+    <%= @airline.commenced_on %>
+  </li>
+
+  <li>
+    <strong>Ceased on:</strong>
+    <%= @airline.ceased_on %>
+  </li>
+
+  <li>
+    <strong>Alliance:</strong>
+    <%= @airline.alliance %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: airline_path(@conn, :edit, @airline) %></span>
+<span><%= link "Back", to: airline_path(@conn, :index) %></span>
