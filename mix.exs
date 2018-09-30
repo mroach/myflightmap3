@@ -25,7 +25,7 @@ defmodule Myflightmap.Mixfile do
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(:test), do: ["lib", "test/support", "test/factories"]
   defp elixirc_paths(_),     do: ["lib"]
 
   # Specifies your project dependencies.
@@ -38,11 +38,14 @@ defmodule Myflightmap.Mixfile do
       {:phoenix_ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
+      # limited envs:
+      {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
-      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false}
+      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
+      {:ex_machina, "~> 2.2", only: :test},
+      {:stream_data, "~> 0.4"}
     ]
   end
 
