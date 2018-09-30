@@ -1,4 +1,4 @@
-defmodule MyflightmapWeb.PageController do
+defmodule MyflightmapWeb.HomeController do
   use MyflightmapWeb, :controller
 
   def index(conn, _params) do

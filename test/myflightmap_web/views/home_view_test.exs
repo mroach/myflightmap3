@@ -1,3 +1,3 @@
-defmodule MyflightmapWeb.PageViewTest do
+defmodule MyflightmapWeb.HomeViewTest do
   use MyflightmapWeb.ConnCase, async: true
 end

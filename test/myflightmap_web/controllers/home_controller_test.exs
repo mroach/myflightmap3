@@ -1,4 +1,4 @@
-defmodule MyflightmapWeb.PageControllerTest do
+defmodule MyflightmapWeb.HomeControllerTest do
   use MyflightmapWeb.ConnCase
 
   test "GET /", %{conn: conn} do
