@@ -5,6 +5,7 @@ defmodule Myflightmap.Transport.Airline do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias Myflightmap.Values
 
   schema "airlines" do
     field :name, :string
@@ -18,8 +19,6 @@ defmodule Myflightmap.Transport.Airline do
     timestamps()
   end
 
-  @iso_country_codes Countries.all |> Enum.map(&(&1.alpha2))
-
   @doc false
   # We don't validate uniqueness of IATA code since they get reused.
   # For example, CX was Crossair, then got assigned to the new Swiss International
@@ -29,6 +28,6 @@ defmodule Myflightmap.Transport.Airline do
     |> validate_required([:name, :icao_code])
     |> validate_format(:iata_code, ~r/\A[A-Z0-9]{2}\z/)
     |> validate_format(:icao_code, ~r/\A[A-Z]{3}\z/)
-    |> validate_inclusion(:country, @iso_country_codes)
+    |> validate_inclusion(:country, Values.country_codes())
   end
 end
