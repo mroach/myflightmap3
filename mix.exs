@@ -41,6 +41,7 @@ defmodule Myflightmap.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:countries, "~> 1.5"},
+      {:timex, "~> 3.1"},
 
       # limited envs:
       {:phoenix_live_reload, "~> 1.0", only: :dev},
