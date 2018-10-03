@@ -47,7 +47,7 @@ defmodule Myflightmap.Mixfile do
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
       {:ex_machina, "~> 2.2", only: :test},
-      {:stream_data, "~> 0.4"}
+      {:stream_data, "~> 0.4", only: :test}
     ]
   end
 
