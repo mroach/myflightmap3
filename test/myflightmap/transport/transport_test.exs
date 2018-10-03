@@ -60,4 +60,58 @@ defmodule Myflightmap.TransportTest do
       assert %Ecto.Changeset{} = Transport.change_airline(airline)
     end
   end
+
+  describe "airports" do
+    alias Myflightmap.Transport.Airport
+
+    @invalid_attrs %{city: nil, common_name: nil, coordinates: nil, country: nil}
+
+    test "list_airports/0 returns all airports" do
+      airport = insert(:airport)
+      assert Transport.list_airports() == [airport]
+    end
+
+    test "get_airport!/1 returns the airport with given id" do
+      airport = insert(:airport)
+      assert Transport.get_airport!(airport.id) == airport
+    end
+
+    test "create_airport/1 with valid data creates a airport" do
+      assert {:ok, %Airport{} = airport} = Transport.create_airport(params_for(:airport))
+    end
+
+    test "create_airport/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Transport.create_airport(@invalid_attrs)
+    end
+
+    test "update_airport/2 with valid data updates the airport" do
+      airport = insert(:airport)
+      new_coords = coordinates()
+      update_attrs = %{
+        coordinates: new_coords,
+        full_name: "Tycho"
+      }
+      assert {:ok, airport} = Transport.update_airport(airport, update_attrs)
+      assert %Airport{} = airport
+      assert airport.coordinates == new_coords
+      assert airport.full_name == "Tycho"
+    end
+
+    test "update_airport/2 with invalid data returns error changeset" do
+      airport = insert(:airport)
+      assert {:error, %Ecto.Changeset{}} = Transport.update_airport(airport, @invalid_attrs)
+      assert airport == Transport.get_airport!(airport.id)
+    end
+
+    test "delete_airport/1 deletes the airport" do
+      airport = insert(:airport)
+      assert {:ok, %Airport{}} = Transport.delete_airport(airport)
+      assert_raise Ecto.NoResultsError, fn -> Transport.get_airport!(airport.id) end
+    end
+
+    test "change_airport/1 returns a airport changeset" do
+      airport = insert(:airport)
+      assert %Ecto.Changeset{} = Transport.change_airport(airport)
+    end
+  end
 end

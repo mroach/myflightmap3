@@ -1,0 +1,72 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="column">
+      <%= label f, :iata_code %>
+      <%= text_input f, :iata_code %>
+      <%= error_tag f, :iata_code %>
+    </div>
+
+    <div class="column">
+      <%= label f, :icao_code %>
+      <%= text_input f, :icao_code %>
+      <%= error_tag f, :icao_code %>
+    </div>
+
+    <div class="column">
+      <%= label f, :metro_code %>
+      <%= text_input f, :metro_code %>
+      <%= error_tag f, :metro_code %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <%= label f, :country %>
+      <%= select f, :country, country_options(), prompt: "-- Pick --" %>
+      <%= error_tag f, :country %>
+    </div>
+
+    <div class="column">
+      <%= label f, :city %>
+      <%= text_input f, :city %>
+      <%= error_tag f, :city %>
+    </div>
+
+    <div class="column">
+      <%= label f, :timezone %>
+      <%= select f, :timezone, timezone_options(), prompt: "-- Pick --" %>
+      <%= error_tag f, :timezone %>
+    </div>
+
+    <div class="column">
+      <%= label f, :coordinates %>
+      <%= text_input f, :coordinates %>
+      <%= error_tag f, :coordinates %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <%= label f, :common_name %>
+      <%= text_input f, :common_name %>
+      <%= error_tag f, :common_name %>
+    </div>
+
+    <div class="column">
+      <%= label f, :full_name %>
+      <%= text_input f, :full_name %>
+      <%= error_tag f, :full_name %>
+    </div>
+  </div>
+
+
+  <div>
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

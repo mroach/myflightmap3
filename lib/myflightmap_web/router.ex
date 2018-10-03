@@ -19,6 +19,7 @@ defmodule MyflightmapWeb.Router do
     get "/", HomeController, :index
 
     resources "/airlines", AirlineController
+    resources "/airports", AirportController
   end
 
   # Other scopes may use custom stacks.

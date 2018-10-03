@@ -11,6 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Myflightmap.Transport.Airline
+alias Myflightmap.Transport.Airport
 
 airlines = [
   %Airline{
@@ -62,5 +63,46 @@ for airline <- airlines do
       |> Myflightmap.Transport.create_airline
   else
     IO.puts "Airline #{airline.name} already exists"
+  end
+end
+
+
+airports = [
+  %Airport{
+    iata_code: "SIN", icao_code: "WSSS", country: "SG",
+    coordinates: {1.359167, 103.989444}, timezone: "Asia/Singapore",
+    city: "Singapore", common_name: "Singapore Changi"
+  },
+  %Airport{
+    iata_code: "HND", icao_code: "RJTT", country: "JP", metro_code: "TYO",
+    coordinates: {35.553333, 139.781111}, timezone: "Asia/Tokyo",
+    city: "Tokyo", common_name: "Tokyo Haneda",
+  },
+  %Airport{
+    iata_code: "NRT", icao_code: "RJAA", country: "JP", metro_code: "TYO",
+    coordinates: {35.765278, 140.385556}, timezone: "Asia/Tokyo",
+    city: "Tokyo", common_name: "Tokyo Narita",
+  },
+  %Airport{
+    iata_code: "HAM", icao_code: "EDDH", country: "DE", city: "Hamburg",
+    coordinates: {53.630278, 9.991111}, timezone: "Europe/Berlin",
+    common_name: "Hamburg Airport"
+  },
+  %Airport{
+    iata_code: "BKK", icao_code: "VTBS", country: "TH", metro_code: "BKK",
+    coordinates: {13.6925, 100.75}, timezone: "Asia/Bangkok",
+    city: "Bangkok", common_name: "Bangkok Suvarnabhumi"
+  },
+  %Airport{
+    iata_code: "DMK", icao_code: "VTBD", country: "TH", metro_code: "BKK",
+    coordinates: {13.9125, 100.606667}, timezone: "Asia/Bangkok",
+    city: "Bangkok", common_name: "Bangkok Don Mueang"
+  }
+]
+for airport <- airports do
+  if nil == Myflightmap.Repo.get_by(Airport, Map.take(airport, [:iata_code])) do
+    {:ok, _record} = airport |> Map.from_struct |> Myflightmap.Transport.create_airport
+  else
+    IO.puts "Airport #{airport.iata_code} already exists"
   end
 end

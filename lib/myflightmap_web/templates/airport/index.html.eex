@@ -1,0 +1,26 @@
+<h2>Airports</h2>
+
+<span><%= link "New Airport", to: airport_path(@conn, :new) %></span>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>IATA code</th>
+      <th>City</th>
+      <th>Common name</th>
+      <th>Timezone</th>
+      <th>Coordinates</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for airport <- @airports do %>
+    <tr>
+      <td><%= link airport.iata_code, to: airport_path(@conn, :show, airport) %></td>
+      <td><%= emoji_flag(airport.country) %> <%= airport.city %></td>
+      <td><%= airport.common_name %></td>
+      <td><%= airport.timezone %></td>
+      <td><%= airport.coordinates %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
