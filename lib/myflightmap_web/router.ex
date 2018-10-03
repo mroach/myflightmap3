@@ -20,6 +20,7 @@ defmodule MyflightmapWeb.Router do
 
     resources "/airlines", AirlineController
     resources "/airports", AirportController
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.

@@ -7,4 +7,5 @@ defmodule Myflightmap.Factory do
 
   use Myflightmap.AirlineFactory
   use Myflightmap.AirportFactory
+  use Myflightmap.UserFactory
 end

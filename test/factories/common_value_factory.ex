@@ -3,6 +3,8 @@ defmodule CommonValueFactory do
   Factories for common values needed by other factories
   """
 
+  require ExUnitProperties
+
   def iata_code do
     [?A..?Z, ?0..?9]
     |> Enum.concat
@@ -22,5 +24,19 @@ defmodule CommonValueFactory do
 
   def timezone do
     Tzdata.canonical_zone_list |> Enum.random
+  end
+
+  def email_address do
+    domains = ~w[example.com example.org example.net example.edu]
+    generator =
+      ExUnitProperties.gen all name <- StreamData.string(:alphanumeric),
+                               name != "",
+                               domain <- StreamData.member_of(domains) do
+        name <> "@" <> domain
+      end
+
+    generator
+    |> StreamData.resize(20)
+    |> Enum.at(0)
   end
 end
