@@ -8,17 +8,21 @@
     <meta name="author" content="">
 
     <title>My Flight Map</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/milligram.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/myflightmap.css") %>">
   </head>
 
   <body>
     <div class="container">
       <header class="header">
-        <h1>My Flight Map</h1>
+        <div class="title">
+          <%= link("My Flight Map", to: home_path(@conn, :index)) %>
+        </div>
         <nav role="navigation">
           <%= link("Airports", to: airport_path(@conn, :index)) %>
           <%= link("Airlines", to: airline_path(@conn, :index)) %>
           <%= link("Users", to: user_path(@conn, :index)) %>
+          <%= link("Trips", to: trip_path(@conn, :index)) %>
         </nav>
       </header>
 

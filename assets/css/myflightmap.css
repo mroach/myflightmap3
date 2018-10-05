@@ -5,3 +5,23 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
+
+header > .title {
+  display: inline-block;
+  font-size: 1.5em;
+}
+
+header > .title > a {
+  color: inherit;
+}
+
+header > nav {
+  display: inline-block;
+  margin-left: 1em;
+  padding-left: 1em;
+  border-left: solid 1px #ccc;
+}
+
+header > nav > a {
+  padding: 0 0.5em;
+}
