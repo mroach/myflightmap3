@@ -1,0 +1,26 @@
+<h2><%= @trip.name %> by <%= @trip.user.username %></h2>
+
+<ul>
+  <li>
+    <strong>Purpose:</strong>
+    <%= @trip.purpose %>
+  </li>
+
+  <li>
+    <strong>Dates:</strong>
+    <%= @trip.start_date %> - <%= @trip.end_date %>
+  </li>
+
+  <li>
+    <strong>Privacy:</strong>
+    <%= @trip.privacy %>
+  </li>
+
+  <li>
+    <strong>Created at:</strong>
+    <%= @trip.inserted_at %>
+  </li>
+</ul>
+
+<span><%= link "Edit", to: trip_path(@conn, :edit, @trip) %></span>
+<span><%= link "Back", to: trip_path(@conn, :index) %></span>

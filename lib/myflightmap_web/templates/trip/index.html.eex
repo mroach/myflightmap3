@@ -1,0 +1,26 @@
+<h2>Trips</h2>
+
+<span><%= link "New Trip", to: trip_path(@conn, :new) %></span>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Name</th>
+      <th>Purpose</th>
+      <th>Dates</th>
+      <th>Privacy</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for trip <- @trips do %>
+    <tr>
+      <td><%= link(trip.user.username, to: user_path(@conn, :show, trip.user)) %></td>
+      <td><%= link(trip.name, to: trip_path(@conn, :show, trip)) %></td>
+      <td><%= trip.purpose %></td>
+      <td><%= trip.start_date %> - <%= trip.end_date %></td>
+      <td><%= trip.privacy %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
