@@ -1,4 +1,6 @@
-<h2><%= @airport.iata_code%> <%= @airport.common_name %></h2>
+<h2>
+  <span class="airport iata_code"><%= @airport.iata_code%></span> <%= @airport.common_name %>
+</h2>
 
 <ul>
   <li>
