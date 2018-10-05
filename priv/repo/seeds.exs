@@ -97,8 +97,19 @@ airports = [
     iata_code: "DMK", icao_code: "VTBD", country: "TH", metro_code: "BKK",
     coordinates: {13.9125, 100.606667}, timezone: "Asia/Bangkok",
     city: "Bangkok", common_name: "Bangkok Don Mueang"
+  },
+  %Airport{
+    iata_code: "LHR", icao_code: "EGLL", country: "GB", metro_code: "LON",
+    coordinates: {51.4775, -0.461389}, timezone: "Europe/London",
+    city: "London", common_name: "London Heathrow"
+  },
+  %Airport{
+    iata_code: "LGW", icao_code: "EGKK", country: "GB", metro_code: "LON",
+    coordinates: {51.148056, -0.190278}, timezone: "Europe/London",
+    city: "London", common_name: "London Gatwick"
   }
 ]
+
 for airport <- airports do
   if nil == Myflightmap.Repo.get_by(Airport, Map.take(airport, [:iata_code])) do
     {:ok, _record} = airport |> Map.from_struct |> Myflightmap.Transport.create_airport
