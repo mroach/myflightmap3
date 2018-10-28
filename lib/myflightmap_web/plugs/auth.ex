@@ -13,7 +13,9 @@ defmodule MyflightmapWeb.Auth do
     # Currently just faking a user until auth is implemented
     user = case Accounts.list_users() do
       [user | _tail] -> user
-      _ -> Myflightmap.Factory.insert(:user)
+      _ ->
+        %Myflightmap.Accounts.User{username: "faker", name: "Faker"}
+        |> Myflightmap.Repo.insert!()
     end
     assign(conn, :current_user, user)
   end
