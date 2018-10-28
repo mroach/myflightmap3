@@ -1,0 +1,101 @@
+<ns2:worldmate-parsing-result request-id="176728568" received="2018-10-26T13:17:00.000Z"
+  xmlns:ns2="http://www.worldmate.com/schemas/worldmate-api-v1.xsd">
+  <status>SUCCESS</status>
+  <error-msg>An itinerary confirmation e-mail was parsed successfully			</error-msg>
+  <headers>
+    <header value="AJdET5foktdz9nMx0CYX/bXjyINH+oK0ZjEAujLzASnTNSWaHgRJboxAhfkJs49U55Fny6tZ+ZPTJWg/ROiWl+s2xME=" name="X-Google-Smtp-Source"/>
+    <header value="&lt;mroach@mroach.com&gt;" name="Return-Path"/>
+    <header value="safe" name="X-Proofpoint-Spam-Reason"/>
+    <header value="v=1; a=rsa-sha256; c=relaxed/relaxed; d=mroach-com.20150623.gappssmtp.com; s=20150623; h=mime-version:references:in-reply-to:from:date:message-id:subject:to; bh=T6gAK3PNGV6M2u4U0UntIGdXhkDEo37DwhfnGEnC5UQ=; b=z0L3vvykQ4uDpNQCn/rv/dmdNNlxrKBw82yNEBtRnw+uENSsgb6UiX11XXG4Ysu7z0
+         VYsKM3Wp/buhbj+t45vNanjh6Zs1ligYsQMci8vOBCanJjx++63Sy8CNK0GMaznZhp8v
+         hR5ijPPORIzqhxd5xVVxemiM26Zy0GPjOiAwWtWUEP8nSGuPwnl0vdXIGJgoQj87d3Jb
+         vltwsaQS0qTW244M7vC8QvIG4k9dLo5T+v4RsWjPX/PxFcdzsixErbQFAZsdOQYGFYvM
+         hjDo+819v/q6Ethi+Wf1pwr+nCtxNNdlsS5X9DFEznF4+V6Qk4CRZzjJY4xobbtIDMkX fNvw==" name="DKIM-Signature"/>
+    <header value="apidemo@tomcat-parsing-01.prod.worldmate.com" name="Delivered-To"/>
+    <header value="&lt;1921830708.42673.1527662317689.JavaMail.saar4@ip-10-117-147-116.ap-southeast-1.compute.internal&gt;" name="References"/>
+    <header value="by 2002:a0c:9b89:: with SMTP id o9mr3174847qve.25.1540559809502;
+ Fri, 26 Oct 2018 06:16:49 -0700 (PDT)" name="X-Received"/>
+    <header value="Michael Roach &lt;mroach@mroach.com&gt;" name="From"/>
+    <header value="carlsonwagonlit.com; spf=softfail smtp.mailfrom=mroach@mroach.com; dkim=pass header.d=mroach-com.20150623.gappssmtp.com header.s=20150623; dmarc=none" name="Authentication-Results"/>
+    <header value="AGRZ1gL3Va7g3yOPe8o/2myJu25SXvnG1MTHJfh1mtrPmqF/6dmuBKxa smcyaG+5xoHWFLevdzeCGM2IL6WJSWBQQGUSlkq/8KFh1Pg=" name="X-Gm-Message-State"/>
+    <header value="apidemo@worldmate.com" name="To"/>
+    <header value="1.0" name="MIME-Version"/>
+    <header value="&lt;CAOvqrWpJoq_w2hVw_4vkaDs8Hgx-rNmedbd86VDMYpq19nExhg@mail.gmail.com&gt;" name="Message-ID"/>
+    <header value="&lt;1921830708.42673.1527662317689.JavaMail.saar4@ip-10-117-147-116.ap-southeast-1.compute.internal&gt;" name="In-Reply-To"/>
+    <header value="by mail-qt1-f171.google.com with SMTP id d14-v6so1122981qto.4
+        for &lt;apidemo@worldmate.com&gt;; Fri, 26 Oct 2018 06:16:53 -0700 (PDT)" name="Received"/>
+    <header value="v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net; s=20161025; h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to; bh=T6gAK3PNGV6M2u4U0UntIGdXhkDEo37DwhfnGEnC5UQ=; b=EqqB3/vkHcnXUd9gtn/MPe9JmThOvnQ6w3SEB0nxYsjA7oSmAH88MDCgDPyeRBg68C
+         PIeJlKsksKJpv9MYo+7Y0TdZhTk78LG+uQwNn2C1CULAv/VrxLNgYiZHVWxYS/pr5UKd
+         41g5RytSVIxqhj5uRRXyDHL6lYqrncEO2N4NbVRkRiok6jRVP/D5vATSzaBCxyJyjdUw
+         FCDbCQSCyBN3QtDcS2eA0Bl6z3W3NUHysCTkhVrmROR28zv9EHo7QJOHThqnZxhwcksl
+         kb41F5a0lBCQmvtfXYES4gf1iT7AUBb1KwBJLD7yd/PJ/FDu40WE0Psl9AvqMhelMzKi kNLw==" name="X-Google-DKIM-Signature"/>
+    <header value="multipart/alternative; boundary=&quot;0000000000003373fb057921880d&quot;" name="Content-Type"/>
+    <header value="1TFkXGxweEQpMehcbGRIRCllNF2dmchEKWUkXBxsZcRsGBxgcdwYYGhoGGgY aBgcYGQYacRoQGncGGgYaBhoGGgYaBhpxGhAadwYaEQpZXhdoY3kRCklGF0lLWEZZRURdS01FRE ZDXl9BdV9ZdUJFWV5PThEKQ04XcEJDZGJ5fRxEXWRsbmt9QWJpRkdMQHxBHUtzfGJDUE0RClhcF
+ x8EGgQbHxsHSBpIHBNJTB8FGxoEGxoaBB4SBB8QGx4aHxoRCl5ZF35pZkJCEQpNXBcHHh0RCkxa F2lNa2sRCkxGF2xraxEKQ1oXGBoTBBIfBBscGgQbHRsRCkJeFxsRCkJcFxoRCkJFF2xuYh5BSBh YW2cSEQpCThdpRUN8UmdEAVoFaxEKQkwXaVpMHV5FEmcBeGURCkJsF2xHbX1TaHBCTF8cEQpCQB
+ dkZnxLZnB5X0xAYBEKQlgXbmZLfVJJTGFNX3ARClpYFxwRCnBnF2JNS1pPTl0bBUgFEB8YEQpwa BdschoaG31PR1NFHhAaEQpwaBdhUgV7cmJdcF1AYRAaEQpwaBd6WlIBRVtufF5JTBAaEQpwaBdi XXpYGWNZZ3NiTRAaEQpwaBdnU0FfQU9le1prXRAaEQpwfxdoQVMaa0tyfxhEWhAbGBoRCnBfF2t
+ QTkBEf0d9Gx9rEBsYExEKcH0Xa1BOQER/R30bH2sQGxgTEQpwXxdnYWFacFtzbn5vaxAZGhEKcH 0XYFAea1BsG1JHTl8QGhEKcF8XZFxkYXtyaRttRGQQHhIRCnB9F2d9bVpkTEZ8ZGlEEB4SEQpwf xdmbX1CBWdpYWRGWxAHHRoRCnBfF2dpGkxgUGZIax9pEAcdGhEKcH0XbnljTX17ZwVFSVIQGhEK
+ cH8Xb0RhUBITfxscEn4QBx8dEQpwXxdsHUlzcFBpSAVhRxAHHBwRCnB9F2xMegVCGm5TSUFEEBo RCnBfF25/Rh1/cnIbYxtsEBkaEQpwfRdiQhpEAVNzZgV4fBAZGhEKcH0Xa1BOQER/R30bH2sQGx gTEQpwXxdpR21hHGVHSW5JWhAdEhEKcH0XbWUBU3pgaHlZeRMQEh8RCnB9F2scaEtcaWYbfUZGE
+ BIfEQpwfRdrGEFjGkBwcE1mbxATGhEKcH0XaxhBYxpAcHBNZm8QExoRCnB9F2sYQWMaQHBwTWZv EBMaEQpwfRdkf2VCQgEea2xubBAfHhEKcH0XZR5FGlBFW1NNZh4QHx4RCnB9F2R/ZUJCAR5rbG5 sEB8eEQpwfRdufWRwS1teW3lvWxAaEQpwfRdrGEFjGkBwcE1mbxATGhEKcH0XZ31tWmRMRnxkaU
+ QQHhIRCnB9F255Y019e2cFRUlSEBoRCnB9F2h6aGxNaWJhTn0cEBoRCnB9F2xMegVCGm5TSUFEE BoRCnB9F2FjWwVSRUJpcE1/EBoRCnB9F2JCGkQBU3NmBXh8EBkaEQpwbBdiGmZHek97Ek1MfhAd HhEKbX4XGhEKWE0XSxEg" name="X-CLX-Response"/>
+    <header value="Fri, 26 Oct 2018 14:16:24 +0100" name="Date"/>
+    <header value="MLX" name="X-CLX-Shades"/>
+    <header value="Fwd: Your seat selection confirmation ABC123" name="Subject"/>
+    <header value="apidemo@worldmate.com" name="X-Original-To"/>
+  </headers>
+  <end-user-emails>
+    <user email="mroach@mroach.com" name=""/>
+  </end-user-emails>
+  <reservation-details>
+    <booking-details>
+      <name>Singapore Airlines</name>
+      <url>http://www.singaporeair.com/</url>
+    </booking-details>
+    <total-price/>
+  </reservation-details>
+  <items size="1">
+    <flight>
+      <notes></notes>
+      <booking-details>
+        <name>Singapore Airlines</name>
+        <confirmation-number>ABC123</confirmation-number>
+      </booking-details>
+      <provider-details>
+        <name>Singapore Airlines</name>
+        <confirmation-number>ABC123</confirmation-number>
+      </provider-details>
+      <total-price>
+        <currency-code>USD</currency-code>
+      </total-price>
+      <details number="26" airline-code="SQ"/>
+      <departure>
+        <latitude>50.03</latitude>
+        <longitude>8.57</longitude>
+        <airport-code>FRA</airport-code>
+        <name>Frankfurt International Airport</name>
+        <terminal> 1</terminal>
+        <gate></gate>
+        <local-date-time>2018-12-22T08:20:00.000Z</local-date-time>
+        <utc-date-time>2018-12-22T07:20:00.000Z</utc-date-time>
+      </departure>
+      <arrival>
+        <latitude>40.645</latitude>
+        <longitude>-73.787</longitude>
+        <airport-code>JFK</airport-code>
+        <name>John F. Kennedy International Airport</name>
+        <terminal> 4</terminal>
+        <gate></gate>
+        <local-date-time>2018-12-22T11:15:00.000Z</local-date-time>
+        <utc-date-time>2018-12-22T16:15:00.000Z</utc-date-time>
+      </arrival>
+      <duration>535</duration>
+      <distance-in-miles>0</distance-in-miles>
+      <class-type>Economy  (X)</class-type>
+      <traveler>
+        <loyalty-program number="0000000000" name="SQ"/>
+        <seat>61D</seat>
+        <class-type>Economy  (X)</class-type>
+      </traveler>
+    </flight>
+  </items>
+</ns2:worldmate-parsing-result>

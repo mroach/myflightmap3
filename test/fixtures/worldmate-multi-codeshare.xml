@@ -1,0 +1,313 @@
+<ns2:worldmate-parsing-result request-id="176595858" received="2018-10-23T08:15:41.000Z"
+  xmlns:ns2="http://www.worldmate.com/schemas/worldmate-api-v1.xsd">
+  <status>SUCCESS</status>
+  <error-msg>An itinerary confirmation e-mail was parsed successfully			</error-msg>
+  <headers>
+    <header value="ACcGV61+NtCEl7apJ1lSHxEKX2TGF7oaFd77kHmZ4M0KN0zxAjK3NWFEl8+i4f8Ix2ZJY2KvIhX/Ms/O8uW/LaIuk/o=" name="X-Google-Smtp-Source"/>
+    <header value="&lt;mroach@mroach.com&gt;" name="Return-Path"/>
+    <header value="safe" name="X-Proofpoint-Spam-Reason"/>
+    <header value="v=1; a=rsa-sha256; c=relaxed/relaxed; d=mroach-com.20150623.gappssmtp.com; s=20150623; h=mime-version:references:in-reply-to:from:date:message-id:subject:to; bh=kwi+b9c07/Btl6tPvgc1eos1+CS8G4foL+KT2FxI4fc=; b=hv2fA8aa2bcYNIkl9wyMCCQesVde+mrX3rqWpUigQPGwGUaEp96TJcR84213G3z2LB
+         eOtHJgA8ubyjd5tB6E1A9c9Yyf9d0ejcgms6kT0ssK+V6jhpCb0YPNEfU8lYW7MXKJo7
+         NNfbkAes6D81T2ymRtVdMklBgxfDAJKgyzEP/gpWnuBl0AKThqO3DkVjb5RdZ8n/wvR0
+         puK1MOfZn2lhJTNc/GIQBke+CMOKAV1BZggRWHmwqMpp5K1AKAsIe34oxaCgx4gt8q2o
+         zzvo9gTuChrF+Ejn1AdVy2vDkwyW1GxznT64AC4v/5lfQor0zHA+7dFKN7E40hzT72Qp FwPg==" name="DKIM-Signature"/>
+    <header value="apidemo@tomcat-parsing-01.prod.worldmate.com" name="Delivered-To"/>
+    <header value="&lt;b2wamkzb0vx5d9auzqx8kqcd3w7fyd@mta857.e.delta.com&gt;" name="References"/>
+    <header value="by 2002:ac8:5205:: with SMTP id r5-v6mr15921643qtn.201.1540282535100;
+ Tue, 23 Oct 2018 01:15:35 -0700 (PDT)" name="X-Received"/>
+    <header value="Michael Roach &lt;mroach@mroach.com&gt;" name="From"/>
+    <header value="carlsonwagonlit.com; spf=softfail smtp.mailfrom=mroach@mroach.com; dkim=pass header.d=mroach-com.20150623.gappssmtp.com header.s=20150623; dmarc=none" name="Authentication-Results"/>
+    <header value="AGRZ1gIJy0BeNlnFwTdzVFWzaXTdLDY2BrQI+2ocNd3x9KC4UKNJ7uVR
+	WKJ8/CluvxRBo1NUk01TtioAtbTkX0TTZ7cEL7FPIHEK" name="X-Gm-Message-State"/>
+    <header value="apidemo@worldmate.com" name="To"/>
+    <header value="1.0" name="MIME-Version"/>
+    <header value="&lt;CAOvqrWrkp1nn6T-8LnyeZLWBO_pCWu20dsTk8hoZV5x6Nukxdg@mail.gmail.com&gt;" name="Message-ID"/>
+    <header value="&lt;b2wamkzb0vx5d9auzqx8kqcd3w7fyd@mta857.e.delta.com&gt;" name="In-Reply-To"/>
+    <header value="by mail-qt1-f176.google.com with SMTP id j46-v6so462254qtc.9
+        for &lt;apidemo@worldmate.com&gt;; Tue, 23 Oct 2018 01:15:37 -0700 (PDT)" name="Received"/>
+    <header value="v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net; s=20161025; h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to; bh=kwi+b9c07/Btl6tPvgc1eos1+CS8G4foL+KT2FxI4fc=; b=EUgHK1yD9jlddyHvWzvqPNbar9uIusBTlysTv9JIh5CXeSqfEHVTrfLkiX68eSt/Li
+         NwCZE4nq0IlOxK2dOGuuUopoYCU6xktDWrAx8Nx/bqKOFbG0Rmrv8n8yhAO6o4OgqUVa
+         UIF/7KeQK+Zt5yGSQtBLfseQPhO8rn5o2c/hvWnjGIlY6glYgYuNgOLPJP3QQ0Fmowr6
+         YOctKHhxw72KF5WxgpO58QnVeSrjfvn+RVP3nzHNTfh8ZI3Y9ERkOKtGgbGU7TlDnay+
+         rCZ5rWv9bswfZFskXMkuAeLbGrSsDCbNe9aDsHh54RkHmIAxhItgI0v4twbyiEmLJAoD EDYQ==" name="X-Google-DKIM-Signature"/>
+    <header value="multipart/alternative; boundary=&quot;0000000000005bdc4a0578e0f937&quot;" name="Content-Type"/>
+    <header value="1TFkXEhoRCkx6FxsZGBEKWU0XZ2ZyEQpZSRcacRoQGncGHBpxGRAadwYYGgY aEQpZXhdoY3kRCklGF0lLWEZZRURdS01FREZDXl9BdV9ZdUJFWV5PThEKQ04XaV5MH2F5X0FyQX BBbE5MfmRAZB5FRk5rbXxOYG54aUERClhcFx8EGgQbHxsHSBpIHBNJTB8FGxoEGxsaBB4SBBIcE
+ BseGh8aEQpeWRd+aGIbbxEKTVwXGxkSEQpMWhdvaU1raxEKTEYXbGtrEQpDWhcYGhMEEh8EGxwa BBsdHBEKQl4XGxEKQlwXGhEKQkUXbG5iHkFIGFhbZxIRCkJOF2lFQ3xSZ0QBWgVrEQpCTBdpWkw dXkUSZwF4ZREKQmwXbEdtfVNocEJMXxwRCkJAF2MbaUh/H1oFex1tEQpCWBduZkt9UklMYU1fcB
+ EKTV4XGxEKWlgXHhEKcGcXbh1MZmtfGBMBf0sQGxgbEQpwaBduTWVTTll4cHgfWhAbGxwRCnBoF 2Z8WV1seXtlZGxgEBkaEQpwaBdoeVJdYh0eRHp5chAZGhEKcGgXbmR6Zx9HR2tleXMQGRoRCnBo F2xtbkxybUZvYG9/EBkaEQpwfxdpcEFLYxJebhwTUxAfHhEKcF8XYx5IaxpQYUdZbnwQHBoRCnB
+ 9F2sSGHpAR0FnHk9+EBkaEQpwfRdrEhh6QEdBZx5PfhAZGhEKcH0XaxIYekBHQWceT34QGRoRCn BfF2tzGEJYGB4SZW9dEB0SEQpwfRdnZ21kGWxnQ0luARAZGhEKcF8XZnxmUmZ+TFlpYGAQHRIRC nB9F2Zwf0J+ZX1kem1jEBkaEQpwXxdnGh1yYlBzTl99XxAdEhEKcH0XZ196XF9maWEFWxIQGRoR
+ CnBfF2NOaRpebGx7BVkcEB0SEQpwfRdoG0x5BXx8GEJBTxAZGhEKcF8XYkdwGH5+HXtTHhMQHRI RCnB9F2JkfUJZHU5Af0wdEBkaEQpwfRdnX3pcX2ZpYQVbEhAZGhEKcH0XZ196XF9maWEFWxIQGR oRCnBfF2JiHh5EG2lCTUZsEB0SEQpwfRdlZ0hFRkldSEJQSxAZGhEKcF8XZmR+emEbbU5mXh8QH
+ RIRCnB9F2J7YxwSUkVdZhlhEBkaEQpwXxdtT095eHpJaEFFHxAdEhEKcH0Xek1mT217XQFBQm0Q GRoRCnBfF25baUhPa25rXRwfEB0SEQpwfRdoU3NmE2dwTX1oEhAZGhEKcF8XaHJ+XkdfZnpiUBg QHRIRCnB9F3psR3pBfklweWQfEBkaEQpwXxdiExlpG29SU3B/BRAZGhEKcH0XZlh/Rn9MG0YFUx
+ gQGRoRCnB9F2ZYf0Z/TBtGBVMYEBkaEQpwfRdmWH9Gf0wbRgVTGBAZGhEKcF8XYk9ZYnBeTVxBE 0UQHRoRCnB9F2d6YEZobB1ocmZNEBkaEQpwXxdof1JgaUNGfnJkWRAdEhEKcH0XbE9LHkNSHVtj R3IQGRoRCnBfF2FmXUtnHx5uRmYBEB0SEQpwbBdiGmZHek97Ek1MfhAeGhEKbX4XGxEKWE0XSxE g" name="X-CLX-Response"/>
+    <header value="Tue, 23 Oct 2018 10:15:22 +0200" name="Date"/>
+    <header value="MLX" name="X-CLX-Shades"/>
+    <header value="Fwd: Your Flight Receipt - MICHAEL FRANCIS ROACH 03NOV18" name="Subject"/>
+    <header value="apidemo@worldmate.com" name="X-Original-To"/>
+  </headers>
+  <end-user-emails>
+    <user email="mroach@mroach.com" name=""/>
+  </end-user-emails>
+  <reservation-details>
+    <booking-details>
+      <name>Delta</name>
+      <url>http://www.delta.com</url>
+      <phone>1-800-221-1212</phone>
+    </booking-details>
+    <total-price/>
+  </reservation-details>
+  <items size="5">
+    <flight>
+      <notes></notes>
+      <booking-details>
+        <name>Delta</name>
+        <phone>1-800-221-1212</phone>
+        <confirmation-number>HWK7V4</confirmation-number>
+      </booking-details>
+      <provider-details>
+        <name>Delta</name>
+        <confirmation-number>HWK7V4</confirmation-number>
+      </provider-details>
+      <total-price>
+        <total-cost>561.47</total-cost>
+        <currency-code>EUR</currency-code>
+      </total-price>
+      <details number="8487" airline-code="DL"/>
+      <operated-by number="1611" airline-code="AF"/>
+      <departure>
+        <latitude>53.63</latitude>
+        <longitude>9.99</longitude>
+        <airport-code>HAM</airport-code>
+        <name>Fuhlsbuettel Airport</name>
+        <terminal> 1</terminal>
+        <gate></gate>
+        <local-date-time>2018-11-03T06:00:00.000Z</local-date-time>
+        <utc-date-time>2018-11-03T05:00:00.000Z</utc-date-time>
+      </departure>
+      <arrival>
+        <latitude>49.013</latitude>
+        <longitude>2.542</longitude>
+        <airport-code>CDG</airport-code>
+        <name>Charles De Gaulle Airport</name>
+        <terminal>Aerogare 2 Term F</terminal>
+        <gate></gate>
+        <local-date-time>2018-11-03T07:35:00.000Z</local-date-time>
+        <utc-date-time>2018-11-03T06:35:00.000Z</utc-date-time>
+      </arrival>
+      <duration>95</duration>
+      <distance-in-miles>0</distance-in-miles>
+      <class-type>Economy Light (E)</class-type>
+      <traveler>
+        <first-name>MICHAEL FRANCIS</first-name>
+        <last-name>ROACH</last-name>
+        <class-type>Economy Light (E)</class-type>
+        <e-ticket>0062337039415-16</e-ticket>
+        <price>
+          <total-cost>561.47</total-cost>
+          <currency-code>EUR</currency-code>
+        </price>
+      </traveler>
+    </flight>
+    <flight>
+      <notes></notes>
+      <booking-details>
+        <name>Delta</name>
+        <phone>1-800-221-1212</phone>
+        <confirmation-number>HWK7V4</confirmation-number>
+      </booking-details>
+      <provider-details>
+        <name>Delta</name>
+        <confirmation-number>HWK7V4</confirmation-number>
+      </provider-details>
+      <total-price>
+        <total-cost>561.47</total-cost>
+        <currency-code>EUR</currency-code>
+      </total-price>
+      <details number="231" airline-code="DL"/>
+      <departure>
+        <latitude>49.013</latitude>
+        <longitude>2.542</longitude>
+        <airport-code>CDG</airport-code>
+        <name>Charles De Gaulle Airport</name>
+        <terminal>Aerogare 2 Term E</terminal>
+        <gate></gate>
+        <local-date-time>2018-11-03T11:50:00.000Z</local-date-time>
+        <utc-date-time>2018-11-03T10:50:00.000Z</utc-date-time>
+      </departure>
+      <arrival>
+        <latitude>35.87</latitude>
+        <longitude>-78.78</longitude>
+        <airport-code>RDU</airport-code>
+        <name>Raleigh/Durham Airport</name>
+        <terminal> 2</terminal>
+        <gate></gate>
+        <local-date-time>2018-11-03T16:16:00.000Z</local-date-time>
+        <utc-date-time>2018-11-03T20:16:00.000Z</utc-date-time>
+      </arrival>
+      <duration>566</duration>
+      <distance-in-miles>0</distance-in-miles>
+      <class-type>Basic Economy (E)</class-type>
+      <traveler>
+        <first-name>MICHAEL FRANCIS</first-name>
+        <last-name>ROACH</last-name>
+        <class-type>Basic Economy (E)</class-type>
+        <e-ticket>0062337039415-16</e-ticket>
+        <price>
+          <total-cost>561.47</total-cost>
+          <currency-code>EUR</currency-code>
+        </price>
+      </traveler>
+    </flight>
+    <flight>
+      <notes></notes>
+      <booking-details>
+        <name>Delta</name>
+        <phone>1-800-221-1212</phone>
+        <confirmation-number>HWK7V4</confirmation-number>
+      </booking-details>
+      <provider-details>
+        <name>Delta</name>
+        <confirmation-number>HWK7V4</confirmation-number>
+      </provider-details>
+      <total-price>
+        <total-cost>561.47</total-cost>
+        <currency-code>EUR</currency-code>
+      </total-price>
+      <details number="2192" airline-code="DL"/>
+      <departure>
+        <latitude>35.57</latitude>
+        <longitude>-82.54</longitude>
+        <airport-code>AVL</airport-code>
+        <name>Asheville Regional Airport</name>
+        <terminal></terminal>
+        <gate></gate>
+        <local-date-time>2018-11-13T18:00:00.000Z</local-date-time>
+        <utc-date-time>2018-11-13T23:00:00.000Z</utc-date-time>
+      </departure>
+      <arrival>
+        <latitude>33.64</latitude>
+        <longitude>-84.42</longitude>
+        <airport-code>ATL</airport-code>
+        <name>Hartsfield-Jackson Atlanta International Airport</name>
+        <terminal>South Terminal</terminal>
+        <gate></gate>
+        <local-date-time>2018-11-13T19:15:00.000Z</local-date-time>
+        <utc-date-time>2018-11-14T00:15:00.000Z</utc-date-time>
+      </arrival>
+      <duration>75</duration>
+      <distance-in-miles>0</distance-in-miles>
+      <class-type>Basic Economy (E)</class-type>
+      <traveler>
+        <first-name>MICHAEL FRANCIS</first-name>
+        <last-name>ROACH</last-name>
+        <class-type>Basic Economy (E)</class-type>
+        <e-ticket>0062337039415-16</e-ticket>
+        <price>
+          <total-cost>561.47</total-cost>
+          <currency-code>EUR</currency-code>
+        </price>
+      </traveler>
+    </flight>
+    <flight>
+      <notes></notes>
+      <booking-details>
+        <name>Delta</name>
+        <phone>1-800-221-1212</phone>
+        <confirmation-number>HWK7V4</confirmation-number>
+      </booking-details>
+      <provider-details>
+        <name>Delta</name>
+        <confirmation-number>HWK7V4</confirmation-number>
+      </provider-details>
+      <total-price>
+        <total-cost>561.47</total-cost>
+        <currency-code>EUR</currency-code>
+      </total-price>
+      <details number="8672" airline-code="DL"/>
+      <operated-by number="689" airline-code="AF"/>
+      <departure>
+        <latitude>33.64</latitude>
+        <longitude>-84.42</longitude>
+        <airport-code>ATL</airport-code>
+        <name>Hartsfield-Jackson Atlanta International Airport</name>
+        <terminal>Maynard H Jackson</terminal>
+        <gate></gate>
+        <local-date-time>2018-11-13T20:25:00.000Z</local-date-time>
+        <utc-date-time>2018-11-14T01:25:00.000Z</utc-date-time>
+      </departure>
+      <arrival>
+        <latitude>49.013</latitude>
+        <longitude>2.542</longitude>
+        <airport-code>CDG</airport-code>
+        <name>Charles De Gaulle Airport</name>
+        <terminal>Aerogare 2 Term E</terminal>
+        <gate></gate>
+        <local-date-time>2018-11-14T10:45:00.000Z</local-date-time>
+        <utc-date-time>2018-11-14T09:45:00.000Z</utc-date-time>
+      </arrival>
+      <duration>500</duration>
+      <distance-in-miles>0</distance-in-miles>
+      <class-type>Economy Light (E)</class-type>
+      <traveler>
+        <first-name>MICHAEL FRANCIS</first-name>
+        <last-name>ROACH</last-name>
+        <class-type>Economy Light (E)</class-type>
+        <e-ticket>0062337039415-16</e-ticket>
+        <price>
+          <total-cost>561.47</total-cost>
+          <currency-code>EUR</currency-code>
+        </price>
+      </traveler>
+    </flight>
+    <flight>
+      <notes></notes>
+      <booking-details>
+        <name>Delta</name>
+        <phone>1-800-221-1212</phone>
+        <confirmation-number>HWK7V4</confirmation-number>
+      </booking-details>
+      <provider-details>
+        <name>Delta</name>
+        <confirmation-number>HWK7V4</confirmation-number>
+      </provider-details>
+      <total-price>
+        <total-cost>561.47</total-cost>
+        <currency-code>EUR</currency-code>
+      </total-price>
+      <details number="8472" airline-code="DL"/>
+      <operated-by number="1710" airline-code="AF"/>
+      <departure>
+        <latitude>49.013</latitude>
+        <longitude>2.542</longitude>
+        <airport-code>CDG</airport-code>
+        <name>Charles De Gaulle Airport</name>
+        <terminal>Aerogare 2 Term F</terminal>
+        <gate></gate>
+        <local-date-time>2018-11-14T13:00:00.000Z</local-date-time>
+        <utc-date-time>2018-11-14T12:00:00.000Z</utc-date-time>
+      </departure>
+      <arrival>
+        <latitude>53.63</latitude>
+        <longitude>9.99</longitude>
+        <airport-code>HAM</airport-code>
+        <name>Fuhlsbuettel Airport</name>
+        <terminal> 1</terminal>
+        <gate></gate>
+        <local-date-time>2018-11-14T14:35:00.000Z</local-date-time>
+        <utc-date-time>2018-11-14T13:35:00.000Z</utc-date-time>
+      </arrival>
+      <duration>95</duration>
+      <distance-in-miles>0</distance-in-miles>
+      <class-type>Economy Light (E)</class-type>
+      <traveler>
+        <first-name>MICHAEL FRANCIS</first-name>
+        <last-name>ROACH</last-name>
+        <class-type>Economy Light (E)</class-type>
+        <e-ticket>0062337039415-16</e-ticket>
+        <price>
+          <total-cost>561.47</total-cost>
+          <currency-code>EUR</currency-code>
+        </price>
+      </traveler>
+    </flight>
+  </items>
+</ns2:worldmate-parsing-result>

@@ -41,7 +41,10 @@ defmodule Myflightmap.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:countries, "~> 1.5"},
+      # Date/time parsing and formatting. TImezone conversions.
       {:timex, "~> 3.1"},
+      # XML parser. Needed for handling Worldmate trip parsing responses
+      {:sweet_xml, "~> 0.6.5"},
 
       # limited envs:
       {:phoenix_live_reload, "~> 1.0", only: :dev},
