@@ -200,4 +200,102 @@ defmodule Myflightmap.Transport do
   def change_airport(%Airport{} = airport) do
     Airport.changeset(airport, %{})
   end
+
+  alias Myflightmap.Transport.Aircraft
+
+  @doc """
+  Returns the list of aircraft.
+
+  ## Examples
+
+      iex> list_aircraft()
+      [%Aircraft{}, ...]
+
+  """
+  def list_aircraft do
+    Aircraft
+    |> order_by(:icao_code)
+    |> Repo.all
+  end
+
+  @doc """
+  Gets a single aircraft.
+
+  Raises `Ecto.NoResultsError` if the Aircraft does not exist.
+
+  ## Examples
+
+      iex> get_aircraft!(123)
+      %Aircraft{}
+
+      iex> get_aircraft!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_aircraft!(id), do: Repo.get!(Aircraft, id)
+
+  @doc """
+  Creates a aircraft.
+
+  ## Examples
+
+      iex> create_aircraft(%{field: value})
+      {:ok, %Aircraft{}}
+
+      iex> create_aircraft(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_aircraft(attrs \\ %{}) do
+    %Aircraft{}
+    |> Aircraft.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a aircraft.
+
+  ## Examples
+
+      iex> update_aircraft(aircraft, %{field: new_value})
+      {:ok, %Aircraft{}}
+
+      iex> update_aircraft(aircraft, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_aircraft(%Aircraft{} = aircraft, attrs) do
+    aircraft
+    |> Aircraft.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Aircraft.
+
+  ## Examples
+
+      iex> delete_aircraft(aircraft)
+      {:ok, %Aircraft{}}
+
+      iex> delete_aircraft(aircraft)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_aircraft(%Aircraft{} = aircraft) do
+    Repo.delete(aircraft)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking aircraft changes.
+
+  ## Examples
+
+      iex> change_aircraft(aircraft)
+      %Ecto.Changeset{source: %Aircraft{}}
+
+  """
+  def change_aircraft(%Aircraft{} = aircraft) do
+    Aircraft.changeset(aircraft, %{})
+  end
 end

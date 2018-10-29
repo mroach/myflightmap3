@@ -19,6 +19,7 @@ defmodule MyflightmapWeb.Router do
 
     get "/", HomeController, :index
 
+    resources "/aircraft", AircraftController
     resources "/airlines", AirlineController
     resources "/airports", AirportController
     resources "/users", UserController

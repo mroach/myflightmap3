@@ -1,0 +1,28 @@
+<h2>Aircraft</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>IATA code</th>
+      <th>ICAO code</th>
+      <th>Manufacturer code</th>
+      <th>Description</th>
+      <th>Engine type</th>
+      <th>Engine count</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for aircraft <- @aircraft do %>
+    <tr>
+      <td><%= aircraft.iata_code %></td>
+      <td><%= aircraft.icao_code %></td>
+      <td><%= aircraft.manufacturer_code %></td>
+      <td><%= aircraft.description %></td>
+      <td><%= aircraft.engine_type %></td>
+      <td><%= aircraft.engine_count %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Aircraft", to: aircraft_path(@conn, :new) %></span>

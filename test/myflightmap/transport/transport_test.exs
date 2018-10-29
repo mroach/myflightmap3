@@ -114,4 +114,74 @@ defmodule Myflightmap.TransportTest do
       assert %Ecto.Changeset{} = Transport.change_airport(airport)
     end
   end
+
+  describe "aircraft" do
+    alias Myflightmap.Transport.Aircraft
+
+    @valid_attrs %{engine_count: "some engine_count", engine_type: "some engine_type", iata_code: "some iata_code", icao_code: "some icao_code", manufacturer_code: "some manufacturer_code", model: "some model"}
+    @update_attrs %{engine_count: "some updated engine_count", engine_type: "some updated engine_type", iata_code: "some updated iata_code", icao_code: "some updated icao_code", manufacturer_code: "some updated manufacturer_code", model: "some updated model"}
+    @invalid_attrs %{engine_count: nil, engine_type: nil, iata_code: nil, icao_code: nil, manufacturer_code: nil, model: nil}
+
+    def aircraft_fixture(attrs \\ %{}) do
+      {:ok, aircraft} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Transport.create_aircraft()
+
+      aircraft
+    end
+
+    test "list_aircraft/0 returns all aircraft" do
+      aircraft = aircraft_fixture()
+      assert Transport.list_aircraft() == [aircraft]
+    end
+
+    test "get_aircraft!/1 returns the aircraft with given id" do
+      aircraft = aircraft_fixture()
+      assert Transport.get_aircraft!(aircraft.id) == aircraft
+    end
+
+    test "create_aircraft/1 with valid data creates a aircraft" do
+      assert {:ok, %Aircraft{} = aircraft} = Transport.create_aircraft(@valid_attrs)
+      assert aircraft.engine_count == "some engine_count"
+      assert aircraft.engine_type == "some engine_type"
+      assert aircraft.iata_code == "some iata_code"
+      assert aircraft.icao_code == "some icao_code"
+      assert aircraft.manufacturer_code == "some manufacturer_code"
+      assert aircraft.model == "some model"
+    end
+
+    test "create_aircraft/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Transport.create_aircraft(@invalid_attrs)
+    end
+
+    test "update_aircraft/2 with valid data updates the aircraft" do
+      aircraft = aircraft_fixture()
+      assert {:ok, aircraft} = Transport.update_aircraft(aircraft, @update_attrs)
+      assert %Aircraft{} = aircraft
+      assert aircraft.engine_count == "some updated engine_count"
+      assert aircraft.engine_type == "some updated engine_type"
+      assert aircraft.iata_code == "some updated iata_code"
+      assert aircraft.icao_code == "some updated icao_code"
+      assert aircraft.manufacturer_code == "some updated manufacturer_code"
+      assert aircraft.model == "some updated model"
+    end
+
+    test "update_aircraft/2 with invalid data returns error changeset" do
+      aircraft = aircraft_fixture()
+      assert {:error, %Ecto.Changeset{}} = Transport.update_aircraft(aircraft, @invalid_attrs)
+      assert aircraft == Transport.get_aircraft!(aircraft.id)
+    end
+
+    test "delete_aircraft/1 deletes the aircraft" do
+      aircraft = aircraft_fixture()
+      assert {:ok, %Aircraft{}} = Transport.delete_aircraft(aircraft)
+      assert_raise Ecto.NoResultsError, fn -> Transport.get_aircraft!(aircraft.id) end
+    end
+
+    test "change_aircraft/1 returns a aircraft changeset" do
+      aircraft = aircraft_fixture()
+      assert %Ecto.Changeset{} = Transport.change_aircraft(aircraft)
+    end
+  end
 end

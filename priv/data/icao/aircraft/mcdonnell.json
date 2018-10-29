@@ -1,0 +1,62 @@
+[
+  {
+    "manufacturer_code": "MCDONNELL",
+    "model_no": "",
+    "model_name": "Phantom 2",
+    "model_version": "",
+    "engine_count": 2,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L2J",
+    "wtc": "M",
+    "tdesig": "F4"
+  },
+  {
+    "manufacturer_code": "MCDONNELL",
+    "model_no": "C-12",
+    "model_name": "Phantom 2",
+    "model_version": "",
+    "engine_count": 2,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L2J",
+    "wtc": "M",
+    "tdesig": "F4"
+  },
+  {
+    "manufacturer_code": "MCDONNELL",
+    "model_no": "CR-12",
+    "model_name": "Phantom 2",
+    "model_version": "",
+    "engine_count": 2,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L2J",
+    "wtc": "M",
+    "tdesig": "F4"
+  },
+  {
+    "manufacturer_code": "MCDONNELL",
+    "model_no": "F-4",
+    "model_name": "Phantom 2",
+    "model_version": "",
+    "engine_count": 2,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L2J",
+    "wtc": "M",
+    "tdesig": "F4"
+  },
+  {
+    "manufacturer_code": "MCDONNELL",
+    "model_no": "RF-4",
+    "model_name": "Phantom 2",
+    "model_version": "",
+    "engine_count": 2,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L2J",
+    "wtc": "M",
+    "tdesig": "F4"
+  }
+]

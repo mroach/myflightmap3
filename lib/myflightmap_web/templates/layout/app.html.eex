@@ -19,6 +19,7 @@
           <%= link("My Flight Map", to: home_path(@conn, :index)) %>
         </div>
         <nav role="navigation">
+          <%= link("Aircraft", to: aircraft_path(@conn, :index)) %>
           <%= link("Airports", to: airport_path(@conn, :index)) %>
           <%= link("Airlines", to: airline_path(@conn, :index)) %>
           <%= link("Users", to: user_path(@conn, :index)) %>
