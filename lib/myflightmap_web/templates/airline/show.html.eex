@@ -2,7 +2,7 @@
 
 <ul>
   <li>
-    <strong>Icao code:</strong>
+    <strong><%= gettext("ICAO Code")%>:</strong>
     <%= @airline.icao_code %>
   </li>
 

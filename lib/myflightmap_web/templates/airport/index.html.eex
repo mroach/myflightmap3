@@ -5,7 +5,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th>IATA code</th>
+      <th><%= gettext("IATA Code") %></th>
       <th>City</th>
       <th>Common name</th>
       <th>Timezone</th>

@@ -6,13 +6,13 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :iata_code, class: "control-label" %>
+    <%= label f, :iata_code, gettext("IATA Code"), class: "control-label" %>
     <%= text_input f, :iata_code, class: "form-control" %>
     <%= error_tag f, :iata_code %>
   </div>
 
   <div class="form-group">
-    <%= label f, :icao_code, class: "control-label" %>
+    <%= label f, :icao_code, gettext("ICAO Code"), class: "control-label" %>
     <%= text_input f, :icao_code, class: "form-control" %>
     <%= error_tag f, :icao_code %>
   </div>
