@@ -1,5 +1,7 @@
 <h2>Airlines</h2>
 
+<div><%= link "New Airline", to: airline_path(@conn, :new) %></div>
+
 <table class="table">
   <thead>
     <tr>
@@ -34,4 +36,3 @@
   </tbody>
 </table>
 
-<span><%= link "New Airline", to: airline_path(@conn, :new) %></span>

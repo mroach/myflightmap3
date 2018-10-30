@@ -1,6 +1,6 @@
 <h2>Users</h2>
 
-<span><%= link "New User", to: user_path(@conn, :new) %></span>
+<div><%= link "New User", to: user_path(@conn, :new) %></div>
 
 <table class="table">
   <thead>

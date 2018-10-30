@@ -1,6 +1,6 @@
 <h2>Airports</h2>
 
-<span><%= link "New Airport", to: airport_path(@conn, :new) %></span>
+<div><%= link "New Airport", to: airport_path(@conn, :new) %></div>
 
 <table class="table">
   <thead>

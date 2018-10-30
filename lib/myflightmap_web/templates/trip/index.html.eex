@@ -1,6 +1,6 @@
 <h2>Trips</h2>
 
-<span><%= link "New Trip", to: trip_path(@conn, :new) %></span>
+<div><%= link "New Trip", to: trip_path(@conn, :new) %></div>
 
 <table class="table">
   <thead>
