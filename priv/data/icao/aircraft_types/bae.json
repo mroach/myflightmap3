@@ -1,0 +1,110 @@
+[
+  {
+    "manufacturer_code": "BAE SYSTEMS",
+    "model_no": "",
+    "model_name": "Avro RJ-70",
+    "model_version": "",
+    "engine_count": 4,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L4J",
+    "wtc": "M",
+    "tdesig": "RJ70"
+  },
+  {
+    "manufacturer_code": "BAE SYSTEMS",
+    "model_no": "",
+    "model_name": "Avro RJ-85",
+    "model_version": "",
+    "engine_count": 4,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L4J",
+    "wtc": "M",
+    "tdesig": "RJ85"
+  },
+  {
+    "manufacturer_code": "BAE SYSTEMS",
+    "model_no": "",
+    "model_name": "Avro RJ-100",
+    "model_version": "",
+    "engine_count": 4,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L4J",
+    "wtc": "M",
+    "tdesig": "RJ1H"
+  },
+  {
+    "manufacturer_code": "BAE SYSTEMS",
+    "model_no": "",
+    "model_name": "Eurofighter 2000",
+    "model_version": "",
+    "engine_count": 2,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L2J",
+    "wtc": "M",
+    "tdesig": "EUFI"
+  },
+  {
+    "manufacturer_code": "BAE SYSTEMS",
+    "model_no": "",
+    "model_name": "Goshawk",
+    "model_version": "",
+    "engine_count": 1,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L1J",
+    "wtc": "M",
+    "tdesig": "HAWK"
+  },
+  {
+    "manufacturer_code": "BAE SYSTEMS",
+    "model_no": "",
+    "model_name": "Typhoon",
+    "model_version": "",
+    "engine_count": 2,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L2J",
+    "wtc": "M",
+    "tdesig": "EUFI"
+  },
+  {
+    "manufacturer_code": "BAE SYSTEMS",
+    "model_no": "",
+    "model_name": "Hawk",
+    "model_version": "",
+    "engine_count": 1,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L1J",
+    "wtc": "M",
+    "tdesig": "HAWK"
+  },
+  {
+    "manufacturer_code": "BAE SYSTEMS",
+    "model_no": "CT-155 ",
+    "model_name": "Hawk",
+    "model_version": "",
+    "engine_count": 1,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L1J",
+    "wtc": "M",
+    "tdesig": "HAWK"
+  },
+  {
+    "manufacturer_code": "BAE SYSTEMS",
+    "model_no": "T-45",
+    "model_name": "Goshawk",
+    "model_version": "",
+    "engine_count": 1,
+    "engine_type": "Jet",
+    "aircraft_desc": "LandPlane",
+    "description": "L1J",
+    "wtc": "M",
+    "tdesig": "HAWK"
+  }
+]

@@ -6,6 +6,7 @@ defmodule Myflightmap.Factory do
   use ExMachina.Ecto, repo: Myflightmap.Repo
 
   # Transport
+  use Myflightmap.AircraftTypeFactory
   use Myflightmap.AirlineFactory
   use Myflightmap.AirportFactory
 

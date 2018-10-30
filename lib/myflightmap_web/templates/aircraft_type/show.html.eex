@@ -1,0 +1,32 @@
+<h2><%= @aircraft_type.description %></h2>
+
+<ul>
+  <li>
+    <strong>IATA code:</strong>
+    <%= @aircraft_type.iata_code %>
+  </li>
+
+  <li>
+    <strong>ICAO code:</strong>
+    <%= @aircraft_type.icao_code %>
+  </li>
+
+  <li>
+    <strong>Manufacturer code:</strong>
+    <%= @aircraft_type.manufacturer_code %>
+  </li>
+
+  <li>
+    <strong>Engine type:</strong>
+    <%= @aircraft_type.engine_type %>
+  </li>
+
+  <li>
+    <strong>Engine count:</strong>
+    <%= @aircraft_type.engine_count %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: aircraft_type_path(@conn, :edit, @aircraft_type) %></span>
+<span><%= link "Back", to: aircraft_type_path(@conn, :index) %></span>

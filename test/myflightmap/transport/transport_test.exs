@@ -114,4 +114,60 @@ defmodule Myflightmap.TransportTest do
       assert %Ecto.Changeset{} = Transport.change_airport(airport)
     end
   end
+
+  describe "aircraft types" do
+    alias Myflightmap.Transport.AircraftType
+
+    test "list_aircraft_types/0 returns all aircraft types" do
+      aircraft_type = insert(:aircraft_type)
+      assert Transport.list_aircraft_types() == [aircraft_type]
+    end
+
+    test "get_aircraft_type!/1 returns the aircraft type with given id" do
+      aircraft_type = insert(:aircraft_type)
+      assert Transport.get_aircraft_type!(aircraft_type.id) == aircraft_type
+    end
+
+    test "create_aircraft_type/1 with valid data creates a aircraft type" do
+      attrs = params_for(:aircraft_type)
+      assert {:ok, %AircraftType{} = aircraft_type} = Transport.create_aircraft_type(attrs)
+      assert aircraft_type.engine_count == attrs.engine_count
+      assert aircraft_type.engine_type == attrs.engine_type
+      assert aircraft_type.iata_code == attrs.iata_code
+      assert aircraft_type.icao_code == attrs.icao_code
+      assert aircraft_type.manufacturer_code == attrs.manufacturer_code
+      assert aircraft_type.description == attrs.description
+    end
+
+    test "create_aircraft_type/1 with invalid data returns error changeset" do
+      invalid_attrs = params_for(:aircraft_type) |> Map.put(:description, nil)
+      assert {:error, %Ecto.Changeset{}} = Transport.create_aircraft_type(invalid_attrs)
+    end
+
+    test "update_aircraft_type/2 with valid data updates the aircraft type" do
+      aircraft_type = insert(:aircraft_type)
+      update_attrs = %{description: "new description"}
+      assert {:ok, aircraft_type} = Transport.update_aircraft_type(aircraft_type, update_attrs)
+      assert %AircraftType{} = aircraft_type
+      assert aircraft_type.description == update_attrs.description
+    end
+
+    test "update_aircraft_type/2 with invalid data returns error changeset" do
+      aircraft_type = insert(:aircraft_type)
+      invalid_attrs = %{description: nil}
+      assert {:error, %Ecto.Changeset{}} = Transport.update_aircraft_type(aircraft_type, invalid_attrs)
+      assert aircraft_type == Transport.get_aircraft_type!(aircraft_type.id)
+    end
+
+    test "delete_aircraft_type/1 deletes the aircraft type" do
+      aircraft_type = insert(:aircraft_type)
+      assert {:ok, %AircraftType{}} = Transport.delete_aircraft_type(aircraft_type)
+      assert_raise Ecto.NoResultsError, fn -> Transport.get_aircraft_type!(aircraft_type.id) end
+    end
+
+    test "change_aircraft_type/1 returns a aircraft type changeset" do
+      aircraft_type = insert(:aircraft_type)
+      assert %Ecto.Changeset{} = Transport.change_aircraft_type(aircraft_type)
+    end
+  end
 end

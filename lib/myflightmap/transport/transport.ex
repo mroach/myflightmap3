@@ -200,4 +200,102 @@ defmodule Myflightmap.Transport do
   def change_airport(%Airport{} = airport) do
     Airport.changeset(airport, %{})
   end
+
+  alias Myflightmap.Transport.AircraftType
+
+  @doc """
+  Returns the list of aircraft types.
+
+  ## Examples
+
+      iex> list_aircraft_types()
+      [%AircraftType{}, ...]
+
+  """
+  def list_aircraft_types do
+    AircraftType
+    |> order_by(:icao_code)
+    |> Repo.all
+  end
+
+  @doc """
+  Gets a single aircraft type.
+
+  Raises `Ecto.NoResultsError` if the aircraft type does not exist.
+
+  ## Examples
+
+      iex> get_aircraft_type!(123)
+      %AircraftType}
+
+      iex> get_aircraft_type!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_aircraft_type!(id), do: Repo.get!(AircraftType, id)
+
+  @doc """
+  Creates an aircraft type.
+
+  ## Examples
+
+      iex> create_aircraft_type(%{field: value})
+      {:ok, %AircraftType{}}
+
+      iex> create_aircraft_type(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_aircraft_type(attrs \\ %{}) do
+    %AircraftType{}
+    |> AircraftType.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates an aircraft type.
+
+  ## Examples
+
+      iex> update_aircraft_type(aircraft_type, %{field: new_value})
+      {:ok, %AircraftType{}}
+
+      iex> update_aircraft_type(aircraft_type, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_aircraft_type(%AircraftType{} = aircraft_type, attrs) do
+    aircraft_type
+    |> AircraftType.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes an aircraft type.
+
+  ## Examples
+
+      iex> delete_aircraft_type(aircraft_type)
+      {:ok, %AircrafType{}}
+
+      iex> delete_aircraft_type(aircraft_type)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_aircraft_type(%AircraftType{} = aircraft_type) do
+    Repo.delete(aircraft_type)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking aircraft type changes.
+
+  ## Examples
+
+      iex> change_aircraft_type(aircraft_type)
+      %Ecto.Changeset{source: %AircraftType{}}
+
+  """
+  def change_aircraft_type(%AircraftType{} = aircraft_type) do
+    AircraftType.changeset(aircraft_type, %{})
+  end
 end
