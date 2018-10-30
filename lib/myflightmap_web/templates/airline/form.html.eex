@@ -25,7 +25,7 @@
 
   <div class="form-group">
     <%= label f, :country, class: "control-label" %>
-    <%= text_input f, :country, class: "form-control" %>
+    <%= select f, :country, country_options(), prompt: "-- Pick --" %>
     <%= error_tag f, :country %>
   </div>
 
