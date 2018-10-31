@@ -15,4 +15,5 @@ defmodule Myflightmap.Factory do
 
   # Travel
   use Myflightmap.TripFactory
+  use Myflightmap.FlightFactory
 end

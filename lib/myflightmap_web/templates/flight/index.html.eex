@@ -1,0 +1,30 @@
+<h2>Flights</h2>
+
+<div><%= link "New Flight", to: flight_path(@conn, :new) %></div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Date</th>
+      <th>Flight code</th>
+      <th>Route</th>
+      <th>Airline</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for flight <- @flights do %>
+    <tr>
+      <td><%= link flight.user_id, to: user_path(@conn, :show, flight.user_id) %>
+      <td><%= date_time_format flight.depart_date, "%Y-%m-%d" %></td>
+      <td><%= link flight.flight_code, to: flight_path(@conn, :show, flight) %></td>
+      <td>
+        <%= flight.depart_airport.iata_code %> - <%= flight.arrive_airport.iata_code %>
+        <div>(<%= airport_name(flight.depart_airport) %> - <%= airport_name(flight.arrive_airport) %>)</div>
+      </td>
+      <td><%= flight.airline.name %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+

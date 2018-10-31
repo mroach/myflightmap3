@@ -32,6 +32,11 @@
     <strong>Coordinates:</strong>
     <%= @airport.coordinates %>
   </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= status(@airport) %>
+  </li>
 </ul>
 
 <span><%= link "Edit", to: airport_path(@conn, :edit, @airport) %></span>

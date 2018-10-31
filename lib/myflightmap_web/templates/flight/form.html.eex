@@ -1,0 +1,93 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="column">
+      <%= label f, :flight_code %>
+      <%= text_input f, :flight_code %>
+      <%= error_tag f, :flight_code %>
+    </div>
+    <div class="column">
+      <%= label f, :airline_id %>
+      <%= select f, :airline_id, airline_options(), prompt: "-- Pick --" %>
+      <%= error_tag f, :airline_id %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <%= label f, :depart_airport_id %>
+      <%= select f, :depart_airport_id, airport_options(), prompt: "-- Pick --" %>
+      <%= error_tag f, :depart_airport_id %>
+    </div>
+
+    <div class="column">
+      <%= label f, :arrive_airport_id %>
+      <%= select f, :arrive_airport_id, airport_options(), prompt: "-- Pick --" %>
+      <%= error_tag f, :arrive_airport_id %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <%= label f, :depart_date %>
+      <%= date_input f, :depart_date %>
+      <%= error_tag f, :depart_date %>
+    </div>
+    <div class="column">
+      <%= label f, :depart_time %>
+      <%= time_input f, :depart_time %>
+      <%= error_tag f, :depart_time %>
+    </div>
+    <div class="column">
+      <%= label f, :arrive_date %>
+      <%= date_input f, :arrive_date %>
+      <%= error_tag f, :arrive_date %>
+    </div>
+
+    <div class="column">
+      <%= label f, :arrive_time %>
+      <%= time_input f, :arrive_time %>
+      <%= error_tag f, :arrive_time %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <%= label f, :seat_class %>
+      <%= select f, :seat_class, seat_class_options() %>
+      <%= error_tag f, :seat_class %>
+    </div>
+    <div class="column">
+      <%= label f, :seat %>
+      <%= text_input f, :seat %>
+      <%= error_tag f, :seat %>
+    </div>
+    <div class="column">
+      <%= label f, :confirmation_number %>
+      <%= text_input f, :confirmation_number %>
+      <%= error_tag f, :confirmation_number %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <%= label f, :aircraft_type_id %>
+      <%= select f, :aircraft_type_id, aircraft_type_options(), prompt: "-- Pick" %>
+      <%= error_tag f, :aircraft_type_id %>
+    </div>
+    <div class="column">
+      <%= label f, :aircraft_registration %>
+      <%= text_input f, :aircraft_registration %>
+      <%= error_tag f, :aircraft_registration %>
+    </div>
+  </div>
+
+  <div>
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

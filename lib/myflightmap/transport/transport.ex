@@ -22,6 +22,12 @@ defmodule Myflightmap.Transport do
     |> Repo.all
   end
 
+  def list_airline_options do
+    from(a in Airline, order_by: a.iata_code, select: {a.id, a.iata_code, a.name})
+    |> Repo.all
+    |> Enum.map(fn {id, iata, name} -> {"#{iata} #{name}", id} end)
+  end
+
   @doc """
   Gets a single airline.
 
@@ -120,6 +126,12 @@ defmodule Myflightmap.Transport do
     |> Repo.all
   end
 
+  def list_airport_options do
+    from(a in Airport, select: {a.id, a.common_name, a.iata_code})
+    |> Repo.all
+    |> Enum.map(fn {id, name, iata} -> {"#{name} (#{iata})", id} end)
+  end
+
   @doc """
   Gets a single airport.
 
@@ -215,6 +227,11 @@ defmodule Myflightmap.Transport do
   def list_aircraft_types do
     AircraftType
     |> order_by(:icao_code)
+    |> Repo.all
+  end
+
+  def list_aircraft_type_options do
+    from(a in AircraftType, order_by: a.description, select: {a.description, a.id})
     |> Repo.all
   end
 
