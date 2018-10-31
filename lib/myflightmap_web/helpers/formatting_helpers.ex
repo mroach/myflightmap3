@@ -1,4 +1,4 @@
-defmodule MyflightmapWeb.FormattingHelpers do
+defmodule MyflightmapWeb.Helpers.FormattingHelpers do
   @moduledoc """
   Common formatting helpers that could be included in
   """
