@@ -1,4 +1,9 @@
 defmodule Myflightmap.Accounts.Credential do
+  @moduledoc """
+  Optional single (one to zero or one) record for a User that stores
+  their login credentials with an email address and hashed password
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   alias Myflightmap.Accounts.User
@@ -6,9 +11,10 @@ defmodule Myflightmap.Accounts.Credential do
   schema "credentials" do
     field :email, :string
     field :password_hash, :string
-    belongs_to :user_id, User
+    belongs_to :user, User
 
     field :password, :string, virtual: true
+    field :password_confirmation, :string, virtual: true
 
     timestamps()
   end
@@ -16,12 +22,14 @@ defmodule Myflightmap.Accounts.Credential do
   @doc false
   def changeset(credential, attrs) do
     credential
-    |> cast(attrs, [:email, :password_hash])
+    |> cast(attrs, [:email, :password])
     |> update_change(:email, &normalize_email/1)
-    |> validate_required([:email, :password_hash])
+    |> validate_required([:email, :password, :password_confirmation])
+    |> validate_confirmation(:password, message: "does not match")
     |> validate_length(:email, min: 3)
     |> unique_constraint(:email)
     |> put_hashed_password()
+    |> foreign_key_constraint(:user_id)
   end
 
   # Trim and downcase will allow the database unique constraint to work without
@@ -35,7 +43,7 @@ defmodule Myflightmap.Accounts.Credential do
   def put_hashed_password(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
-        put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(password)
+        put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(password))
       _ ->
         changeset
     end

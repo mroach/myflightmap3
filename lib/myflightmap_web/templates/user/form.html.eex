@@ -17,6 +17,13 @@
     <%= error_tag f, :username %>
   </div>
 
+  <hr />
+
+  <%= inputs_for f, :credential, fn cred -> %>
+    <%= text_input cred, :email %>
+    <%= password_input cred, :password %>
+  <% end %>
+
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
