@@ -13,7 +13,7 @@ defmodule MyflightmapWeb.Helpers.FormattingHelpers do
   Get a country's name by ISO code
 
   Examples:
-      iex> MyflightmapWeb.FormattingHelpers.country_name("SG")
+      iex> MyflightmapWeb.Helpers.FormattingHelpers.country_name("SG")
       "Singapore"
   """
   def country_name(code) when is_binary(code) do

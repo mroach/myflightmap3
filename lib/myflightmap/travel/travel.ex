@@ -107,6 +107,8 @@ defmodule Myflightmap.Travel do
 
   alias Myflightmap.Travel.Flight
 
+  @preload_flight_assocs [:depart_airport, :arrive_airport, :airline, :aircraft_type, :trip, :user]
+
   @doc """
   Returns the list of flights.
 
@@ -123,7 +125,7 @@ defmodule Myflightmap.Travel do
 
   def list_flights_with_assocs do
     list_flights()
-    |> Repo.preload([:airline, :depart_airport, :arrive_airport])
+    |> Repo.preload(@preload_flight_assocs)
   end
 
   @doc """
@@ -140,12 +142,12 @@ defmodule Myflightmap.Travel do
       ** (Ecto.NoResultsError)
 
   """
-  def get_flight!(id), do: Repo.get!(Flight, id)
+  def get_flight!(id), do: Flight |> Repo.get!(id)
 
   def get_flight_with_assocs!(id) do
-    Flight
-    |> Repo.get!(id)
-    |> Repo.preload([:depart_airport, :arrive_airport, :airline, :aircraft_type, :trip])
+    id
+    |> get_flight!()
+    |> Repo.preload(@preload_flight_assocs)
   end
 
   @doc """

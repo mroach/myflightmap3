@@ -57,80 +57,56 @@ defmodule Myflightmap.TravelTest do
   describe "flights" do
     alias Myflightmap.Travel.Flight
 
-    @valid_attrs %{aircraft_registration: "some aircraft_registration", arrive_date: ~D[2010-04-17], arrive_time: ~T[14:00:00.000000], confirmation_number: "some confirmation_number", depart_date: ~D[2010-04-17], depart_time: ~T[14:00:00.000000], distance: 42, duration: 42, flight_code: "some flight_code", seat: "some seat", seat_class: "some seat_class"}
-    @update_attrs %{aircraft_registration: "some updated aircraft_registration", arrive_date: ~D[2011-05-18], arrive_time: ~T[15:01:01.000000], confirmation_number: "some updated confirmation_number", depart_date: ~D[2011-05-18], depart_time: ~T[15:01:01.000000], distance: 43, duration: 43, flight_code: "some updated flight_code", seat: "some updated seat", seat_class: "some updated seat_class"}
-    @invalid_attrs %{aircraft_registration: nil, arrive_date: nil, arrive_time: nil, confirmation_number: nil, depart_date: nil, depart_time: nil, distance: nil, duration: nil, flight_code: nil, seat: nil, seat_class: nil}
-
-    def flight_fixture(attrs \\ %{}) do
-      {:ok, flight} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Travel.create_flight()
-
-      flight
-    end
+    @invalid_attrs %{depart_date: nil}
 
     test "list_flights/0 returns all flights" do
-      flight = flight_fixture()
+      flight = insert(:flight)
       assert Travel.list_flights() == [flight]
     end
 
-    test "get_flight!/1 returns the flight with given id" do
-      flight = flight_fixture()
-      assert Travel.get_flight!(flight.id) == flight
+    test "get_flight_with_assocs!/1 returns the flight with given id" do
+      flight = insert(:flight)
+      assert Travel.get_flight_with_assocs!(flight.id) == flight
     end
 
     test "create_flight/1 with valid data creates a flight" do
-      assert {:ok, %Flight{} = flight} = Travel.create_flight(@valid_attrs)
-      assert flight.aircraft_registration == "some aircraft_registration"
-      assert flight.arrive_date == ~D[2010-04-17]
-      assert flight.arrive_time == ~T[14:00:00.000000]
-      assert flight.confirmation_number == "some confirmation_number"
-      assert flight.depart_date == ~D[2010-04-17]
-      assert flight.depart_time == ~T[14:00:00.000000]
-      assert flight.distance == 42
-      assert flight.duration == 42
-      assert flight.flight_code == "some flight_code"
-      assert flight.seat == "some seat"
-      assert flight.seat_class == "some seat_class"
+      user = insert(:user)
+      params = params_for(:flight)
+      assert {:ok, %Flight{} = flight} = Travel.create_flight(user, params)
+      assert flight.flight_code == params.flight_code
     end
 
     test "create_flight/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Travel.create_flight(@invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} = Travel.create_flight(insert(:user), @invalid_attrs)
     end
 
     test "update_flight/2 with valid data updates the flight" do
-      flight = flight_fixture()
-      assert {:ok, flight} = Travel.update_flight(flight, @update_attrs)
+      flight = insert(:flight)
+      update_attrs = %{seat: "12A"}
+      assert {:ok, flight} = Travel.update_flight(flight, update_attrs)
       assert %Flight{} = flight
-      assert flight.aircraft_registration == "some updated aircraft_registration"
-      assert flight.arrive_date == ~D[2011-05-18]
-      assert flight.arrive_time == ~T[15:01:01.000000]
-      assert flight.confirmation_number == "some updated confirmation_number"
-      assert flight.depart_date == ~D[2011-05-18]
-      assert flight.depart_time == ~T[15:01:01.000000]
-      assert flight.distance == 43
-      assert flight.duration == 43
-      assert flight.flight_code == "some updated flight_code"
-      assert flight.seat == "some updated seat"
-      assert flight.seat_class == "some updated seat_class"
+      assert flight.seat == update_attrs.seat
     end
 
     test "update_flight/2 with invalid data returns error changeset" do
-      flight = flight_fixture()
+      flight = insert(:flight)
       assert {:error, %Ecto.Changeset{}} = Travel.update_flight(flight, @invalid_attrs)
-      assert flight == Travel.get_flight!(flight.id)
+      assert Travel.get_flight!(flight.id).depart_date == flight.depart_date
     end
 
     test "delete_flight/1 deletes the flight" do
-      flight = flight_fixture()
+      flight = insert(:flight)
       assert {:ok, %Flight{}} = Travel.delete_flight(flight)
       assert_raise Ecto.NoResultsError, fn -> Travel.get_flight!(flight.id) end
     end
 
     test "change_flight/1 returns a flight changeset" do
-      flight = flight_fixture()
+      flight = insert(:flight)
       assert %Ecto.Changeset{} = Travel.change_flight(flight)
+    end
+
+    test "change_flight/1 with changed airports recalculates the distance" do
+      flight = insert(:flight)
     end
   end
 end

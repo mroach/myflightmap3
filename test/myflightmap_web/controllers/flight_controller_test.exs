@@ -21,13 +21,14 @@ defmodule MyflightmapWeb.FlightControllerTest do
 
   describe "create flight" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, flight_path(conn, :create), flight: params_for(:flight)
+      params = params_for(:flight)
+      conn = post conn, flight_path(conn, :create), flight: params
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == flight_path(conn, :show, id)
 
       conn = get conn, flight_path(conn, :show, id)
-      assert html_response(conn, 200) =~ "Show Flight"
+      assert html_response(conn, 200) =~ params.flight_code
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -54,7 +55,7 @@ defmodule MyflightmapWeb.FlightControllerTest do
       assert redirected_to(conn) == flight_path(conn, :show, flight)
 
       conn = get conn, flight_path(conn, :show, flight)
-      assert html_response(conn, 200) =~ "some updated aircraft_registration"
+      assert html_response(conn, 200) =~ update_attrs.seat
     end
 
     test "renders errors when data is invalid", %{conn: conn, flight: flight} do
