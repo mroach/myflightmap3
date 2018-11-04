@@ -22,6 +22,11 @@ defmodule Myflightmap.FlightFactory do
             year: 1990..2019 |> Enum.random,
             month: 1..12 |> Enum.random,
             day: 1..28 |> Enum.random
+          },
+          depart_time: %Time{
+            hour: 0..23 |> Enum.random,
+            minute: 0..59 |> Enum.random,
+            second: 0
           }
         }
       end

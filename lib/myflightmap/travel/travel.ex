@@ -8,6 +8,7 @@ defmodule Myflightmap.Travel do
   alias Myflightmap.Repo
 
   alias Myflightmap.Accounts.User
+  alias Myflightmap.FlightDuration
   alias Myflightmap.Transport
   alias Myflightmap.Travel.Trip
 
@@ -168,6 +169,7 @@ defmodule Myflightmap.Travel do
     %Flight{user: user}
     |> Flight.changeset(attrs)
     |> put_calculated_flight_distance()
+    |> put_calculated_flight_duration()
     |> Repo.insert()
   end
 
@@ -187,6 +189,7 @@ defmodule Myflightmap.Travel do
     flight
     |> Flight.changeset(attrs)
     |> put_calculated_flight_distance()
+    |> put_calculated_flight_duration()
     |> Repo.update()
   end
 
@@ -203,6 +206,14 @@ defmodule Myflightmap.Travel do
     end
   end
   defp put_calculated_flight_distance(changeset), do: changeset
+
+  defp put_calculated_flight_duration(%{valid?: true} = changeset) do
+    case FlightDuration.from_changeset(changeset) do
+      duration when is_number(duration) -> put_change(changeset, :duration, duration)
+      _ -> changeset
+    end
+  end
+  defp put_calculated_flight_duration(changeset), do: changeset
 
   @doc """
   Deletes a Flight.

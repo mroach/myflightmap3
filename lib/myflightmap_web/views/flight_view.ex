@@ -4,6 +4,7 @@ defmodule MyflightmapWeb.FlightView do
   alias Myflightmap.Transport
   alias Myflightmap.Transport.Airport
   alias Myflightmap.Travel.Flight
+  alias Timex.Duration
 
   def airport_options, do: Transport.list_airport_options
   def airline_options, do: Transport.list_airline_options
@@ -56,4 +57,19 @@ defmodule MyflightmapWeb.FlightView do
     "#{whole_units} #{units}"
   end
   def format_distance(_, _), do: nil
+
+  def format_duration(nil), do: nil
+  def format_duration(0), do: nil
+  def format_duration(minutes) when is_number(minutes) do
+    minutes
+    |> Duration.from_minutes
+    |> Duration.to_clock
+    |> format_duration
+  end
+  def format_duration({0, min, _, _}) do
+    "#{min} min"
+  end
+  def format_duration({hours, minutes, _, _}) do
+    "#{hours} hr #{minutes} min"
+  end
 end

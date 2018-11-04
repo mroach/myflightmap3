@@ -43,7 +43,7 @@
 
   <li>
     <strong>Duration:</strong>
-    <%= @flight.duration %>
+    <%= format_duration(@flight.duration) %>
   </li>
 
   <li>
