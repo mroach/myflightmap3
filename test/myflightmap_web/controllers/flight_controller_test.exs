@@ -21,7 +21,7 @@ defmodule MyflightmapWeb.FlightControllerTest do
 
   describe "create flight" do
     test "redirects to show when data is valid", %{conn: conn} do
-      params = params_for(:flight)
+      params = params_with_assocs(:flight)
       conn = post conn, flight_path(conn, :create), flight: params
 
       assert %{id: id} = redirected_params(conn)
@@ -32,7 +32,7 @@ defmodule MyflightmapWeb.FlightControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, flight_path(conn, :create), flight: params_for(:flight)
+      conn = post conn, flight_path(conn, :create), flight: @invalid_attrs
       assert html_response(conn, 200) =~ "New Flight"
     end
   end

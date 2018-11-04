@@ -1,7 +1,9 @@
 defmodule Myflightmap.TravelTest do
   use Myflightmap.DataCase
 
+  alias Myflightmap.Transport
   alias Myflightmap.Travel
+  alias Myflightmap.Accounts
   import Myflightmap.Factory
 
   describe "trips" do
@@ -60,18 +62,25 @@ defmodule Myflightmap.TravelTest do
     @invalid_attrs %{depart_date: nil}
 
     test "list_flights/0 returns all flights" do
-      flight = insert(:flight)
-      assert Travel.list_flights() == [flight]
+      # The maps end up not being exactly equal because of `nil` vs
+      # `Ecto.Association.NotLoaded` values on associatins.
+      # So just compare on IDs rather than the whole map
+      flight = insert(:flight).id
+      assert Travel.list_flights() |> Enum.map(&(&1.id)) == [flight]
     end
 
     test "get_flight_with_assocs!/1 returns the flight with given id" do
-      flight = insert(:flight)
-      assert Travel.get_flight_with_assocs!(flight.id) == flight
+      flight_id = insert(:flight).id
+      flight = Travel.get_flight_with_assocs!(flight_id)
+      assert %Flight{} = flight
+      assert %Flight{user: %Accounts.User{}} = flight
+      assert %Flight{depart_airport: %Transport.Airport{}} = flight
+      assert %Flight{arrive_airport: %Transport.Airport{}} = flight
     end
 
     test "create_flight/1 with valid data creates a flight" do
       user = insert(:user)
-      params = params_for(:flight)
+      params = params_with_assocs(:flight)
       assert {:ok, %Flight{} = flight} = Travel.create_flight(user, params)
       assert flight.flight_code == params.flight_code
     end
