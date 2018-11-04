@@ -16,7 +16,7 @@ defmodule Myflightmap.Travel.Flight do
     field :depart_time, :time
     field :arrive_date, :date
     field :arrive_time, :time
-    field :distance, :integer
+    field :distance, :float
     field :duration, :integer
     field :aircraft_registration, :string
     field :confirmation_number, :string
@@ -44,21 +44,7 @@ defmodule Myflightmap.Travel.Flight do
     |> foreign_key_constraint(:arrive_airport_id)
     |> foreign_key_constraint(:aircraft_type_id)
     |> foreign_key_constraint(:airline_id)
-    |> put_calculated_distance()
     |> validate_number(:distance, greater_than_or_equal_to: 0)
     |> validate_number(:duration, greater_than_or_equal_to: 0)
-  end
-
-  def put_calculated_distance(changeset) do
-    changed_airports = {get_change(changeset, :depart_airport), get_change(changeset, :arrive_airport)}
-
-    case changed_airports do
-      {nil, nil} -> changeset
-      {dep_ap, arr_ap} ->
-        dep_ap = dep_ap || get_field(changeset, :depart_airport)
-        arr_ap = arr_ap || get_field(changeset, :arrive_airport)
-        distance = Geo.haversine(dep_ap.coordinates, arr_ap.coordinates)
-        put_change(changeset, :distance, distance)
-    end
   end
 end

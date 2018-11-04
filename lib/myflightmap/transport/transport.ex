@@ -213,6 +213,18 @@ defmodule Myflightmap.Transport do
     Airport.changeset(airport, %{})
   end
 
+  def distance_between_airports(airport_1_id, airport_2_id)
+    when is_integer(airport_1_id) and is_integer(airport_2_id) do
+
+    airport_1 = get_airport!(airport_1_id)
+    airport_2 = get_airport!(airport_2_id)
+
+    distance_between_airports(airport_1, airport_2)
+  end
+  def distance_between_airports(%Airport{coordinates: c1}, %Airport{coordinates: c2}) do
+    Geo.haversine(c1, c2)
+  end
+
   alias Myflightmap.Transport.AircraftType
 
   @doc """

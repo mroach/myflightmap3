@@ -45,4 +45,14 @@ defmodule MyflightmapWeb.FlightView do
   def format_offset(0), do: nil
   def format_offset(num) when num < 0, do: "-#{num}"
   def format_offset(num) when num > 0, do: "+#{num}"
+
+  def format_distance(radians, units \\ :km)
+  def format_distance(radians, units) when is_number(radians) do
+    whole_units =
+      radians
+      |> Geo.radians_to(units)
+      |> trunc
+    "#{whole_units} #{units}"
+  end
+  def format_distance(_, _), do: nil
 end

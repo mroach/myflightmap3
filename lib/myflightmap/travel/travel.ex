@@ -4,10 +4,12 @@ defmodule Myflightmap.Travel do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Changeset
   alias Myflightmap.Repo
 
   alias Myflightmap.Travel.Trip
   alias Myflightmap.Accounts.User
+  alias Myflightmap.Transport
 
   @doc """
   Returns the list of trips with the `user` preloaded.
@@ -165,6 +167,7 @@ defmodule Myflightmap.Travel do
   def create_flight(%User{} = user, attrs \\ %{}) do
     %Flight{user: user}
     |> Flight.changeset(attrs)
+    |> put_calculated_flight_distance()
     |> Repo.insert()
   end
 
@@ -183,8 +186,23 @@ defmodule Myflightmap.Travel do
   def update_flight(%Flight{} = flight, attrs) do
     flight
     |> Flight.changeset(attrs)
+    |> put_calculated_flight_distance()
     |> Repo.update()
   end
+
+  defp put_calculated_flight_distance(%{valid?: true} = changeset) do
+    with airport_1_id when is_integer(airport_1_id) <- get_field(changeset, :depart_airport_id),
+         airport_2_id when is_integer(airport_2_id) <- get_field(changeset, :arrive_airport_id)
+         do
+          distance = Transport.distance_between_airports(airport_1_id, airport_2_id)
+
+          changeset
+          |> put_change(:distance, distance)
+      else
+        _ -> changeset
+    end
+  end
+  defp put_calculated_flight_distance(changeset), do: changeset
 
   @doc """
   Deletes a Flight.

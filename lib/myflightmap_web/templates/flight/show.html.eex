@@ -48,7 +48,7 @@
 
   <li>
     <strong>Distance:</strong>
-    <%= @flight.distance %>
+    <%= format_distance(@flight.distance) %>
   </li>
 
   <li>

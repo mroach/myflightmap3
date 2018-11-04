@@ -16,8 +16,8 @@ defmodule Myflightmap.Repo.Migrations.CreateFlights do
       add :seat_class, :string
       add :seat, :string
       add :aircraft_registration, :string
-      add :duration, :integer
-      add :distance, :integer
+      add :duration, :integer, comment: "Duration in minutes"
+      add :distance, :float, comment: "Distance in radians"
       add :confirmation_number, :string
       add :aircraft_type_id, references(:aircraft_types, on_delete: :restrict)
 

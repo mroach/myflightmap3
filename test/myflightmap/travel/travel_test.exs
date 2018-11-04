@@ -105,8 +105,11 @@ defmodule Myflightmap.TravelTest do
       assert %Ecto.Changeset{} = Travel.change_flight(flight)
     end
 
-    test "change_flight/1 with changed airports recalculates the distance" do
-      flight = insert(:flight)
+    test "create_flight/1 with changed airports recalculates the distance" do
+      user = insert(:user)
+      params = params_with_assocs(:flight)
+      assert {:ok, %Flight{} = f} = Travel.create_flight(user, params)
+      assert f.distance > 0
     end
   end
 end
