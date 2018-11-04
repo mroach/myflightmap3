@@ -1,12 +1,13 @@
 defmodule MyflightmapWeb.FlightView do
   use MyflightmapWeb, :view
   import MyflightmapWeb.Helpers.DateTimeHelpers
+  alias Myflightmap.Transport
   alias Myflightmap.Transport.Airport
   alias Myflightmap.Travel.Flight
 
-  def airport_options, do: Myflightmap.Transport.list_airport_options
-  def airline_options, do: Myflightmap.Transport.list_airline_options
-  def aircraft_type_options, do: Myflightmap.Transport.list_aircraft_type_options
+  def airport_options, do: Transport.list_airport_options
+  def airline_options, do: Transport.list_airline_options
+  def aircraft_type_options, do: Transport.list_aircraft_type_options
   def seat_class_options do
     [
       {"Economy", "economy"},

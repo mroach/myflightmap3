@@ -1,4 +1,8 @@
 defmodule Myflightmap.Travel.Flight do
+  @moduledoc """
+  A flight owned by a user.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   alias Myflightmap.Accounts.User

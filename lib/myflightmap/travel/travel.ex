@@ -7,9 +7,9 @@ defmodule Myflightmap.Travel do
   import Ecto.Changeset
   alias Myflightmap.Repo
 
-  alias Myflightmap.Travel.Trip
   alias Myflightmap.Accounts.User
   alias Myflightmap.Transport
+  alias Myflightmap.Travel.Trip
 
   @doc """
   Returns the list of trips with the `user` preloaded.

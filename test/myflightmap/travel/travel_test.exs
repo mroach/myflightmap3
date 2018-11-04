@@ -1,9 +1,9 @@
 defmodule Myflightmap.TravelTest do
   use Myflightmap.DataCase
 
+  alias Myflightmap.Accounts
   alias Myflightmap.Transport
   alias Myflightmap.Travel
-  alias Myflightmap.Accounts
   import Myflightmap.Factory
 
   describe "trips" do
