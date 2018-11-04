@@ -37,3 +37,25 @@ header > nav > a {
 .airport.name {
   text-align: center
 }
+
+.alert {
+  color: #F7F8F9;
+}
+
+.alert:not(:empty) { padding: 0.4em }
+
+.alert--success {
+  background-color: #5ACa75;
+}
+
+.alert--warning {
+  background-color: #FF8F39;
+}
+
+.alert--info {
+  background-color: #89A7E0;
+}
+
+.alert--error {
+  background-color: #F48989;
+}
