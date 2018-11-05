@@ -51,7 +51,7 @@ db_config =
   [
     username: System.get_env("DB_USER"),
     password: System.get_env("DB_PASS"),
-    database: System.get_env("DB_NAME") || "myflightmap_test",
+    database: System.get_env("DB_NAME") || "myflightmap_dev",
     hostname: System.get_env("DB_HOST") || "localhost",
     pool_size: 10
   ]
