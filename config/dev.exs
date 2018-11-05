@@ -47,9 +47,14 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :myflightmap, Myflightmap.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "myflightmap_dev",
-  hostname: "localhost",
-  pool_size: 10
+db_config =
+  [
+    username: System.get_env("DB_USER"),
+    password: System.get_env("DB_PASS"),
+    database: System.get_env("DB_NAME") || "myflightmap_test",
+    hostname: System.get_env("DB_HOST") || "localhost",
+    pool_size: 10
+  ]
+  |> Enum.reject(fn {_, val} -> is_nil(val) end)
+
+config :myflightmap, Myflightmap.Repo, db_config
