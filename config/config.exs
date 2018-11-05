@@ -22,6 +22,8 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+config :phoenix, :json_library, Jason
+
 # In dev env, use `mix test.watch` to automatically run tests and credo
 # every time a file is saved. Faster TDD response cycle.
 if Mix.env == :dev do
