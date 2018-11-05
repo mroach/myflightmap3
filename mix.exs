@@ -33,13 +33,14 @@ defmodule Myflightmap.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.4"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
-      {:postgrex, ">= 0.0.0"},
+      {:ecto_sql, "~> 3.0"},
+      {:phoenix, "~> 1.4.0-rc.3", override: true},
+      {:phoenix_ecto, "~> 4.0"},
       {:phoenix_html, "~> 2.10"},
+      {:phoenix_pubsub, "~> 1.0"},
+      {:plug_cowboy, "~> 2.0"},
+      {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
       {:countries, "~> 1.5"},
       # Date/time parsing and formatting. TImezone conversions.
       {:timex, "~> 3.1"},
