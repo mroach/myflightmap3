@@ -6,6 +6,7 @@ defmodule Myflightmap.Travel.Flight do
   use Ecto.Schema
   import Ecto.Changeset
   alias Myflightmap.Accounts.User
+  alias Myflightmap.Transport
   alias Myflightmap.Transport.{AircraftType, Airline, Airport}
   alias Myflightmap.Travel.Trip
 
@@ -34,7 +35,7 @@ defmodule Myflightmap.Travel.Flight do
   @writable_attributes [
     :trip_id, :airline_id, :depart_airport_id, :arrive_airport_id, :aircraft_type_id,
     :flight_code, :depart_date, :depart_time, :arrive_date, :arrive_time,
-    :seat_class, :seat, :aircraft_registration, :duration, :confirmation_number
+    :seat_class, :seat, :aircraft_registration, :confirmation_number
   ]
 
   @doc false
@@ -50,5 +51,59 @@ defmodule Myflightmap.Travel.Flight do
     |> foreign_key_constraint(:airline_id)
     |> validate_number(:distance, greater_than_or_equal_to: 0)
     |> validate_number(:duration, greater_than_or_equal_to: 0)
+  end
+
+  def change_duration(flight) do
+    change(flight, duration: calculated_duration(flight))
+  end
+
+  def change_distance(flight) do
+    change(flight, distance: calculated_distance(flight))
+  end
+
+  def calculated_duration(%__MODULE__{} = flight) do
+    with %DateTime{} = depart_at <- depart_at(flight),
+         %DateTime{} = arrive_at <- arrive_at(flight)
+      do
+        Timex.diff(arrive_at, depart_at, :minutes)
+      else
+        _ -> nil
+      end
+  end
+
+  def calculated_distance(%__MODULE__{} = flight) do
+    with %Airport{} = depart_airport <- flight.depart_airport,
+         %Airport{} = arrive_airport <- flight.arrive_airport
+    do
+      Transport.distance_between_airports(depart_airport, arrive_airport)
+    else
+      _ -> nil
+    end
+  end
+
+  @doc """
+  Full `DateTime` of the departure. Only available when the date, time, and
+  departure airport are set on the flight. Otherwise, `nil`.
+  """
+  def depart_at(%__MODULE__{} = flight), do: movement_date_time(flight, :depart)
+
+  @doc """
+  Full `DateTime` of the arrival. Only available when the date, time, and
+  arrival airport are set on the flight. Otherwise, `nil`.
+  """
+  def arrive_at(%__MODULE__{} = flight), do: movement_date_time(flight, :arrive)
+
+  defp movement_date_time(%__MODULE__{} = flight, movement)
+    when movement in [:depart, :arrive] do
+
+    with %Date{} = date <- Map.get(flight, :"#{movement}_date"),
+         %Time{} = time <- Map.get(flight, :"#{movement}_time"),
+         %Airport{} = airport <- Map.get(flight, :"#{movement}_airport"),
+         {:ok, datetime} = _ <- NaiveDateTime.new(date, time)
+    do
+      Timex.to_datetime(datetime, airport.timezone)
+    else
+      _ -> nil
+    end
   end
 end

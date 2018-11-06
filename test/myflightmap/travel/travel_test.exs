@@ -80,9 +80,11 @@ defmodule Myflightmap.TravelTest do
 
     test "create_flight/1 with valid data creates a flight" do
       user = insert(:user)
-      params = params_with_assocs(:flight)
+      params = params_with_assocs(:flight) |> with_arrival_time
       assert {:ok, %Flight{} = flight} = Travel.create_flight(user, params)
       assert flight.flight_code == params.flight_code
+      assert flight.distance != nil
+      assert flight.duration != nil
     end
 
     test "create_flight/1 with invalid data returns error changeset" do

@@ -1,12 +1,12 @@
 <div class="row">
   <div class="column">
-    <div class="airline_name"><%= @flight.airline.name %></div>
-  </div>
-  <div class="column">
     <div class="flight_code"><%= @flight.flight_code %></div>
   </div>
   <div class="column">
     <%= date_time_format @flight.depart_date, "%d %B %Y" %>
+  </div>
+  <div class="column">
+    <div class="airline_name"><%= @flight.airline.name %></div>
   </div>
 </div>
 <div class="row">

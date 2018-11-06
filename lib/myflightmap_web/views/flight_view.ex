@@ -72,4 +72,7 @@ defmodule MyflightmapWeb.FlightView do
   def format_duration({hours, minutes, _, _}) do
     "#{hours} hr #{minutes} min"
   end
+
+  def airline(nil), do: nil
+  def airline(%{name: name}), do: name
 end

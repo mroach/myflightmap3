@@ -4,12 +4,11 @@ defmodule Myflightmap.Travel do
   """
 
   import Ecto.Query, warn: false
-  import Ecto.Changeset
+  alias Ecto.Changeset
+  alias Ecto.Multi
   alias Myflightmap.Repo
 
   alias Myflightmap.Accounts.User
-  alias Myflightmap.FlightDuration
-  alias Myflightmap.Transport
   alias Myflightmap.Travel.Trip
 
   @doc """
@@ -166,11 +165,14 @@ defmodule Myflightmap.Travel do
 
   """
   def create_flight(%User{} = user, attrs \\ %{}) do
-    %Flight{user: user}
-    |> Flight.changeset(attrs)
-    |> put_calculated_flight_distance()
-    |> put_calculated_flight_duration()
-    |> Repo.insert()
+    Multi.new
+    |> Multi.insert(:flight, Flight.changeset(%Flight{user: user}, attrs))
+    |> Multi.update(:calculated, &update_flight_calculations/1)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{calculated: calculated}} -> {:ok, calculated}
+      {:error, _, changeset, _} -> {:error, changeset}
+    end
   end
 
   @doc """
@@ -186,34 +188,23 @@ defmodule Myflightmap.Travel do
 
   """
   def update_flight(%Flight{} = flight, attrs) do
+    Multi.new
+    |> Multi.update(:flight, Flight.changeset(flight, attrs))
+    |> Multi.update(:calculated, &update_flight_calculations/1)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{calculated: calculated}} -> {:ok, calculated}
+      {:error, _, changeset, _} -> {:error, changeset}
+    end
+  end
+
+  defp update_flight_calculations(%{flight: flight}) do
+    flight = Repo.preload(flight, [:depart_airport, :arrive_airport])
     flight
-    |> Flight.changeset(attrs)
-    |> put_calculated_flight_distance()
-    |> put_calculated_flight_duration()
-    |> Repo.update()
+    |> Changeset.change
+    |> Changeset.put_change(:duration, Flight.calculated_duration(flight))
+    |> Changeset.put_change(:distance, Flight.calculated_distance(flight))
   end
-
-  defp put_calculated_flight_distance(%{valid?: true} = changeset) do
-    with airport_1_id when is_integer(airport_1_id) <- get_field(changeset, :depart_airport_id),
-         airport_2_id when is_integer(airport_2_id) <- get_field(changeset, :arrive_airport_id)
-         do
-          distance = Transport.distance_between_airports(airport_1_id, airport_2_id)
-
-          changeset
-          |> put_change(:distance, distance)
-      else
-        _ -> changeset
-    end
-  end
-  defp put_calculated_flight_distance(changeset), do: changeset
-
-  defp put_calculated_flight_duration(%{valid?: true} = changeset) do
-    case FlightDuration.from_changeset(changeset) do
-      duration when is_number(duration) -> put_change(changeset, :duration, duration)
-      _ -> changeset
-    end
-  end
-  defp put_calculated_flight_duration(changeset), do: changeset
 
   @doc """
   Deletes a Flight.

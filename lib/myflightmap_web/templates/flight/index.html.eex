@@ -9,20 +9,31 @@
       <th>Date</th>
       <th>Flight code</th>
       <th>Route</th>
-      <th>Airline</th>
+      <th>Duration, Distance</th>
     </tr>
   </thead>
   <tbody>
 <%= for flight <- @flights do %>
     <tr>
       <td><%= link flight.user_id, to: user_path(@conn, :show, flight.user_id) %>
-      <td><%= date_time_format flight.depart_date, "%Y-%m-%d" %></td>
-      <td><%= link flight.flight_code, to: flight_path(@conn, :show, flight) %></td>
       <td>
-        <%= flight.depart_airport.iata_code %> - <%= flight.arrive_airport.iata_code %>
-        <div>(<%= airport_name(flight.depart_airport) %> - <%= airport_name(flight.arrive_airport) %>)</div>
+        <%= date_time_format flight.depart_date, "%Y-%m-%d" %>
+        <div>
+          <%= date_time_format flight.depart_time, "%H:%M" %> -
+          <%= date_time_format flight.arrive_time, "%H:%M" %> <%= date_offset(flight) %>
+        </div>
       </td>
-      <td><%= flight.airline.name %></td>
+      <td>
+        <%= link flight.flight_code, to: flight_path(@conn, :show, flight) %>
+        <div><%= airline(flight.airline) %></div>
+      </td>
+      <td>
+        <%= airport_name(flight.depart_airport) %> - <%= airport_name(flight.arrive_airport) %>
+      </td>
+      <td>
+        <div><%= format_duration(flight.duration) %></div>
+        <div><%= format_distance(flight.distance) %></div>
+      </td>
     </tr>
 <% end %>
   </tbody>

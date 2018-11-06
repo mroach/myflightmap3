@@ -4,6 +4,7 @@ defmodule Myflightmap.FlightFactory do
   """
 
   import CommonValueFactory
+  alias Myflightmap.Travel.Flight
 
   defmacro __using__(_opts) do
     quote do
@@ -12,7 +13,7 @@ defmodule Myflightmap.FlightFactory do
 
       def flight_factory do
         airline = insert(:airline)
-        %Myflightmap.Travel.Flight{
+        %Flight{
           user: build(:user),
           depart_airport: build(:airport),
           arrive_airport: build(:airport),
@@ -29,6 +30,14 @@ defmodule Myflightmap.FlightFactory do
             second: 0
           }
         }
+      end
+
+      def with_arrival_time(%{depart_date: date, depart_time: time} = flight) do
+        # between 45 mins and 18 hours
+        duration_seconds = Enum.random(45..1080) * 60
+        flight
+        |> Map.put(:arrive_date, date)
+        |> Map.put(:arrive_time, Time.add(time, duration_seconds))
       end
     end
   end
