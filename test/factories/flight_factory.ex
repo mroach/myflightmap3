@@ -13,10 +13,11 @@ defmodule Myflightmap.FlightFactory do
 
       def flight_factory do
         airline = insert(:airline)
+        airport = build(:airport)
         %Flight{
           user: build(:user),
-          depart_airport: build(:airport),
-          arrive_airport: build(:airport),
+          depart_airport: airport,
+          arrive_airport: build(:airport, timezone: airport.timezone),
           airline: airline,
           flight_code: flight_code(airline.iata_code),
           depart_date: %Date{
@@ -35,9 +36,13 @@ defmodule Myflightmap.FlightFactory do
       def with_arrival_time(%{depart_date: date, depart_time: time} = flight) do
         # between 45 mins and 18 hours
         duration_seconds = Enum.random(45..1080) * 60
+
+        {:ok, depart_at} = NaiveDateTime.new(date, time)
+        arrive_at = NaiveDateTime.add(depart_at, duration_seconds)
+
         flight
-        |> Map.put(:arrive_date, date)
-        |> Map.put(:arrive_time, Time.add(time, duration_seconds))
+        |> Map.put(:arrive_date, NaiveDateTime.to_date(arrive_at))
+        |> Map.put(:arrive_time, NaiveDateTime.to_time(arrive_at))
       end
     end
   end
