@@ -177,6 +177,7 @@ defmodule Myflightmap.Travel do
     Multi.new
     |> Multi.insert(:flight, Flight.changeset(%Flight{user: user}, attrs))
     |> Multi.update(:calculated, &update_flight_calculations/1)
+    |> Multi.update(:trip_dates, &update_trip_dates/1)
     |> Repo.transaction()
     |> case do
       {:ok, %{calculated: calculated}} -> {:ok, calculated}
@@ -200,6 +201,7 @@ defmodule Myflightmap.Travel do
     Multi.new
     |> Multi.update(:flight, Flight.changeset(flight, attrs))
     |> Multi.update(:calculated, &update_flight_calculations/1)
+    |> Multi.update(:trip_dates, &update_trip_dates/1)
     |> Repo.transaction()
     |> case do
       {:ok, %{calculated: calculated}} -> {:ok, calculated}
@@ -212,6 +214,32 @@ defmodule Myflightmap.Travel do
     flight
     |> Flight.change_duration(Flight.calculated_duration(flight))
     |> Flight.change_distance(Flight.calculated_distance(flight))
+  end
+
+  # After adding or updating a flight, re-calculate the start and end dates
+  # on the related trip and update the trip
+  defp update_trip_dates(%{flight: flight}) do
+    with %{trip: %Trip{} = trip} <- Repo.preload(flight, [:trip]),
+         {start_date, end_date} <- get_trip_dates(trip)
+    do
+      trip
+      |> Changeset.change(start_date: start_date)
+      |> Changeset.change(end_date: end_date)
+    else
+      _ -> %{}
+    end
+  end
+
+  @doc """
+  Fetch the start and end dates of a trip based on the flights' departure and
+  arrival dates.
+  """
+  def get_trip_dates(%Trip{id: trip_id}), do: get_trip_dates(trip_id)
+  def get_trip_dates(trip_id) when is_integer(trip_id) do
+    query = from f in Flight,
+            where: f.trip_id == ^trip_id,
+            select: {min(f.depart_date), max(f.arrive_date)}
+    Repo.one(query)
   end
 
   @doc """
