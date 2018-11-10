@@ -49,16 +49,18 @@ defmodule Myflightmap.Travel.Flight do
     |> foreign_key_constraint(:arrive_airport_id)
     |> foreign_key_constraint(:aircraft_type_id)
     |> foreign_key_constraint(:airline_id)
-    |> validate_number(:distance, greater_than_or_equal_to: 0)
-    |> validate_number(:duration, greater_than_or_equal_to: 0)
   end
 
   def change_duration(flight) do
-    change(flight, duration: calculated_duration(flight))
+    flight
+    |> change(duration: calculated_duration(flight))
+    |> validate_number(:duration, greater_than_or_equal_to: 0)
   end
 
   def change_distance(flight) do
-    change(flight, distance: calculated_distance(flight))
+    flight
+    |> change(distance: calculated_distance(flight))
+    |> validate_number(:distance, greater_than_or_equal_to: 0)
   end
 
   def calculated_duration(%__MODULE__{} = flight) do

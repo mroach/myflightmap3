@@ -44,6 +44,40 @@ defmodule MyflightmapWeb.FlightView do
     format_offset(Date.diff(ad, dd))
   end
 
+  def timezone_change(%Flight{} = flight) do
+    with %DateTime{} = depart_at <- Flight.depart_at(flight),
+         %DateTime{} = arrive_at <- Flight.arrive_at(flight)
+    do
+      time_difference(arrive_at, depart_at)
+    else
+      _ -> nil
+    end
+  end
+  def time_difference(%DateTime{} = t1, %DateTime{} = t2) do
+    (t1.utc_offset + t1.std_offset) - (t2.utc_offset + t2.std_offset)
+  end
+  def format_timechange(0), do: nil
+  def format_timechange(nil), do: nil
+  def format_timechange(change) when is_integer(change) and change > 0 do
+    change
+    |> Duration.from_seconds
+    |> Duration.to_clock
+    |> format_timechange
+    |> (fn s -> "+" <> s end).()
+  end
+  def format_timechange(change) when is_integer(change) and  change < 0 do
+    change
+    |> Kernel.abs
+    |> Duration.from_seconds
+    |> Duration.to_clock
+    |> format_timechange
+    |> (fn s -> "-" <> s end).()
+  end
+  def format_timechange({0, 0, _, _}), do: nil
+  def format_timechange({0, mins, _, _}), do: "#{mins}m"
+  def format_timechange({hrs, 0, _, _}), do: "#{hrs}h"
+  def format_timechange({hrs, mins, _, _}), do: "#{hrs}h #{mins}m"
+
   def format_offset(0), do: nil
   def format_offset(num) when num < 0, do: "-#{num}"
   def format_offset(num) when num > 0, do: "+#{num}"
