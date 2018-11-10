@@ -177,7 +177,7 @@ defmodule Myflightmap.Travel do
     Multi.new
     |> Multi.insert(:flight, Flight.changeset(%Flight{user: user}, attrs))
     |> Multi.update(:calculated, &update_flight_calculations/1)
-    |> Multi.update(:trip_dates, &update_trip_dates/1)
+    |> Multi.run(:trip_dates, &update_trip_dates/2)
     |> Repo.transaction()
     |> case do
       {:ok, %{calculated: calculated}} -> {:ok, calculated}
@@ -201,7 +201,7 @@ defmodule Myflightmap.Travel do
     Multi.new
     |> Multi.update(:flight, Flight.changeset(flight, attrs))
     |> Multi.update(:calculated, &update_flight_calculations/1)
-    |> Multi.update(:trip_dates, &update_trip_dates/1)
+    |> Multi.run(:trip_dates, &update_trip_dates/2)
     |> Repo.transaction()
     |> case do
       {:ok, %{calculated: calculated}} -> {:ok, calculated}
@@ -218,15 +218,16 @@ defmodule Myflightmap.Travel do
 
   # After adding or updating a flight, re-calculate the start and end dates
   # on the related trip and update the trip
-  defp update_trip_dates(%{flight: flight}) do
+  defp update_trip_dates(repo, %{flight: flight}) do
     with %{trip: %Trip{} = trip} <- Repo.preload(flight, [:trip]),
          {start_date, end_date} <- get_trip_dates(trip)
     do
       trip
       |> Changeset.change(start_date: start_date)
       |> Changeset.change(end_date: end_date)
+      |> repo.update
     else
-      _ -> %{}
+      _ -> {:ok, :noop}
     end
   end
 
@@ -255,7 +256,14 @@ defmodule Myflightmap.Travel do
 
   """
   def delete_flight(%Flight{} = flight) do
-    Repo.delete(flight)
+    Multi.new
+    |> Multi.delete(:flight, flight)
+    |> Multi.run(:trip_dates, &update_trip_dates/2)
+    |> Repo.transaction
+    |> case do
+      {:ok, %{flight: flight}} -> {:ok, flight}
+      {:error, _, changeset, _} -> {:error, changeset}
+    end
   end
 
   @doc """
