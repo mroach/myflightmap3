@@ -201,9 +201,8 @@ defmodule Myflightmap.Travel do
   defp update_flight_calculations(%{flight: flight}) do
     flight = Repo.preload(flight, [:depart_airport, :arrive_airport])
     flight
-    |> Changeset.change
-    |> Changeset.put_change(:duration, Flight.calculated_duration(flight))
-    |> Changeset.put_change(:distance, Flight.calculated_distance(flight))
+    |> Flight.change_duration(Flight.calculated_duration(flight))
+    |> Flight.change_distance(Flight.calculated_distance(flight))
   end
 
   @doc """

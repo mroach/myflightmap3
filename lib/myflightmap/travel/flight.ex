@@ -51,15 +51,15 @@ defmodule Myflightmap.Travel.Flight do
     |> foreign_key_constraint(:airline_id)
   end
 
-  def change_duration(flight) do
+  def change_duration(flight, duration) do
     flight
-    |> change(duration: calculated_duration(flight))
+    |> change(duration: duration)
     |> validate_number(:duration, greater_than_or_equal_to: 0)
   end
 
-  def change_distance(flight) do
+  def change_distance(flight, distance) do
     flight
-    |> change(distance: calculated_distance(flight))
+    |> change(distance: distance)
     |> validate_number(:distance, greater_than_or_equal_to: 0)
   end
 
