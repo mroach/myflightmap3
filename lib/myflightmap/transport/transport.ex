@@ -23,7 +23,11 @@ defmodule Myflightmap.Transport do
   end
 
   def list_airline_options do
-    from(a in Airline, order_by: a.iata_code, select: {a.id, a.iata_code, a.name})
+    query = from a in Airline,
+            order_by: a.iata_code,
+            select: {a.id, a.iata_code, a.name}
+
+    query
     |> Repo.all
     |> Enum.map(fn {id, iata, name} -> {"#{iata} #{name}", id} end)
   end
@@ -127,7 +131,9 @@ defmodule Myflightmap.Transport do
   end
 
   def list_airport_options do
-    from(a in Airport, select: {a.id, a.common_name, a.iata_code})
+    query = from a in Airport, select: {a.id, a.common_name, a.iata_code}
+
+    query
     |> Repo.all
     |> Enum.map(fn {id, name, iata} -> {"#{name} (#{iata})", id} end)
   end
@@ -243,8 +249,8 @@ defmodule Myflightmap.Transport do
   end
 
   def list_aircraft_type_options do
-    from(a in AircraftType, order_by: a.description, select: {a.description, a.id})
-    |> Repo.all
+    query = from a in AircraftType, order_by: a.description, select: {a.description, a.id}
+    Repo.all(query)
   end
 
   @doc """

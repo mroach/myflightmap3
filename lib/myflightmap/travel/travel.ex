@@ -31,8 +31,8 @@ defmodule Myflightmap.Travel do
   """
   def list_trip_options(%User{id: user_id}), do: list_trip_options(user_id)
   def list_trip_options(user_id) when is_integer(user_id) do
-    from(t in Trip, where: t.user_id == ^user_id, select: {t.name, t.id})
-    |> Repo.all
+    query = from t in Trip, where: t.user_id == ^user_id, select: {t.name, t.id}
+    Repo.all(query)
   end
 
   @doc """
@@ -130,8 +130,8 @@ defmodule Myflightmap.Travel do
 
   """
   def list_flights do
-    from(f in Flight, order_by: [desc: f.depart_date])
-    |> Repo.all
+    query = from f in Flight, order_by: [desc: f.depart_date]
+    Repo.all(query)
   end
 
   def list_flights_with_assocs do
