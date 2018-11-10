@@ -2,13 +2,16 @@ defmodule MyflightmapWeb.FlightView do
   use MyflightmapWeb, :view
   import MyflightmapWeb.Helpers.DateTimeHelpers
   alias Myflightmap.Transport
-  alias Myflightmap.Transport.Airport
+  alias Myflightmap.Transport.{AircraftType, Airport}
   alias Myflightmap.Travel.Flight
   alias Timex.Duration
 
   def airport_options, do: Transport.list_airport_options
+
   def airline_options, do: Transport.list_airline_options
+
   def aircraft_type_options, do: Transport.list_aircraft_type_options
+
   def seat_class_options do
     [
       {"Economy", "economy"},
@@ -28,6 +31,9 @@ defmodule MyflightmapWeb.FlightView do
       _ -> nil
     end
   end
+
+  def aircraft_type(%AircraftType{description: desc}) when is_binary(desc), do: desc
+  def aircraft_type(_), do: nil
 
   @doc """
   Provide an unambiguous name for the airport. If a `metro_code` is present

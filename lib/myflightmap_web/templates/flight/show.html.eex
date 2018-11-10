@@ -37,7 +37,8 @@
   </li>
 
   <li>
-    <strong>Aircraft registration:</strong>
+    <strong>Aircraft:</strong>
+    <%= aircraft_type(@flight.aircraft_type) %>
     <%= @flight.aircraft_registration %>
   </li>
 
