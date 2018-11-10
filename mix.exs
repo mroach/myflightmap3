@@ -34,7 +34,7 @@ defmodule Myflightmap.Mixfile do
   defp deps do
     [
       {:ecto_sql, "~> 3.0"},
-      {:phoenix, "~> 1.4.0-rc.3", override: true},
+      {:phoenix, "~> 1.4.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_pubsub, "~> 1.0"},
@@ -48,7 +48,7 @@ defmodule Myflightmap.Mixfile do
       {:sweet_xml, "~> 0.6.5"},
 
       # limited envs:
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
       {:ex_machina, "~> 2.2", only: :test},
