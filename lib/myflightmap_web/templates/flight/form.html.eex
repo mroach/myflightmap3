@@ -77,13 +77,18 @@
   <div class="row">
     <div class="column">
       <%= label f, :aircraft_type_id %>
-      <%= select f, :aircraft_type_id, aircraft_type_options(), prompt: "-- Pick" %>
+      <%= select f, :aircraft_type_id, aircraft_type_options(), prompt: "-- Pick --" %>
       <%= error_tag f, :aircraft_type_id %>
     </div>
     <div class="column">
       <%= label f, :aircraft_registration %>
       <%= text_input f, :aircraft_registration %>
       <%= error_tag f, :aircraft_registration %>
+    </div>
+    <div class="column">
+      <%= label f, :trip_id %>
+      <%= select f, :trip_id, trip_options(@conn.assigns.current_user), prompt: "-- Pick --" %>
+      <%= error_tag f, :trip_id %>
     </div>
   </div>
 

@@ -3,6 +3,7 @@ defmodule MyflightmapWeb.FlightView do
   import MyflightmapWeb.Helpers.DateTimeHelpers
   alias Myflightmap.Transport
   alias Myflightmap.Transport.{AircraftType, Airport}
+  alias Myflightmap.Travel
   alias Myflightmap.Travel.Flight
   alias Timex.Duration
 
@@ -11,6 +12,8 @@ defmodule MyflightmapWeb.FlightView do
   def airline_options, do: Transport.list_airline_options
 
   def aircraft_type_options, do: Transport.list_aircraft_type_options
+
+  def trip_options(user), do: Travel.list_trip_options(user)
 
   def seat_class_options do
     [

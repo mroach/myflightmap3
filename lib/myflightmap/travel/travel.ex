@@ -27,6 +27,15 @@ defmodule Myflightmap.Travel do
   end
 
   @doc """
+  List the trips for the given user as a list that can be used for an option picker
+  """
+  def list_trip_options(%User{id: user_id}), do: list_trip_options(user_id)
+  def list_trip_options(user_id) when is_integer(user_id) do
+    from(t in Trip, where: t.user_id == ^user_id, select: {t.name, t.id})
+    |> Repo.all
+  end
+
+  @doc """
   Gets a single trip with the `user` preloaded.
 
   Raises `Ecto.NoResultsError` if the Trip does not exist.
