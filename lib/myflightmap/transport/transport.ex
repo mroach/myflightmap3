@@ -7,6 +7,21 @@ defmodule Myflightmap.Transport do
   alias Myflightmap.Repo
   alias Myflightmap.Transport.Airline
 
+  def list_seat_classes do
+    [
+      %{value: "economy", name: "Economy"},
+      %{value: "premium_economy", name: "Premium Economy"},
+      %{value: "business", name: "Business"},
+      %{value: "first", name: "First"},
+      %{value: "suites", name: "Suites"}
+    ]
+  end
+
+  def list_seat_class_options do
+    list_seat_classes()
+    |> Enum.map(fn %{value: value, name: name} -> {value, name} end )
+  end
+
   @doc """
   Returns the list of airlines.
 
