@@ -9,7 +9,9 @@ defmodule Myflightmap.Travel do
   alias Myflightmap.Repo
 
   alias Myflightmap.Accounts.User
-  alias Myflightmap.Travel.Trip
+  alias Myflightmap.Travel.{Flight, Trip}
+
+  @preload_flight_assocs [:depart_airport, :arrive_airport, :airline, :aircraft_type, :trip, :user]
 
   @doc """
   Returns the list of trips with the `user` preloaded.
@@ -50,6 +52,12 @@ defmodule Myflightmap.Travel do
 
   """
   def get_trip!(id), do: Trip |> Repo.get!(id) |> Repo.preload(:user)
+
+  def get_trip_with_assocs!(id) do
+    id
+    |> get_trip!
+    |> Repo.preload([:user, flights: @preload_flight_assocs])
+  end
 
   @doc """
   Creates a trip for the given user.
@@ -115,10 +123,6 @@ defmodule Myflightmap.Travel do
   def change_trip(%Trip{} = trip) do
     Trip.changeset(trip, %{})
   end
-
-  alias Myflightmap.Travel.Flight
-
-  @preload_flight_assocs [:depart_airport, :arrive_airport, :airline, :aircraft_type, :trip, :user]
 
   @doc """
   Returns the list of flights.

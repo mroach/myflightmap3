@@ -15,12 +15,35 @@
     <strong>Privacy:</strong>
     <%= @trip.privacy %>
   </li>
-
-  <li>
-    <strong>Created at:</strong>
-    <%= @trip.inserted_at %>
-  </li>
 </ul>
 
 <span><%= link "Edit", to: trip_path(@conn, :edit, @trip) %></span>
-<span><%= link "Back", to: trip_path(@conn, :index) %></span>
+
+<h3>Flights</h3>
+
+<table>
+<%= for flight <- @trip.flights do %>
+  <tr>
+    <td>
+      <%= link date_time_format(flight.depart_date, "%d %B"), to: flight_path(@conn, :show, flight) %>
+    </td>
+    <td>
+      <div>
+        <%= date_time_format flight.depart_time, "%H:%M" %> -
+        <%= date_time_format flight.arrive_time, "%H:%M" %> <%= formatted_arrival_day_offset(flight) %>
+      </div>
+    </td>
+    <td>
+      <%= flight.flight_code %>
+      <div><%= airline_name(flight.airline) %></div>
+    </td>
+    <td>
+      <%= depart_airport_name(flight) %> - <%= arrive_airport_name(flight) %>
+    </td>
+    <td>
+      <div><%= formatted_duration(flight) %></div>
+      <div><%= formatted_distance(flight) %></div>
+    </td>
+  </div>
+<% end %>
+</table>
