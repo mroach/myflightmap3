@@ -4,8 +4,10 @@ services:
   test:
     build:
       context: .
-      target: phoenix_test
+      target: phoenix_dev
+    command: mix test
     environment:
+      MIX_ENV: test
       DB_HOST: db
       DB_USER: app
       DB_PASS: letmein

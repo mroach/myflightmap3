@@ -14,6 +14,7 @@ COPY mix.exs mix.lock ./
 COPY config/ ./config/
 COPY lib/ ./lib
 COPY priv/ ./priv
+COPY test/ ./test
 
 RUN mix do deps.get, deps.compile
 
@@ -33,19 +34,6 @@ CMD ["mix", "phx.server"]
 
 
 ################################################################################
-# == Test
-FROM phoenix_base AS phoenix_test
-
-ENV MIX_ENV test
-
-COPY test/ ./test
-
-RUN mix compile
-
-CMD ["mix", "test"]
-
-
-################################################################################
 # == Production release builder
 #
 # This will use distillery to create a tarball of binaries and static files
@@ -54,6 +42,8 @@ CMD ["mix", "test"]
 FROM phoenix_base AS release_builder
 
 ENV MIX_ENV prod
+
+COPY rel/ ./rel
 
 RUN mix do compile, release
 
