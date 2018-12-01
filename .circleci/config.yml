@@ -16,7 +16,7 @@ jobs:
 
       - run:
           name: Run tests
-          command: docker-compose -f docker-compose.test.yml run test
+          command: docker-compose run --rm app mix test
 
       - run:
           name: Build release image

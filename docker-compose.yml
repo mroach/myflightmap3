@@ -4,7 +4,8 @@ services:
   app:
     build:
       context: .
-      target: phoenix_dev
+      target: phoenix_base
+    command: mix phx.server
     ports:
       - "4000:4000"
     environment:

@@ -8,29 +8,18 @@ FROM elixir:1.7-alpine AS phoenix_base
 
 RUN mix do local.hex --force, local.rebar --force
 
+# Need inotify for watchers to work
+RUN apk --no-cache add inotify-tools
+
 WORKDIR /app
 
 COPY mix.exs mix.lock ./
-COPY config/ ./config/
+COPY config/ ./config
 COPY lib/ ./lib
 COPY priv/ ./priv
 COPY test/ ./test
 
-RUN mix do deps.get, deps.compile
-
-
-################################################################################
-# == Development
-FROM phoenix_base AS phoenix_dev
-
-ENV MIX_ENV dev
-
-# Need inotify for watchers to work
-RUN apk --no-cache add inotify-tools
-
-RUN mix compile
-
-CMD ["mix", "phx.server"]
+RUN mix deps.get
 
 
 ################################################################################
@@ -45,7 +34,7 @@ ENV MIX_ENV prod
 
 COPY rel/ ./rel
 
-RUN mix do compile, release
+RUN mix release --env=prod
 
 
 ################################################################################
