@@ -1,0 +1,6 @@
+.git/
+_build/
+deps/
+Dockerfile
+docker-compose*.yml
+erl_crash.dump
