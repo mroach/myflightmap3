@@ -5,6 +5,9 @@ jobs:
       - image: circleci/buildpack-deps
 
     working_directory: ~/repo
+    branches:
+      only:
+        - master
     steps:
       - checkout
 
