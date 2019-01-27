@@ -1,4 +1,10 @@
 defmodule Geo do
+  @moduledoc """
+  Helper for calculating geographic distances, such as between airports.
+  The Earth isn't a perfect sphere, so the radius values used are averages
+  generally accepted for non-pinpoint accurate distance calculation.
+  """
+
   @earth_radius_km 6371
   @earth_radius_sm 3958.748
   @earth_radius_nm 3440.065
@@ -6,10 +12,18 @@ defmodule Geo do
 
   @d2r :math.pi / 180
 
+  @units [:km, :sm, :nm, :m, :ft]
+
   @doc """
   Convert degrees to radians
   """
   def deg_to_rad(deg), do: deg * @d2r
+
+  def radians_to(radians, :km), do: radians * @earth_radius_km
+  def radians_to(radians, :sm), do: radians * @earth_radius_sm
+  def radians_to(radians, :nm), do: radians * @earth_radius_nm
+  def radians_to(radians, :m), do: radians * @earth_radius_km * 1000
+  def radians_to(radians, :ft), do: radians * @earth_radius_sm * @feet_per_sm
 
   @doc """
   ## Examples:
@@ -22,11 +36,9 @@ defmodule Geo do
     iex> Geo.great_circle_distance({-23.435555, -46.473055}, {-26.133693, 28.242317}, :sm) |> Float.floor
     4622.0
   """
-  def great_circle_distance(p1, p2, :km), do: haversine(p1, p2) * @earth_radius_km
-  def great_circle_distance(p1, p2, :sm), do: haversine(p1, p2) * @earth_radius_sm
-  def great_circle_distance(p1, p2, :nm), do: haversine(p1, p2) * @earth_radius_nm
-  def great_circle_distance(p1, p2, :m), do: great_circle_distance(p1, p2, :km) * 1000
-  def great_circle_distance(p1, p2, :ft), do: great_circle_distance(p1, p2, :sm) * @feet_per_sm
+  def great_circle_distance(p1, p2, unit) when unit in(@units) do
+    radians_to(haversine(p1, p2), unit)
+  end
 
   @doc """
   Calculate the [Haversine](https://en.wikipedia.org/wiki/Haversine_formula)
