@@ -34,6 +34,7 @@ defmodule Myflightmap.Mixfile do
   defp deps do
     [
       {:ecto_sql, "~> 3.0"},
+      {:jason, "~> 1.1"},
       {:phoenix, "~> 1.4.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:phoenix_html, "~> 2.10"},
@@ -46,6 +47,7 @@ defmodule Myflightmap.Mixfile do
       {:timex, "~> 3.1"},
       # XML parser. Needed for handling Worldmate trip parsing responses
       {:sweet_xml, "~> 0.6.5"},
+      {:distillery, "~> 2.0"},
 
       # limited envs:
       {:phoenix_live_reload, "~> 1.2", only: :dev},

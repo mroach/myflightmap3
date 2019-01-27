@@ -1,20 +1,37 @@
 # Myflightmap
 
-To start your Phoenix server:
+## Running with Docker
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+This app is Dockerized so getting up and running should be easy.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+*First time:*
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+```shell
+docker-compose build
 
-## Learn more
+# fetch dependencies and prepare the database
+docker-compose run app mix do deps.get, ecto.create, ecto.migrate
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+# seed the database for development (airports, aircraft)
+docker-compose run --rm app mix run priv/repo/seeds.exs
+```
+
+*Start dev server:*
+
+```shell
+docker-compose up
+```
+
+*Run test watcher*
+
+With this running, every time you modify a file in the app, the tests will run. Similar to how Guard works with Ruby apps.
+
+```shell
+docker-compose run --rm app mix test.watch
+```
+
+*Get an IEx shell*
+
+```shell
+docker-compose run --rm app iex -S mix
+```

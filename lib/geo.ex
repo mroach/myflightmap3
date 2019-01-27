@@ -1,8 +1,8 @@
 defmodule Geo do
   @moduledoc """
-  Helper for calcualting geograhic distances, such as between airports.
+  Helper for calculating geographic distances, such as between airports.
   The Earth isn't a perfect sphere, so the radius values used are averages
-  generally accpeted for non-pinpoint accurate distance calculation.
+  generally accepted for non-pinpoint accurate distance calculation.
   """
 
   @earth_radius_km 6371

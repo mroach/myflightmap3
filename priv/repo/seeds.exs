@@ -426,7 +426,7 @@ end)
 for path <- Path.wildcard("priv/data/icao/aircraft_types/*.json") do
   path
   |> File.read!
-  |> Poison.decode!(%{keys: :atoms})
+  |> Jason.decode!(%{keys: :atoms})
   |> Enum.each(fn data ->
     attrs =
       data
