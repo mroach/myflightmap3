@@ -22,6 +22,7 @@ defmodule MyflightmapWeb.Router do
     resources "/aircraft_types", AircraftTypeController
     resources "/airlines", AirlineController
     resources "/airports", AirportController
+    resources "/flights", FlightController
     resources "/users", UserController
     resources "/trips", TripController
   end

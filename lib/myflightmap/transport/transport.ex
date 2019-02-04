@@ -7,6 +7,21 @@ defmodule Myflightmap.Transport do
   alias Myflightmap.Repo
   alias Myflightmap.Transport.Airline
 
+  def list_seat_classes do
+    [
+      %{value: "economy", name: "Economy"},
+      %{value: "premium_economy", name: "Premium Economy"},
+      %{value: "business", name: "Business"},
+      %{value: "first", name: "First"},
+      %{value: "suites", name: "Suites"}
+    ]
+  end
+
+  def list_seat_class_options do
+    list_seat_classes()
+    |> Enum.map(fn %{value: value, name: name} -> {value, name} end )
+  end
+
   @doc """
   Returns the list of airlines.
 
@@ -20,6 +35,16 @@ defmodule Myflightmap.Transport do
     Airline
     |> order_by(:name)
     |> Repo.all
+  end
+
+  def list_airline_options do
+    query = from a in Airline,
+            order_by: a.iata_code,
+            select: {a.id, a.iata_code, a.name}
+
+    query
+    |> Repo.all
+    |> Enum.map(fn {id, iata, name} -> {"#{iata} #{name}", id} end)
   end
 
   @doc """
@@ -120,6 +145,14 @@ defmodule Myflightmap.Transport do
     |> Repo.all
   end
 
+  def list_airport_options do
+    query = from a in Airport, select: {a.id, a.common_name, a.iata_code}
+
+    query
+    |> Repo.all
+    |> Enum.map(fn {id, name, iata} -> {"#{name} (#{iata})", id} end)
+  end
+
   @doc """
   Gets a single airport.
 
@@ -201,6 +234,18 @@ defmodule Myflightmap.Transport do
     Airport.changeset(airport, %{})
   end
 
+  def distance_between_airports(airport_1_id, airport_2_id)
+    when is_integer(airport_1_id) and is_integer(airport_2_id) do
+
+    airport_1 = get_airport!(airport_1_id)
+    airport_2 = get_airport!(airport_2_id)
+
+    distance_between_airports(airport_1, airport_2)
+  end
+  def distance_between_airports(%Airport{coordinates: c1}, %Airport{coordinates: c2}) do
+    Geo.haversine(c1, c2)
+  end
+
   alias Myflightmap.Transport.AircraftType
 
   @doc """
@@ -216,6 +261,11 @@ defmodule Myflightmap.Transport do
     AircraftType
     |> order_by(:icao_code)
     |> Repo.all
+  end
+
+  def list_aircraft_type_options do
+    query = from a in AircraftType, order_by: a.description, select: {a.description, a.id}
+    Repo.all(query)
   end
 
   @doc """

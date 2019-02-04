@@ -1,0 +1,14 @@
+msgid "date_time_format_default"
+msgstr "%d %b %Y %H:%M %Z"
+
+msgid "date_format_default"
+msgstr "%d %b %Y"
+
+msgid "date_format_short"
+msgstr "%d %b"
+
+msgid "time_format_default"
+msgstr "%H:%M:%S"
+
+msgid "time_format_short"
+msgstr "%H:%M"

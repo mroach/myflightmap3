@@ -108,11 +108,34 @@ airports = [
     iata_code: "LGW", icao_code: "EGKK", country: "GB", metro_code: "LON",
     coordinates: {51.148056, -0.190278}, timezone: "Europe/London",
     city: "London", common_name: "London Gatwick"
+  },
+  %Airport{
+    iata_code: "HKG", icao_code: "VHHH", country: "HK",
+    coordinates: {22.32861, 114.194167}, timezone: "Asia/Hong_Kong",
+    city: "Hong Kong", common_name: "Hong Kong Kai Tak",
+    opened_on: ~D[1925-01-01], closed_on: ~D[1998-07-06]
+  },
+  %Airport{
+    iata_code: "HKG", icao_code: "VHHH", country: "HK",
+    coordinates: {22.308889, 113.91444}, timezone: "Asia/Hong_Kong",
+    city: "Hong Kong", common_name: "Hong Kong International",
+    opened_on: ~D[1998-07-06]
+  },
+  %Airport{
+    iata_code: "BOS", icao_code: "KBOS", country: "US",
+    coordinates: {42.363056, -71.006389}, timezone: "America/New_York",
+    city: "Boston", common_name: "Boston Logan",
+    opened_on: ~D[1923-09-08]
+  },
+  %Airport{
+    iata_code: "PER", icao_code: "YPPH", country: "AU",
+    coordinates: {-31.940278, 115.966944}, timezone: "Australia/Perth",
+    city: "Perth", common_name: "Perth Airport"
   }
 ]
 
 for airport <- airports do
-  if nil == Myflightmap.Repo.get_by(Airport, Map.take(airport, [:iata_code])) do
+  if nil == Myflightmap.Repo.get_by(Airport, Map.take(airport, [:iata_code, :common_name])) do
     {:ok, _record} = airport |> Map.from_struct |> Myflightmap.Transport.create_airport
   else
     IO.puts "Airport #{airport.iata_code} already exists"

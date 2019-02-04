@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="column">
+    <div class="flight_code"><%= @flight.flight_code %></div>
+  </div>
+  <div class="column">
+    <%= date_time_format @flight.depart_date, "%d %B %Y" %>
+  </div>
+  <div class="column">
+    <div class="airline_name"><%= if @flight.airline, do: @flight.airline.name %></div>
+  </div>
+</div>
+<div class="row">
+  <div class="column">
+    <div class="airport name"><%= depart_airport_name(@flight) %></div>
+    <div class="airport iata_code"><%= @flight.depart_airport.iata_code %></div>
+  </div>
+  <div class="column">
+    <div class="airport name"><%= arrive_airport_name(@flight) %></div>
+    <div class="airport iata_code"><%= @flight.arrive_airport.iata_code %></div>
+  </div>
+</div>
+
+<ul>
+  <li>
+    <strong>Depart time:</strong>
+    <%= date_time_format @flight.depart_time, "%H:%M" %>
+  </li>
+
+  <li>
+    <strong>Arrive time:</strong>
+    <%= date_time_format @flight.arrive_time, "%H:%M" %> <%= formatted_arrival_day_offset(@flight) %>
+  </li>
+
+  <li>
+    <strong>Seat:</strong>
+    <%= @flight.seat %> <%= seat_class_name(@flight) %>
+  </li>
+
+  <li>
+    <strong>Aircraft:</strong>
+    <%= aircraft_type_name(@flight) %>
+    <%= @flight.aircraft_registration %>
+  </li>
+
+  <li>
+    <strong>Duration:</strong>
+    <%= formatted_duration(@flight) %>
+    <div><%= formatted_timechange(@flight) %></div>
+  </li>
+
+  <li>
+    <strong>Distance:</strong>
+    <%= formatted_distance(@flight) %>
+  </li>
+
+  <li>
+    <strong>Confirmation number:</strong>
+    <%= @flight.confirmation_number %>
+  </li>
+
+  <li>
+    <strong>Trip:</strong>
+    <%= if @flight.trip, do: link @flight.trip.name, to: trip_path(@conn, :show, @flight.trip.id) %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: flight_path(@conn, :edit, @flight) %></span>

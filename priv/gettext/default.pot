@@ -24,3 +24,14 @@ msgstr ""
 #: lib/myflightmap_web/templates/airport/show.html.eex:7
 msgid "ICAO Code"
 msgstr ""
+
+#, elixir-format
+#: lib/myflightmap_web/views/airport_view.ex:16
+#: lib/myflightmap_web/views/airport_view.ex:20
+msgid "Active"
+msgstr ""
+
+#, elixir-format
+#: lib/myflightmap_web/views/airport_view.ex:19
+msgid "Closed"
+msgstr ""

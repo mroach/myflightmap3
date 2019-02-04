@@ -22,13 +22,15 @@
           <%= link("Aircraft Types", to: aircraft_type_path(@conn, :index)) %>
           <%= link("Airports", to: airport_path(@conn, :index)) %>
           <%= link("Airlines", to: airline_path(@conn, :index)) %>
+          <%= link("Flights", to: flight_path(@conn, :index)) %>
           <%= link("Users", to: user_path(@conn, :index)) %>
           <%= link("Trips", to: trip_path(@conn, :index)) %>
         </nav>
       </header>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <p class="alert alert--info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert--success" role="alert"><%= get_flash(@conn, :success) %></p>
+      <p class="alert alert--warning" role="alert"><%= get_flash(@conn, :error) %></p>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>

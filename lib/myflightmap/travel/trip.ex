@@ -7,6 +7,7 @@ defmodule Myflightmap.Travel.Trip do
   use Ecto.Schema
   import Ecto.Changeset
   alias Myflightmap.Accounts.User
+  alias Myflightmap.Travel.Flight
 
   schema "trips" do
     field :name, :string
@@ -15,6 +16,7 @@ defmodule Myflightmap.Travel.Trip do
     field :start_date, :date
     field :end_date, :date
     belongs_to :user, User
+    has_many :flights, Flight
 
     timestamps()
   end

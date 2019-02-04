@@ -27,7 +27,7 @@ defmodule MyflightmapWeb.TripController do
   end
 
   def show(conn, %{"id" => id}) do
-    trip = Travel.get_trip!(id)
+    trip = Travel.get_trip_with_assocs!(id)
     render(conn, "show.html", trip: trip)
   end
 
