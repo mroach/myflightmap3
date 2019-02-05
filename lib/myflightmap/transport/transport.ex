@@ -169,6 +169,10 @@ defmodule Myflightmap.Transport do
   """
   def get_airport!(id), do: Repo.get!(Airport, id)
 
+  def get_airport_by_iata!(code), do: Repo.get_by!(Airport, iata_code: code)
+
+  def get_airport_by_icao!(code), do: Repo.get_by!(Airport, icao_code: code)
+
   @doc """
   Creates a airport.
 

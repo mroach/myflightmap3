@@ -26,7 +26,16 @@ defmodule MyflightmapWeb.AirportController do
   end
 
   def show(conn, %{"id" => id}) do
-    airport = Transport.get_airport!(id)
+    airport =
+      cond do
+        Regex.match?(~r/\A[A-Z]{3}\z/, id) ->
+          Transport.get_airport_by_iata!(id)
+        Regex.match?(~r/\A[A-Z]{4}\z/, id) ->
+          Transport.get_airport_by_icao!(id)
+        true ->
+          Transport.get_airport!(id)
+      end
+
     render(conn, "show.html", airport: airport)
   end
 
