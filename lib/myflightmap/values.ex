@@ -3,7 +3,7 @@ defmodule Myflightmap.Values do
   General/common/basic values used around the app
   """
 
-  def timezones, do: Tzdata.canonical_zone_list
+  def timezones, do: Tzdata.zone_list
 
   def country_codes, do: Countries.all |> Enum.map(&(&1.alpha2))
 end
