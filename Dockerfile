@@ -14,13 +14,13 @@ RUN apk --no-cache add inotify-tools
 WORKDIR /app
 
 COPY mix.exs mix.lock ./
+
+RUN mix do deps.get, deps.compile
+
 COPY config/ ./config
 COPY lib/ ./lib
 COPY priv/ ./priv
 COPY test/ ./test
-
-RUN mix deps.get
-
 
 ################################################################################
 # == Production release builder
