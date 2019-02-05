@@ -12,6 +12,7 @@ services:
       DB_HOST: db
       DB_USER: app
       DB_PASS: letmein
+      SITA_API_KEY: KEY_GOES_HERE
     volumes:
       - .:/app
     depends_on:
