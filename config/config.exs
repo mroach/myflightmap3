@@ -24,6 +24,8 @@ config :logger, :console,
 
 config :phoenix, :json_library, Jason
 
+config :tesla, adapter: Tesla.Adapter.Hackney
+
 # In dev env, use `mix test.watch` to automatically run tests and credo
 # every time a file is saved. Faster TDD response cycle.
 if Mix.env == :dev do

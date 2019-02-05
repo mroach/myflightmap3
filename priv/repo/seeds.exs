@@ -134,13 +134,21 @@ airports = [
   }
 ]
 
-for airport <- airports do
-  if nil == Myflightmap.Repo.get_by(Airport, Map.take(airport, [:iata_code, :common_name])) do
-    {:ok, _record} = airport |> Map.from_struct |> Myflightmap.Transport.create_airport
+OpenFlights.get_airports
+|> Stream.filter(fn ap -> ap[:iata_code] && ap[:timezone] end)
+|> Enum.each(fn airport ->
+  if nil == Myflightmap.Repo.get_by(Airport, iata_code: airport.iata_code) do
+    case Myflightmap.Transport.create_airport(airport) do
+      {:ok, _record} ->
+        IO.puts "Created #{airport.iata_code}"
+      {:error, changeset} ->
+        IO.warn "Failed to create #{airport.iata_code}"
+        IO.inspect(:stderr, changeset, label: "Changeset dump")
+    end
   else
     IO.puts "Airport #{airport.iata_code} already exists"
   end
-end
+end)
 
 aircraft_data = ~s"""
 A124	A4F	Antonov AN-124 Ruslan

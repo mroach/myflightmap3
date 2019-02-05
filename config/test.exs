@@ -21,3 +21,5 @@ db_config =
   |> Enum.reject(fn {_, val} -> is_nil(val) end)
 
 config :myflightmap, Myflightmap.Repo, db_config
+
+config :tesla, adapter: Tesla.Mock

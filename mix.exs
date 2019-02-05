@@ -48,6 +48,9 @@ defmodule Myflightmap.Mixfile do
       # XML parser. Needed for handling Worldmate trip parsing responses
       {:sweet_xml, "~> 0.6.5"},
       {:distillery, "~> 2.0"},
+      {:hackney, "~> 1.14.0"},
+      {:tesla, "~> 1.2.1"},
+      {:nimble_csv, "~> 0.3"},
 
       # limited envs:
       {:phoenix_live_reload, "~> 1.2", only: :dev},

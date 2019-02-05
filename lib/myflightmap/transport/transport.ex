@@ -130,6 +130,53 @@ defmodule Myflightmap.Transport do
 
   alias Myflightmap.Transport.Airport
 
+  def metro_codes do
+    %{
+      "BKK" => ~w[BKK DMK],
+      "BJS" => ~w[PEK NAY],
+      "OSA" => ~w[KIX ITM UKB],
+      "SPK" => ~w[CTS OKD],
+      "SEL" => ~w[ICN GMP],
+      "SHA" => ~w[SHA PVG],
+      "TYO" => ~w[NRT HND],
+      "JKT" => ~w[CGK HLP],
+      "BER" => ~w[BER TXL SXF],
+      "BUH" => ~w[OTP BBU],
+      "BRU" => ~w[BRU CRL],
+      "LON" => ~w[BHQ LCY LGW LTN LHR SEN STN],
+      "MIL" => ~w[BGY MXP LIN PMF],
+      "MOW" => ~w[SVO DME VKO BKA],
+      "OSL" => ~w[OSL TRF RYG],
+      "PAR" => ~w[CDG ORY LBG],
+      "REK" => ~w[KEF RKV],
+      "ROM" => ~w[FCO CIA],
+      "STO" => ~w[ARN NYO BMA VST],
+      "TCI" => ~w[TFN TFS],
+      "CHI" => ~w[ORD MDW RFD],
+      "DFW" => ~w[DAL DFW],
+      "DTT" => ~w[DTW DET YIP],
+      "YEA" => ~w[YEG],
+      "HOU" => ~w[IAH HOU],
+      "LAX" => ~w[LAX],
+      "QMI" => ~w[MIA FLL PBI],
+      "YMQ" => ~w[YUL YMY],
+      "NYC" => ~w[JFK EWR LGA],
+      "YTO" => ~w[YYZ YTZ YKF],
+      "WAS" => ~w[IAD DCA BWI],
+      "BHZ" => ~w[CNF PLU],
+      "BUE" => ~w[EZE AEP],
+      "RIO" => ~w[GIG SDU],
+      "SAO" => ~w[GRU CGH VCP],
+    }
+  end
+
+  def get_metro_code(iata_code) do
+    case Enum.find(metro_codes(), fn {_k, v} -> Enum.member?(v, iata_code) end) do
+      {code, _} -> code
+      _ -> nil
+    end
+  end
+
   @doc """
   Returns the list of airports.
 
