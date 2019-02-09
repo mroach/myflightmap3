@@ -20,7 +20,7 @@ defmodule Myflightmap.Mixfile do
   def application do
     [
       mod: {Myflightmap.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth_identity]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -56,8 +56,6 @@ defmodule Myflightmap.Mixfile do
       # Authentication
       {:comeonin, "~> 4.1"},
       {:bcrypt_elixir, "~> 1.0"},
-      {:ueberauth, "~> 0.4"},
-      {:ueberauth_identity, "~> 0.2"},
 
       # limited envs:
       {:phoenix_live_reload, "~> 1.2", only: :dev},
