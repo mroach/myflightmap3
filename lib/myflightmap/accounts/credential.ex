@@ -22,7 +22,7 @@ defmodule Myflightmap.Accounts.Credential do
   @doc false
   def changeset(credential, attrs) do
     credential
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :password_confirmation])
     |> update_change(:email, &normalize_email/1)
     |> validate_required([:email, :password, :password_confirmation])
     |> validate_confirmation(:password, message: "does not match")

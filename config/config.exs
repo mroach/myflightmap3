@@ -26,6 +26,13 @@ config :phoenix, :json_library, Jason
 
 config :tesla, adapter: Tesla.Adapter.Hackney
 
+config :myflightmap, Myflightmap.Auth.Guardian,
+  issuer: "myflightmap",
+  secret_key: "nnMP2E/21SwWTWBQnDDhPfW7q4TddFE17sBhpLOLJ28U5V0znMs7Bzkh76Hd5Ft5"
+
+config :myflightmap, Myflightmap.Auth.AccessPipeline,
+  module: Myflightmap.Auth.Guardian,
+  error_handler: Myflightmap.Auth.ErrorHandler
 
 # In dev env, use `mix test.watch` to automatically run tests and credo
 # every time a file is saved. Faster TDD response cycle.

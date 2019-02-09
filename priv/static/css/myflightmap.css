@@ -6,24 +6,29 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-header > .title {
+#site-title {
   display: inline-block;
   font-size: 1.5em;
 }
 
-header > .title > a {
+#site-title a {
   color: inherit;
 }
 
-header > nav {
-  display: inline-block;
-  margin-left: 1em;
-  padding-left: 1em;
-  border-left: solid 1px #ccc;
+#header-navigation,
+#header-account {
+  margin-top: 0.4em;
 }
 
-header > nav > a {
+#header-navigation a {
   padding: 0 0.5em;
+  border-bottom: solid 1px transparent;
+  transition: all .5s;
+}
+
+#header-navigation a:hover {
+  padding: 0 0.5em;
+  border-bottom: solid 1px #999;
 }
 
 .airport.iata_code {

@@ -3,6 +3,7 @@ defmodule MyflightmapWeb.UserController do
 
   alias Myflightmap.Accounts
   alias Myflightmap.Accounts.User
+  alias Myflightmap.Auth.Guardian
 
   def index(conn, _params) do
     users = Accounts.list_users()
@@ -19,6 +20,8 @@ defmodule MyflightmapWeb.UserController do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User created successfully.")
+        |> Guardian.Plug.sign_in(user)
+        |> assign(:current_user, user)
         |> redirect(to: user_path(conn, :show, user))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

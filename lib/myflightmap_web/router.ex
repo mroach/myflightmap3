@@ -9,25 +9,39 @@ defmodule MyflightmapWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :maybe_auth do
+    plug Myflightmap.Auth.AccessPipeline
+  end
+
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", MyflightmapWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through [:browser, :maybe_auth]
 
     get "/", HomeController, :index
+
+    get "/session/new", SessionController, :new
+    post "/session", SessionController, :create
+    delete "/session", SessionController, :delete
 
     resources "/aircraft_types", AircraftTypeController
     resources "/airlines", AirlineController
     resources "/airports", AirportController
+
+    resources "/users", UserController, only: [:new, :create]
+  end
+
+  scope "/", MyflightmapWeb do
+    pipe_through [:browser, :maybe_auth, :ensure_auth]
+
     resources "/flights", FlightController
     resources "/users", UserController
     resources "/trips", TripController
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", MyflightmapWeb do
-  #   pipe_through :api
-  # end
 end

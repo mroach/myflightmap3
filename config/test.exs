@@ -23,3 +23,8 @@ db_config =
 config :myflightmap, Myflightmap.Repo, db_config
 
 config :tesla, adapter: Tesla.Mock
+
+# Set the guardian module to our faker that doesn't hit the database
+config :myflightmap, Myflightmap.Auth.AccessPipeline,
+  module: Myflightmap.Mock.Guardian,
+  error_handler: Myflightmap.Auth.ErrorHandler

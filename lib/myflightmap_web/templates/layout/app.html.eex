@@ -14,18 +14,31 @@
 
   <body>
     <div class="container">
-      <header class="header">
-        <div class="title">
-          <%= link("My Flight Map", to: home_path(@conn, :index)) %>
+      <header class="row">
+        <div class="column column-20">
+          <div id="site-title">
+            <%= link("My Flight Map", to: home_path(@conn, :index)) %>
+          </div>
         </div>
-        <nav role="navigation">
-          <%= link("Aircraft Types", to: aircraft_type_path(@conn, :index)) %>
-          <%= link("Airports", to: airport_path(@conn, :index)) %>
-          <%= link("Airlines", to: airline_path(@conn, :index)) %>
-          <%= link("Flights", to: flight_path(@conn, :index)) %>
-          <%= link("Users", to: user_path(@conn, :index)) %>
-          <%= link("Trips", to: trip_path(@conn, :index)) %>
-        </nav>
+        <div class="column">
+          <nav id="header-navigation">
+            <%= link("Aircraft Types", to: aircraft_type_path(@conn, :index)) %>
+            <%= link("Airports", to: airport_path(@conn, :index)) %>
+            <%= link("Airlines", to: airline_path(@conn, :index)) %>
+            <%= link("Flights", to: flight_path(@conn, :index)) %>
+            <%= link("Trips", to: trip_path(@conn, :index)) %>
+          </nav>
+        </div>
+        <div class="column column-20">
+          <nav id="header-account">
+            <%= if assigns[:current_user] do %>
+              <%= link(assigns[:current_user].username, to: user_path(@conn, :show, assigns[:current_user].id)) %> |
+              <%= link("Logout", to: session_path(@conn, :delete), method: :delete) %>
+            <% else %>
+              <%= link("Login", to: session_path(@conn, :new)) %>
+            <% end %>
+          </nav>
+        </div>
       </header>
 
       <p class="alert alert--info" role="alert"><%= get_flash(@conn, :info) %></p>

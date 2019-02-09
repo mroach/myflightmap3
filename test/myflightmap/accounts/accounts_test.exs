@@ -52,10 +52,4 @@ defmodule Myflightmap.AccountsTest do
       assert %Ecto.Changeset{} = Accounts.change_user(user)
     end
   end
-
-  describe "authenticating with credentials" do
-    alias Myflightmap.Accounts.Credential
-
-    test ""
-  end
 end

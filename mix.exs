@@ -56,6 +56,7 @@ defmodule Myflightmap.Mixfile do
       # Authentication
       {:comeonin, "~> 4.1"},
       {:bcrypt_elixir, "~> 1.0"},
+      {:guardian, "~> 1.0"},
 
       # limited envs:
       {:phoenix_live_reload, "~> 1.2", only: :dev},

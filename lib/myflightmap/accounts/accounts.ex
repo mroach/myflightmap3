@@ -4,28 +4,12 @@ defmodule Myflightmap.Accounts do
   """
 
   import Ecto.Query, warn: false
-  alias Myflightmap.Accounts.{Credential, User}
+  alias Myflightmap.Accounts.User
   alias Myflightmap.Repo
-
-  def authenticate_by_email(email, pass) do
-    email
-    |> get_user_by_email()
-    |> authenticate_with_password(pass)
-  end
-
-  def authenticate_with_password(%User{} = user, pass) do
-    if Comeonein.Bcrypt.checkpw(pass, user.credential.password_hash) do
-      {:ok, user}
-    else
-      Comeone.Bcrypt.dummy_checkpw()
-      {:error, :unauthorized}
-    end
-  end
-
-  def authenticate_with_password(_, _) do
-    {:error, :not_found}
-  end
   
+  @doc """
+  Register a new user and create a `Credential`
+  """
   def register_user(attrs \\ %{}) do
     %User{}
     |> User.registration_changeset(attrs)
