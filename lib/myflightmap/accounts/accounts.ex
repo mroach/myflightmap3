@@ -4,9 +4,23 @@ defmodule Myflightmap.Accounts do
   """
 
   import Ecto.Query, warn: false
-  alias Myflightmap.Repo
-
   alias Myflightmap.Accounts.User
+  alias Myflightmap.Repo
+  
+  @doc """
+  Register a new user and create a `Credential`
+  """
+  def register_user(attrs \\ %{}) do
+    %User{}
+    |> User.registration_changeset(attrs)
+    |> Repo.insert
+  end
+
+  def get_user_by_email(email) when is_binary(email) do
+    from(u in User, join: c in assoc(u, :credential), where: c.email == ^email)
+    |> Repo.one
+    |> Repo.preload(:credential)
+  end
 
   @doc """
   Returns the list of users.
@@ -35,7 +49,7 @@ defmodule Myflightmap.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id), do: User |> Repo.get!(id) |> Repo.preload(:credential)
 
   @doc """
   Creates a user.

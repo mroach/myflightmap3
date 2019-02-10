@@ -25,6 +25,8 @@ defmodule MyflightmapWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint MyflightmapWeb.Endpoint
+
+      import MyflightmapWeb.ConnCase
     end
   end
 
@@ -33,6 +35,16 @@ defmodule MyflightmapWeb.ConnCase do
     unless tags[:async] do
       Sandbox.mode(Myflightmap.Repo, {:shared, self()})
     end
-    {:ok, conn: ConnTest.build_conn()}
+
+    conn = ConnTest.build_conn()
+    authed_conn = guardian_login(conn)
+    {:ok, conn: ConnTest.build_conn(), authed_conn: authed_conn}
+  end
+
+  def guardian_login(conn) do
+    guardian_login(conn, %Myflightmap.Accounts.User{id: 1})
+  end
+  def guardian_login(conn, user) do
+    Myflightmap.Auth.Guardian.Plug.sign_in(conn, user)
   end
 end

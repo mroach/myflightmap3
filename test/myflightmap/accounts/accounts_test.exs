@@ -15,7 +15,7 @@ defmodule Myflightmap.AccountsTest do
     end
 
     test "get_user!/1 returns the user with given id" do
-      user = insert(:user)
+      user = insert(:user) |> Repo.preload(:credential)
       assert Accounts.get_user!(user.id) == user
     end
 
@@ -36,7 +36,7 @@ defmodule Myflightmap.AccountsTest do
     end
 
     test "update_user/2 with invalid data returns error changeset" do
-      user = insert(:user)
+      user = insert(:user) |> Repo.preload(:credential)
       assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
       assert user == Accounts.get_user!(user.id)
     end

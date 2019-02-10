@@ -5,10 +5,12 @@ defmodule Myflightmap.Accounts.User do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias Myflightmap.Accounts.Credential
 
   schema "users" do
     field :name, :string
     field :username, :string
+    has_one :credential, Credential
 
     timestamps()
   end
@@ -21,6 +23,13 @@ defmodule Myflightmap.Accounts.User do
     |> update_change(:username, &normalize_username/1)
     |> validate_length(:username, min: 2, max: 30)
     |> unique_constraint(:username)
+  end
+
+  @doc false
+  def registration_changeset(user, attrs) do
+    user
+    |> changeset(attrs)
+    |> cast_assoc(:credential, with: &Credential.changeset/2)
   end
 
   # Trim and downcase will allow the database unique constraint to work without

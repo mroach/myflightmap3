@@ -9,7 +9,8 @@ FROM elixir:1.7-alpine AS phoenix_base
 RUN mix do local.hex --force, local.rebar --force
 
 # Need inotify for watchers to work
-RUN apk --no-cache add inotify-tools
+# Need build-base to build native extensions (bcrypt requires it)
+RUN apk --no-cache add inotify-tools build-base
 
 WORKDIR /app
 
