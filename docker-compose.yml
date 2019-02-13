@@ -22,6 +22,8 @@ services:
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: letmein
+    ports:
+      - "54320:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
 
