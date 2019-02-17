@@ -1,0 +1,6 @@
+<div>Flights: <%= @summary.flights %></div>
+<div>Distance: <%= format_distance(@summary.distance.sum) %></div>
+<div>Duration: <%= format_duration(@summary.duration.sum) %></div>
+<div>Airlines: <%= @summary.airlines %></div>
+<div>Airports: <%= @summary.airports %></div>
+<div>Countries: <%= @summary.countries %></div>

@@ -19,6 +19,8 @@
 
 <span><%= link "Edit", to: trip_path(@conn, :edit, @trip) %></span>
 
+<%= render(MyflightmapWeb.StatsView, "summary.html", summary: @summary_stats) %>
+
 <h3>Flights</h3>
 
 <table>
