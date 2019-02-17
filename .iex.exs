@@ -1,3 +1,5 @@
+import Ecto.Query
+
 alias Myflightmap.Repo
 
 alias Myflightmap.Transport
