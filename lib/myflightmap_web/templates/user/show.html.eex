@@ -7,5 +7,8 @@
   </li>
 </ul>
 
+<%= render(MyflightmapWeb.StatsView, "summary.html", summary: @summary_stats) %>
+<%= render(MyflightmapWeb.StatsView, "top.html", top: @top_stats) %>
+
 <span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>
 <span><%= link "Back", to: user_path(@conn, :index) %></span>

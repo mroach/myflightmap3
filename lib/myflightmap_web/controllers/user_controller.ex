@@ -30,7 +30,12 @@ defmodule MyflightmapWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
-    render(conn, "show.html", user: user)
+
+    conn
+    |> assign(:summary_stats, Myflightmap.Stats.summary_for(user))
+    |> assign(:top_stats, Myflightmap.Stats.top_for(user))
+    |> assign(:user, user)
+    |> render("show.html")
   end
 
   def edit(conn, %{"id" => id}) do

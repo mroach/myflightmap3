@@ -28,7 +28,11 @@ defmodule MyflightmapWeb.TripController do
 
   def show(conn, %{"id" => id}) do
     trip = Travel.get_trip_with_assocs!(id)
-    render(conn, "show.html", trip: trip)
+
+    conn
+    |> assign(:summary_stats, Myflightmap.Stats.summary_for(trip))
+    |> assign(:trip, trip)
+    |> render("show.html")
   end
 
   def edit(conn, %{"id" => id}) do

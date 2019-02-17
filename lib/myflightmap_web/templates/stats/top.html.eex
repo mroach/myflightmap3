@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="column">
+      <h4>Airports</h4>
+      <%= for %{airport: airport, movements: movements} <- @top.airports do %>
+        <div>
+          <%= emoji_flag(airport.country) %>
+          <%= airport.iata_code %> - <%= movements %></div>
+      <% end %>
+    </div>
+
+    <div class="column">
+      <h4>Airlines</h4>
+      <%= for %{airline: airline, movements: movements} <- @top.airlines do %>
+        <div><%= airline.iata_code %> - <%= movements %></div>
+      <% end %>
+    </div>
+
+    <div class="column">
+      <h4>Countries</h4>
+      <%= for %{country: country, movements: movements} <- @top.countries do %>
+        <div><%= emoji_flag(country.alpha2) %> <%= country_name(country.alpha2) %> - <%= movements %></div>
+      <% end %>
+
+    </div>
+  </div>
+</div>

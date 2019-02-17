@@ -47,4 +47,13 @@ defmodule MyflightmapWeb.Helpers.DurationHelpers do
   def format_clock({0, mins, _, _}), do: "#{mins}m"
   def format_clock({hrs, 0, _, _}), do: "#{hrs}h"
   def format_clock({hrs, mins, _, _}), do: "#{hrs}h #{mins}m"
+
+  def format_duration(nil), do: nil
+  def format_duration(0), do: nil
+  def format_duration(minutes) when is_number(minutes) do
+    minutes
+    |> Duration.from_minutes
+    |> Duration.to_clock
+    |> format_clock()
+  end
 end
