@@ -2,7 +2,8 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
   alias Myflightmap.Transport
   alias Myflightmap.Travel.Flight
   alias Timex.Duration
-  import MyflightmapWeb.Helpers.DurationHelpers
+
+  alias MyflightmapWeb.Helpers
   import MyflightmapWeb.Helpers.AirportHelpers, only: [airport_name: 1]
 
   def seat_class_name(%Flight{seat_class: seat_class}), do: seat_class_name(seat_class)
@@ -36,27 +37,12 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
   defp format_arrival_day_offset(offset) when offset > 0, do: "+#{offset}"
   defp format_arrival_day_offset(offset) when offset < 0, do: "+#{offset}"
 
-  def formatted_distance(input, units \\ :km)
-  def formatted_distance(%Flight{distance: distance}, units) when is_number(distance) do
-    formatted_distance(distance, units)
+  def formatted_distance(%Flight{distance: distance}, units \\ :km) when is_number(distance) do
+    Helpers.DistanceHelpers.format_distance(distance, units)
   end
-  def formatted_distance(radians, units) when is_number(radians) do
-    whole_units =
-      radians
-      |> Geo.radians_to(units)
-      |> trunc
-    "#{whole_units} #{units}"
-  end
-  def formatted_distance(_, _), do: nil
 
-  def formatted_duration(%Flight{duration: duration}), do: formatted_duration(duration)
-  def formatted_duration(nil), do: nil
-  def formatted_duration(0), do: nil
-  def formatted_duration(minutes) when is_number(minutes) do
-    minutes
-    |> Duration.from_minutes
-    |> Duration.to_clock
-    |> format_clock()
+  def formatted_duration(%Flight{duration: duration}) do
+    Helpers.DurationHelpers.format_duration(duration)
   end
 
   def airline_name(%Flight{airline: %{name: name}}), do: name
@@ -84,7 +70,7 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
   end
 
   def formatted_timechange(%Flight{} = flight) do
-    flight |> timezone_change() |> format_timechange()
+    flight |> timezone_change() |> Helpers.DurationHelpers.format_timechange()
   end
 
   # Timezone difference in seconds between the two datetimes
