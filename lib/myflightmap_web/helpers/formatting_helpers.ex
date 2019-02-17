@@ -18,7 +18,7 @@ defmodule MyflightmapWeb.Helpers.FormattingHelpers do
   """
   def country_name(code) when is_binary(code) do
     case Countries.filter_by(:alpha2, code) do
-      [%Countries.Country{} = c] -> c.name
+      [%Countries.Country{} = c] -> Enum.at(c.unofficial_names, 0)
       _ -> code
     end
   end
