@@ -193,11 +193,13 @@ defmodule Myflightmap.Transport do
   end
 
   def list_airport_options do
-    query = from a in Airport, select: {a.id, a.common_name, a.iata_code}
+    query = from a in Airport,
+            order_by: a.iata_code,
+            select: {a.id, a.common_name, a.iata_code}
 
     query
     |> Repo.all
-    |> Enum.map(fn {id, name, iata} -> {"#{name} (#{iata})", id} end)
+    |> Enum.map(fn {id, name, iata} -> {"#{iata} - #{name}", id} end)
   end
 
   @doc """
