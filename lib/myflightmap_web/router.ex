@@ -44,4 +44,8 @@ defmodule MyflightmapWeb.Router do
     resources "/users", UserController
     resources "/trips", TripController
   end
+
+  scope "/system", MyflightmapWeb do
+    get "/alive", SystemController, :alive
+  end
 end

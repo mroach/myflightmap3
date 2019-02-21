@@ -25,6 +25,8 @@ COPY test/ ./test
 
 EXPOSE 8000
 
+HEALTHCHECK CMD wget -q -O /dev/null http://localhost:8000/system/alive || exit 1
+
 ################################################################################
 # == Production release builder
 #
