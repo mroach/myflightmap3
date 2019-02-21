@@ -1,10 +1,30 @@
-<h1>Login</h1>
+<h1 class="title">Login</h1>
 
-<div>New? <%= link("Sign up", to: user_path(@conn, :new)) %></div>
+<div class="columns">
 
-<%= form_for @conn, session_path(@conn, :create), [method: "post", as: :session], fn f -> %>
-  <%= email_input f, :email, placeholder: "Email" %>
-  <%= password_input f, :password, placeholder: "Password" %>
-  <%= hidden_input f, :return_to, value: @return_to %>
-  <button>Login</button>
-<% end %>
+  <div class="column">
+    <%= form_for @conn, session_path(@conn, :create), [method: "post", as: :session], fn f -> %>
+      <%= hidden_input f, :return_to, value: @return_to %>
+
+      <div class="field">
+        <div class="control">
+          <%= email_input f, :email, placeholder: "Email", class: "input is-medium" %>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <%= password_input f, :password, placeholder: "Password", class: "input is-medium" %>
+        </div>
+      </div>
+
+      <div class="control">
+        <button class="button is-primary">Login</button>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="column">
+    <%= link("Sign up", to: user_path(@conn, :new), class: "button is-link is-medium") %>
+  </div>
+
+</div>

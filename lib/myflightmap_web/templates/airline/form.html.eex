@@ -1,53 +1,67 @@
 <%= form_for @changeset, @action, fn f -> %>
   <%= if @changeset.action do %>
-    <div class="alert alert--warning">
+    <div class="message is-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :iata_code, gettext("IATA Code"), class: "control-label" %>
-    <%= text_input f, :iata_code, class: "form-control" %>
+  <div class="field">
+    <%= label f, :iata_code, gettext("IATA Code"), class: "label" %>
+    <div class="control">
+      <%= text_input f, :iata_code, class: "input" %>
+    </div>
     <%= error_tag f, :iata_code %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :icao_code, gettext("ICAO Code"), class: "control-label" %>
-    <%= text_input f, :icao_code, class: "form-control" %>
+  <div class="field">
+    <%= label f, :icao_code, gettext("ICAO Code"), class: "label" %>
+    <div class="control">
+      <%= text_input f, :icao_code, class: "input" %>
+    </div>
     <%= error_tag f, :icao_code %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control" %>
+  <div class="field">
+    <%= label f, :name, class: "label" %>
+    <div class="control">
+      <%= text_input f, :name, class: "input" %>
+    </div>
     <%= error_tag f, :name %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :country, class: "control-label" %>
-    <%= select f, :country, country_options(), prompt: "-- Pick --" %>
+  <div class="field">
+    <%= label f, :country, class: "label" %>
+    <div class="select">
+      <%= select f, :country, country_options(), prompt: "-- Pick --" %>
+    </div>
     <%= error_tag f, :country %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :commenced_on, class: "control-label" %>
-    <%= date_input f, :commenced_on, class: "form-control" %>
+  <div class="field">
+    <%= label f, :commenced_on, class: "label" %>
+    <div class="control">
+      <%= date_input f, :commenced_on, class: "input" %>
+    </div>
     <%= error_tag f, :commenced_on %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :ceased_on, class: "control-label" %>
-    <%= date_input f, :ceased_on, class: "form-control" %>
+  <div class="field">
+    <%= label f, :ceased_on, class: "label" %>
+    <div class="control">
+      <%= date_input f, :ceased_on, class: "input" %>
+    </div>
     <%= error_tag f, :ceased_on %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :alliance, class: "control-label" %>
-    <%= text_input f, :alliance, class: "form-control" %>
+  <div class="field">
+    <%= label f, :alliance, class: "label" %>
+    <div class="control">
+      <%= text_input f, :alliance, class: "input" %>
+    </div>
     <%= error_tag f, :alliance %>
   </div>
 
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+  <div class="field">
+    <%= submit "Submit", class: "button is-link" %>
   </div>
 <% end %>

@@ -1,8 +1,8 @@
-<h2>Trips</h2>
+<h2 class="title">Trips</h2>
 
-<div><%= link "New Trip", to: trip_path(@conn, :new) %></div>
+<div><%= link "New Trip", to: trip_path(@conn, :new), class: "button is-link" %></div>
 
-<table class="table">
+<table class="ui table">
   <thead>
     <tr>
       <th>User</th>

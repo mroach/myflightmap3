@@ -1,6 +1,26 @@
-<div>Flights: <%= @summary.flights %></div>
-<div>Distance: <%= format_distance(@summary.distance.sum) %></div>
-<div>Duration: <%= format_duration(@summary.duration.sum) %></div>
-<div>Airlines: <%= @summary.airlines %></div>
-<div>Airports: <%= @summary.airports %></div>
-<div>Countries: <%= @summary.countries %></div>
+<div class="statistics">
+  <div class="statistic">
+    <div class="statistic-label">Flights</div>
+    <div class="statistic-value"><%= @summary.flights %></div>
+  </div>
+  <div class="statistic">
+    <div class="statistic-label">km Flown</div>
+    <div class="statistic-value"><%= whole_units(@summary.distance.sum) %></div>
+  </div>
+  <div class="statistic">
+    <div class="statistic-label">Hours in the air</div>
+    <div class="statistic-value"><%= hours(@summary.duration.sum) %></div>
+  </div>
+  <div class="statistic">
+    <div class="statistic-label">Airlines</div>
+    <div class="statistic-value"><%= @summary.airlines %></div>
+  </div>
+  <div class="statistic">
+    <div class="statistic-label">Airports</div>
+    <div class="statistic-value"><%= @summary.airports %></div>
+  </div>
+  <div class="statistic">
+    <div class="statistic-label">Countries</div>
+    <div class="statistic-value"><%= @summary.countries %></div>
+  </div>
+</div>

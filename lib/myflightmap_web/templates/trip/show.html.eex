@@ -1,29 +1,12 @@
-<h2><%= @trip.name %> by <%= @trip.user.username %></h2>
+<h2 class="title"><%= @trip.name %> by <%= @trip.user.username %></h2>
+<h3 class="subtitle"><%= date_time_format(@trip.start_date) %> - <%= date_time_format(@trip.end_date) %></h3>
 
-<ul>
-  <li>
-    <strong>Purpose:</strong>
-    <%= @trip.purpose %>
-  </li>
-
-  <li>
-    <strong>Dates:</strong>
-    <%= @trip.start_date %> - <%= @trip.end_date %>
-  </li>
-
-  <li>
-    <strong>Privacy:</strong>
-    <%= @trip.privacy %>
-  </li>
-</ul>
-
-<span><%= link "Edit", to: trip_path(@conn, :edit, @trip) %></span>
 
 <%= render(MyflightmapWeb.StatsView, "summary.html", summary: @summary_stats) %>
 
-<h3>Flights</h3>
+<h3 class="title is-4">Flights</h3>
 
-<table>
+<table class="table is-fullwidth">
 <%= for flight <- @trip.flights do %>
   <tr>
     <td>
@@ -42,10 +25,10 @@
     <td>
       <%= depart_airport_name(flight) %> - <%= arrive_airport_name(flight) %>
     </td>
-    <td>
-      <div><%= formatted_duration(flight) %></div>
-      <div><%= formatted_distance(flight) %></div>
-    </td>
+    <td><%= formatted_duration(flight) %></td>
+    <td class="has-text-right"><%= formatted_distance(flight) %></td>
   </div>
 <% end %>
 </table>
+
+<span><%= link "Edit", to: trip_path(@conn, :edit, @trip), class: "button is-link" %></span>

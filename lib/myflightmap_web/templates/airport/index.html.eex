@@ -1,15 +1,13 @@
-<h2>Airports</h2>
+<h2 class="title">Airports</h2>
 
-<div><%= link "New Airport", to: airport_path(@conn, :new) %></div>
+<div><%= link "New Airport", to: airport_path(@conn, :new), class: "button is-link" %></div>
 
-<table class="table">
+<table class="table is-narrow">
   <thead>
     <tr>
       <th><%= gettext("IATA Code") %></th>
       <th>City</th>
       <th>Common name</th>
-      <th>Timezone</th>
-      <th>Coordinates</th>
     </tr>
   </thead>
   <tbody>
@@ -18,8 +16,6 @@
       <td><%= link airport.iata_code, to: airport_path(@conn, :show, airport) %></td>
       <td><%= emoji_flag(airport.country) %> <%= airport.city %></td>
       <td><%= airport.common_name %></td>
-      <td><%= airport.timezone %></td>
-      <td><%= airport.coordinates %></td>
     </tr>
 <% end %>
   </tbody>

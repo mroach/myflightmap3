@@ -4,4 +4,5 @@ defmodule MyflightmapWeb.StatsView do
   import MyflightmapWeb.Helpers.FormattingHelpers
   import MyflightmapWeb.Helpers.DistanceHelpers
   import MyflightmapWeb.Helpers.DurationHelpers
+  import MyflightmapWeb.Helpers.AirportHelpers
 end

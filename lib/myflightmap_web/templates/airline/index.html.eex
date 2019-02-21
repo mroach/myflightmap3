@@ -1,6 +1,6 @@
-<h2>Airlines</h2>
+<h2 class="title">Airlines</h2>
 
-<div><%= link "New Airline", to: airline_path(@conn, :new) %></div>
+<div><%= link "New Airline", to: airline_path(@conn, :new), class: "button is-link" %></div>
 
 <table class="table">
   <thead>
@@ -8,7 +8,6 @@
       <th>IATA</th>
       <th>ICAO</th>
       <th>Name</th>
-      <th>Country</th>
       <th>Commenced on</th>
       <th>Ceased on</th>
       <th>Alliance</th>
@@ -21,8 +20,7 @@
     <tr>
       <td><%= airline.iata_code %></td>
       <td><%= airline.icao_code %></td>
-      <td><%= link(airline.name, to: airline_path(@conn, :show, airline)) %></td>
-      <td><%= emoji_flag(airline.country) %></td>
+      <td><%= emoji_flag(airline.country) %> <%= link(airline.name, to: airline_path(@conn, :show, airline)) %></td>
       <td><%= airline.commenced_on %></td>
       <td><%= airline.ceased_on %></td>
       <td><%= airline.alliance %></td>

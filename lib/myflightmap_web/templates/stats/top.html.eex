@@ -1,27 +1,37 @@
-<div class="container">
-  <div class="row">
-    <div class="column">
-      <h4>Airports</h4>
-      <%= for %{airport: airport, movements: movements} <- @top.airports do %>
-        <div>
-          <%= emoji_flag(airport.country) %>
-          <%= airport.iata_code %> - <%= movements %></div>
-      <% end %>
-    </div>
+<div class="columns">
+  <div class="column">
+    <h4 class="title is-5">Airports</h4>
+    <table class="table">
+    <%= for %{airport: airport, movements: movements} <- @top.airports do %>
+      <tr>
+        <td><%= emoji_flag(airport.country) %> <%= airport_name(airport) %></td>
+        <td class="has-text-right"><%= movements %></td>
+      </tr>
+    <% end %>
+    </table>
+  </div>
 
-    <div class="column">
-      <h4>Airlines</h4>
+  <div class="column">
+    <h4 class="title is-5">Airlines</h4>
+    <table class="table">
       <%= for %{airline: airline, movements: movements} <- @top.airlines do %>
-        <div><%= airline.iata_code %> - <%= movements %></div>
+        <tr>
+          <td><%= airline.name %></td>
+          <td class="has-text-right"><%= movements %></td>
+        </tr>
       <% end %>
-    </div>
+    </table>
+  </div>
 
-    <div class="column">
-      <h4>Countries</h4>
+  <div class="column">
+    <h4 class="title is-5">Countries</h4>
+    <table class="table">
       <%= for %{country: country, movements: movements} <- @top.countries do %>
-        <div><%= emoji_flag(country.alpha2) %> <%= country_name(country.alpha2) %> - <%= movements %></div>
+        <tr>
+          <td><%= emoji_flag(country.alpha2) %> <%= country_name(country.alpha2) %></td>
+          <td class="has-text-right"><%= movements %></td>
+        </tr>
       <% end %>
-
-    </div>
+    </table>
   </div>
 </div>

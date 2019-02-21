@@ -1,6 +1,6 @@
-<h2>Flights</h2>
+<h2 class="title">Flights</h2>
 
-<div><%= link "New Flight", to: flight_path(@conn, :new) %></div>
+<div><%= link "New Flight", to: flight_path(@conn, :new), class: "button is-link" %></div>
 
 <table class="table">
   <thead>
