@@ -12,40 +12,45 @@
   </head>
 
   <body>
-    <div class="container">
-      <header class="row">
-        <div class="column column-20">
-          <div id="site-title">
-            <%= link("My Flight Map", to: home_path(@conn, :index)) %>
+    <nav class="navbar" role="navigation">
+      <div class="container">
+        <div class="navbar-brand">
+          <%= link("My Flight Map", to: home_path(@conn, :index), class: "navbar-item") %>
+        </div>
+
+        <div class="navbar-menu">
+          <div class="navbar-start">
+            <%= link("Flights", to: flight_path(@conn, :index), class: "navbar-item") %>
+            <%= link("Trips", to: trip_path(@conn, :index), class: "navbar-item") %>
+          </div>
+
+          <div class="navbar-end">
+            <%= if assigns[:current_user] do %>
+              <div class="navbar-item has-dropdown is-hoverable">
+                <%= link(assigns[:current_user].username, to: user_path(@conn, :show, assigns[:current_user].id), class: "navbar-link") %>
+
+                <div class="navbar-dropdown">
+                  <%= link("Logout", to: session_path(@conn, :delete), method: :delete, class: "navbar-item") %>
+                </div>
+              </div>
+            <% else %>
+              <%= link("Login", to: session_path(@conn, :new), class: "navbar-item") %>
+            <% end %>
           </div>
         </div>
-        <div class="column">
-          <nav id="header-navigation">
-            <%= link("Aircraft Types", to: aircraft_type_path(@conn, :index)) %>
-            <%= link("Airports", to: airport_path(@conn, :index)) %>
-            <%= link("Airlines", to: airline_path(@conn, :index)) %>
-            <%= link("Flights", to: flight_path(@conn, :index)) %>
-            <%= link("Trips", to: trip_path(@conn, :index)) %>
-          </nav>
-        </div>
-        <div class="column column-20">
-          <nav id="header-account">
-            <%= if assigns[:current_user] do %>
-              <%= link(assigns[:current_user].username, to: user_path(@conn, :show, assigns[:current_user].id)) %> |
-              <%= link("Logout", to: session_path(@conn, :delete), method: :delete) %>
-            <% else %>
-              <%= link("Login", to: session_path(@conn, :new)) %>
-            <% end %>
-          </nav>
-        </div>
-      </header>
+      </div>
+    </nav>
 
-      <p class="alert alert--info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert--success" role="alert"><%= get_flash(@conn, :success) %></p>
-      <p class="alert alert--warning" role="alert"><%= get_flash(@conn, :error) %></p>
+      <main role="main" class="section">
+        <div class="container">
+          <%= for {type, msg} <- get_flash(@conn) do %>
+            <article class="message is-<%= error_class(type) %>">
+              <div class="message-body"><%= msg %></div>
+            </article>
+          <% end %>
 
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
+          <%= render @view_module, @view_template, assigns %>
+        </div>
       </main>
 
     </div> <!-- /container -->
