@@ -11,6 +11,15 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
 
+  webpack:
+    build:
+      context: "."
+      dockerfile: "Dockerfile.webpack"
+    command: yarn run watch
+    volumes:
+      - ".:/app"
+      - "static:/app/priv/static"
+
   app:
     build:
       context: .
@@ -25,8 +34,14 @@ services:
       DB_PASS: letmein
     volumes:
       - .:/app
+      - "static:/app/priv/static"
     depends_on:
       - db
+      - webpack
 
 volumes:
   pg_data:
+  static:
+    driver_opts:
+      device: "tmpfs"
+      type: "tmpfs"

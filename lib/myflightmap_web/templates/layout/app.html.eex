@@ -8,8 +8,7 @@
     <meta name="author" content="">
 
     <title>My Flight Map</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/milligram.css") %>">
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/myflightmap.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>

@@ -1,0 +1,69 @@
+@charset "utf-8";
+
+// Import a Google Font
+//@import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,700');
+
+// Set your brand colors
+$purple: #8A4D76;
+$pink: #F012BE;
+$brown: #757763;
+$beige-light: #D0D1CD;
+$beige-lighter: #EFF0EB;
+
+// https://clrs.cc/
+$navy: #001f3f;
+$blue: #0074D9;
+$aqua: #7FDBFF;
+$teal: #39CCCC;
+$olive: #3D9970;
+$green: #2ECC40;
+$lime: #01FF70;
+$yellow: #FFDC00;
+$orange: #FF851B;
+$red: #FF4136;
+$maroon: #85144b;
+$fuchsia: #F012BE;
+$purple: #B10DC9;
+$black: #111111;
+$grey: #AAAAAA;
+$gray: $grey;
+$silver: #DDDDDD;
+
+$color1: rgba(7, 17, 67, 1);
+$color2: rgba(251, 139, 36, 1);
+$color3: rgba(217, 3, 104, 1);
+$color4: rgba(130, 2, 99, 1);
+$color5: rgba(4, 167, 119, 1);
+
+// Update Bulma's global variables
+$family-sans-serif: "Fira Sans", sans-serif;
+$grey-dark: $brown;
+$grey-light: $beige-light;
+$primary: $color1;
+$link: $color2;
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+
+// Update some of Bulma's component variables
+$body-background-color: #E0E2DB;
+$control-border-width: 2px;
+$input-border-color: transparent;
+$input-shadow: none;
+
+// Import only what you need from Bulma
+@import "~bulma/sass/utilities/_all.sass";
+@import "~bulma/sass/base/_all.sass";
+@import "~bulma/sass/elements/_all.sass";
+@import "~bulma/sass/elements/button.sass";
+@import "~bulma/sass/elements/container.sass";
+@import "~bulma/sass/elements/form.sass";
+@import "~bulma/sass/elements/table.sass";
+@import "~bulma/sass/elements/title.sass";
+@import "~bulma/sass/components/card.sass";
+@import "~bulma/sass/components/navbar.sass";
+@import "~bulma/sass/components/message.sass";
+@import "~bulma/sass/layout/hero.sass";
+@import "~bulma/sass/layout/section.sass";
+@import "~bulma/sass/grid/columns.sass";
+@import "~bulma/sass/grid/tiles.sass"

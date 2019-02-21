@@ -18,3 +18,8 @@ erl_crash.dump
 # IDEs, editors, personal configs
 *.sublime-project
 *.sublime-workspace
+
+/assets/node_modules
+
+/priv/static/css/*
+/priv/static/js/*
