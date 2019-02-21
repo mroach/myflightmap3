@@ -23,6 +23,8 @@ COPY lib/ ./lib
 COPY priv/ ./priv
 COPY test/ ./test
 
+EXPOSE 8000
+
 ################################################################################
 # == Production release builder
 #
