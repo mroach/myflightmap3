@@ -4,9 +4,7 @@
 # == Base
 # Elixir base image for running development server and tools and
 # for building a production release
-FROM elixir:1.7-alpine AS phoenix_base
-
-RUN mix do local.hex --force, local.rebar --force
+FROM elixir:1.8-alpine AS phoenix_base
 
 # Need inotify for watchers to work
 # Need build-base to build native extensions (bcrypt requires it)
@@ -16,7 +14,7 @@ WORKDIR /app
 
 COPY mix.exs mix.lock ./
 
-RUN mix do deps.get, deps.compile
+RUN mix do local.hex --force, local.rebar --force, deps.get, deps.compile
 
 COPY config/ ./config
 COPY lib/ ./lib
@@ -26,6 +24,8 @@ COPY test/ ./test
 EXPOSE 8000
 
 HEALTHCHECK CMD wget -q -O /dev/null http://localhost:8000/system/alive || exit 1
+
+CMD ["mix", "phx.server"]
 
 ################################################################################
 # == Production release builder
