@@ -47,5 +47,6 @@ defmodule MyflightmapWeb.Router do
 
   scope "/system", MyflightmapWeb do
     get "/alive", SystemController, :alive
+    get "/stats", SystemController, :stats
   end
 end
