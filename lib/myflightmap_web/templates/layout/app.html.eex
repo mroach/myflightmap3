@@ -16,9 +16,15 @@
       <div class="container">
         <div class="navbar-brand">
           <%= link("My Flight Map", to: home_path(@conn, :index), class: "navbar-item") %>
+
+          <a role="button" class="navbar-burger burger" data-target="main-nav">
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
         </div>
 
-        <div class="navbar-menu">
+        <div class="navbar-menu" id="main-nav">
           <div class="navbar-start">
             <%= link("Flights", to: flight_path(@conn, :index), class: "navbar-item") %>
             <%= link("Trips", to: trip_path(@conn, :index), class: "navbar-item") %>
