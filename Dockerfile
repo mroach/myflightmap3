@@ -14,7 +14,7 @@ WORKDIR /app
 
 COPY mix.exs mix.lock ./
 
-RUN mix do local.hex --force, local.rebar --force, deps.get, deps.compile
+RUN mix do local.hex --force, local.rebar --force
 
 COPY config/ ./config
 COPY lib/ ./lib
@@ -39,7 +39,7 @@ ENV MIX_ENV prod
 
 COPY rel/ ./rel
 
-RUN mix release --env=prod
+RUN mix do deps.get, release --env=prod
 
 
 ################################################################################
