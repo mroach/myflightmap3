@@ -19,7 +19,7 @@ defmodule Myflightmap.Transport do
 
   def list_seat_class_options do
     list_seat_classes()
-    |> Enum.map(fn %{value: value, name: name} -> {value, name} end )
+    |> Enum.map(fn %{value: value, name: name} -> {name, value} end )
   end
 
   @doc """
