@@ -24,7 +24,7 @@ services:
     build:
       context: .
       target: phoenix_base
-    command: mix phx.server
+    command: mix do deps.get, phx.server
     ports:
       - "8000:8000"
     environment:
