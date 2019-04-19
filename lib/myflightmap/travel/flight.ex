@@ -43,12 +43,20 @@ defmodule Myflightmap.Travel.Flight do
     flight
     |> cast(attrs, @writable_attributes)
     |> validate_required([:depart_date])
+    |> update_change(:flight_code, &normalize_flight_code/1)
     |> foreign_key_constraint(:user_id)
     |> foreign_key_constraint(:trip_id)
     |> foreign_key_constraint(:depart_airport_id)
     |> foreign_key_constraint(:arrive_airport_id)
     |> foreign_key_constraint(:aircraft_type_id)
     |> foreign_key_constraint(:airline_id)
+  end
+
+  def normalize_flight_code(nil), do: nil
+  def normalize_flight_code(code) do
+    code
+    |> String.replace(~r/\s/, "")
+    |> String.upcase
   end
 
   def change_duration(flight, duration) do
