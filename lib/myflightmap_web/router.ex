@@ -49,4 +49,8 @@ defmodule MyflightmapWeb.Router do
     get "/alive", SystemController, :alive
     get "/stats", SystemController, :stats
   end
+
+  scope "/vendor", MyflightmapWeb do
+    post "/worldmate/receive", WorldmateController, :receive
+  end
 end

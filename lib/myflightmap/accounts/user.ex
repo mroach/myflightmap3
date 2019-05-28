@@ -10,6 +10,7 @@ defmodule Myflightmap.Accounts.User do
   schema "users" do
     field :name, :string
     field :username, :string
+    field :trip_email_id, :string
     has_one :credential, Credential
 
     timestamps()
@@ -18,7 +19,7 @@ defmodule Myflightmap.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :username])
+    |> cast(attrs, [:name, :username, :trip_email_id])
     |> validate_required([:username])
     |> update_change(:username, &normalize_username/1)
     |> validate_length(:username, min: 2, max: 30)

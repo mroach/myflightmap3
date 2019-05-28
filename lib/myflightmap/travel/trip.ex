@@ -11,7 +11,7 @@ defmodule Myflightmap.Travel.Trip do
 
   schema "trips" do
     field :name, :string
-    field :privacy, :string
+    field :privacy, :string, default: "public"
     field :purpose, :string
     field :start_date, :date
     field :end_date, :date
@@ -25,6 +25,7 @@ defmodule Myflightmap.Travel.Trip do
   def changeset(trip, attrs) do
     trip
     |> cast(attrs, [:name, :purpose, :start_date, :end_date, :privacy])
+    |> cast_assoc(:flights, with: &Flight.changeset/2)
     |> validate_required([:name, :privacy])
     |> foreign_key_constraint(:user_id)
   end

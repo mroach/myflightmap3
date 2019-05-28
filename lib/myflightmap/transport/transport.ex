@@ -63,6 +63,8 @@ defmodule Myflightmap.Transport do
   """
   def get_airline!(id), do: Repo.get!(Airline, id)
 
+  def get_airline_by_iata!(code), do: Repo.get_by!(Airline, iata_code: code)
+
   @doc """
   Creates a airline.
 

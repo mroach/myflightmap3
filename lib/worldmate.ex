@@ -9,7 +9,7 @@ defmodule Worldmate do
   Converts a [Worldmate parsing result](https://developers.worldmate.com/documentation.php#_Toc317625927)
   to a simple `ParseResult` that can be easily consumed.
   """
-  def parsing_result(xmlstr) do
+  def parse_xml_itinerary!(xmlstr) do
     xmlstr
     |> ItineraryParser.parse_xml!
     |> ItineraryParser.to_parse_result

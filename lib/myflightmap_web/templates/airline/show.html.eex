@@ -1,32 +1,31 @@
-<h2><%= @airline.iata_code %> - <%= @airline.name %></h2>
+<section class="hero is-primary">
+  <div class="hero-body">
+    <h1 class="title"><%= @airline.iata_code %> - <%= @airline.name %></h1>
+  </div>
+</section>
 
-<ul>
-  <li>
-    <strong><%= gettext("ICAO Code")%>:</strong>
-    <%= @airline.icao_code %>
-  </li>
+<table class="table">
+  <tr>
+    <th><%= gettext("ICAO Code")%>:</th>
+    <td><%= @airline.icao_code %></td>
+  </tr>
+  <tr>
+    <th>Alliance</th>
+    <td><%= @airline.alliance %></td>
+  </tr>
+  <tr>
+    <th>Country</th>
+    <td><%= emoji_flag(@airline.country) %></td>
+  </tr>
+  <tr>
+    <th>Commenced on</th>
+    <td><%= @airline.commenced_on %></td>
+  </tr>
 
-  <li>
-    <strong>Country:</strong>
-    <%= emoji_flag(@airline.country) %>
-  </li>
+  <tr>
+    <th>Ceased on</th>
+    <td><%= @airline.ceased_on %></td>
+  </tr>
+</table>
 
-  <li>
-    <strong>Commenced on:</strong>
-    <%= @airline.commenced_on %>
-  </li>
-
-  <li>
-    <strong>Ceased on:</strong>
-    <%= @airline.ceased_on %>
-  </li>
-
-  <li>
-    <strong>Alliance:</strong>
-    <%= @airline.alliance %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: airline_path(@conn, :edit, @airline) %></span>
-<span><%= link "Back", to: airline_path(@conn, :index) %></span>
+<div><%= link "Edit", to: airline_path(@conn, :edit, @airline), class: "button is-link" %></div>

@@ -22,6 +22,11 @@ defmodule Myflightmap.Accounts do
     |> Repo.preload(:credential)
   end
 
+  def get_user_by_trip_email_id(trip_email_id) when is_binary(trip_email_id) do
+    from(u in User, where: u.trip_email_id == ^trip_email_id)
+    |> Repo.one
+  end
+
   @doc """
   Returns the list of users.
 

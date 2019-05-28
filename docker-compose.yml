@@ -2,7 +2,7 @@ version: "3.6"
 
 services:
   db:
-    image: postgres:10-alpine
+    image: postgres:11-alpine
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: letmein
@@ -25,6 +25,8 @@ services:
       context: .
       target: phoenix_base
     command: mix do deps.get, phx.server
+    healthcheck:
+      interval: 5m
     ports:
       - "8000:8000"
     environment:
@@ -32,6 +34,8 @@ services:
       DB_HOST: db
       DB_USER: app
       DB_PASS: letmein
+    healthcheck:
+      interval: 5m
     volumes:
       - .:/app
       - "static:/app/priv/static"
