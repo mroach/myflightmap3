@@ -177,16 +177,14 @@ defmodule Myflightmap.Travel do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_flight(%User{} = user, attrs \\ %{}) do
-    Multi.new
-    |> Multi.insert(:flight, Flight.changeset(%Flight{user: user}, attrs))
-    |> Multi.update(:calculated, &update_flight_calculations/1)
-    |> Multi.run(:trip_dates, &update_trip_dates/2)
-    |> Repo.transaction()
-    |> case do
-      {:ok, %{calculated: calculated}} -> {:ok, calculated}
-      {:error, _, changeset, _} -> {:error, changeset}
-    end
+  def create_flight(%Flight{} = flight, attrs) when is_map(attrs) do
+    insert_or_update_flight(flight, attrs)
+  end
+  def create_flight(%User{} = user, attrs) when is_map(attrs) do
+    %Flight{user: user} |> create_flight(attrs)
+  end
+  def create_flight(attrs) when is_map(attrs) do
+    create_flight(%Flight{}, attrs)
   end
 
   @doc """
@@ -201,23 +199,29 @@ defmodule Myflightmap.Travel do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_flight(%Flight{} = flight, attrs) do
+  def update_flight(flight, attrs), do: insert_or_update_flight(flight, attrs)
+
+  defp insert_or_update_flight(%Flight{} = flight, attrs) do
+    changeset =
+      flight
+      |> preassign_airports(attrs)
+      |> Repo.preload([:depart_airport, :arrive_airport])
+      |> Flight.changeset(attrs)
+
     Multi.new
-    |> Multi.update(:flight, Flight.changeset(flight, attrs))
-    |> Multi.update(:calculated, &update_flight_calculations/1)
+    |> Multi.insert_or_update(:flight, changeset)
     |> Multi.run(:trip_dates, &update_trip_dates/2)
     |> Repo.transaction()
     |> case do
-      {:ok, %{calculated: calculated}} -> {:ok, calculated}
+      {:ok, %{flight: flight}} -> {:ok, flight}
       {:error, _, changeset, _} -> {:error, changeset}
     end
   end
 
-  defp update_flight_calculations(%{flight: flight}) do
-    flight = Repo.preload(flight, [:depart_airport, :arrive_airport])
+  def preassign_airports(%Flight{} = flight, attrs) do
     flight
-    |> Flight.change_duration(Flight.calculated_duration(flight))
-    |> Flight.change_distance(Flight.calculated_distance(flight))
+    |> Ecto.Changeset.cast(attrs, [:depart_airport_id, :arrive_airport_id])
+    |> Ecto.Changeset.apply_changes
   end
 
   # After adding or updating a flight, re-calculate the start and end dates

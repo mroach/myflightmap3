@@ -44,6 +44,8 @@ defmodule Myflightmap.Travel.Flight do
     |> cast(attrs, @writable_attributes)
     |> validate_required([:depart_date])
     |> update_change(:flight_code, &normalize_flight_code/1)
+    |> maybe_update_distance()
+    |> maybe_update_duration()
     |> foreign_key_constraint(:user_id)
     |> foreign_key_constraint(:trip_id)
     |> foreign_key_constraint(:depart_airport_id)
@@ -65,23 +67,50 @@ defmodule Myflightmap.Travel.Flight do
     |> validate_number(:duration, greater_than_or_equal_to: 0)
   end
 
-  def change_distance(flight, distance) do
+  def put_movement_date_time(flight, movement, %DateTime{} = datetime)
+    when movement in [:depart, :arrive] do
+
     flight
-    |> change(distance: distance)
-    |> validate_number(:distance, greater_than_or_equal_to: 0)
+    |> Map.put(:"#{movement}_date", datetime |> DateTime.to_date)
+    |> Map.put(:"#{movement}_time", datetime |> DateTime.to_time |> Time.truncate(:second))
   end
 
-  def calculated_duration(%__MODULE__{} = flight) do
-    with %DateTime{} = depart_at <- depart_at(flight),
-         %DateTime{} = arrive_at <- arrive_at(flight)
+  def maybe_update_distance(changeset) do
+    with true <- Ecto.assoc_loaded?(changeset.data.depart_airport),
+         true <- Ecto.assoc_loaded?(changeset.data.arrive_airport)
+    do
+      changeset
+      |> put_change(:distance, calculated_distance(changeset.data))
+      |> validate_number(:distance, greater_than_or_equal_to: 0)
+    else
+      _ -> changeset
+    end
+  end
+
+  def maybe_update_duration(changeset) do
+    with true <- Ecto.assoc_loaded?(changeset.data.depart_airport),
+         true <- Ecto.assoc_loaded?(changeset.data.arrive_airport),
+         duration when is_number(duration) <- calculated_duration(changeset)
+    do
+      changeset
+      |> put_change(:duration, duration)
+      |> validate_number(:duration, greater_than_or_equal_to: 0)
+    else
+      _ -> changeset
+    end
+  end
+
+  def calculated_duration(flight_or_changeset) do
+    with %DateTime{} = depart_at <- depart_at(flight_or_changeset),
+         %DateTime{} = arrive_at <- arrive_at(flight_or_changeset)
       do
         Timex.diff(arrive_at, depart_at, :minutes)
       else
-        _ -> nil
+        res -> {:error, res}
       end
   end
 
-  def calculated_distance(%__MODULE__{} = flight) do
+  def calculated_distance(flight) do
     with %Airport{} = depart_airport <- flight.depart_airport,
          %Airport{} = arrive_airport <- flight.arrive_airport
     do
@@ -95,13 +124,13 @@ defmodule Myflightmap.Travel.Flight do
   Full `DateTime` of the departure. Only available when the date, time, and
   departure airport are set on the flight. Otherwise, `nil`.
   """
-  def depart_at(%__MODULE__{} = flight), do: movement_date_time(flight, :depart)
+  def depart_at(flight), do: movement_date_time(flight, :depart)
 
   @doc """
   Full `DateTime` of the arrival. Only available when the date, time, and
   arrival airport are set on the flight. Otherwise, `nil`.
   """
-  def arrive_at(%__MODULE__{} = flight), do: movement_date_time(flight, :arrive)
+  def arrive_at(flight), do: movement_date_time(flight, :arrive)
 
   defp movement_date_time(%__MODULE__{} = flight, movement)
     when movement in [:depart, :arrive] do
@@ -110,6 +139,19 @@ defmodule Myflightmap.Travel.Flight do
          %Time{} = time <- Map.get(flight, :"#{movement}_time"),
          %Airport{} = airport <- Map.get(flight, :"#{movement}_airport"),
          {:ok, datetime} = _ <- NaiveDateTime.new(date, time)
+    do
+      Timex.to_datetime(datetime, airport.timezone)
+    else
+      _ -> nil
+    end
+  end
+  defp movement_date_time(%Ecto.Changeset{} = changeset, movement)
+    when movement in [:depart, :arrive] do
+
+    with {_, %Date{} = date}  <- fetch_field(changeset, :"#{movement}_date"),
+         {_, %Time{} = time}  <- fetch_field(changeset, :"#{movement}_time"),
+         %Airport{} = airport <- Map.get(changeset.data, :"#{movement}_airport"),
+         {:ok, datetime} = _  <- NaiveDateTime.new(date, time)
     do
       Timex.to_datetime(datetime, airport.timezone)
     else
