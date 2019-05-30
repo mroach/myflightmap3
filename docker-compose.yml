@@ -2,7 +2,7 @@ version: "3.6"
 
 services:
   db:
-    image: postgres:10-alpine
+    image: postgres:11-alpine
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: letmein
