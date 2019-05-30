@@ -5,8 +5,6 @@ defmodule Myflightmap.Travel.WorldmateTripImporter do
   alias Ecto.Multi
   alias Worldmate.ParseResult
 
-  @valid_domains ~w[trips.myflightmap.com]
-
   def import(xmlstr) do
     result = Worldmate.parse_xml_itinerary!(xmlstr)
 
@@ -70,7 +68,7 @@ defmodule Myflightmap.Travel.WorldmateTripImporter do
   """
   def recipient(email) do
     [user, domain | _] = String.split(email, "@")
-    case Enum.member?(@valid_domains, domain) do
+    case Enum.member?(valid_domains(), domain) do
       true -> {:ok, user}
       _ -> {:error, :invalid_domain}
     end
@@ -96,5 +94,11 @@ defmodule Myflightmap.Travel.WorldmateTripImporter do
     }
     |> Flight.put_movement_date_time(:depart, wmflight.departure.local_time)
     |> Flight.put_movement_date_time(:arrive, wmflight.arrival.local_time)
+  end
+
+  defp valid_domains do
+    :myflightmap
+    |> Application.get_env(__MODULE__)
+    |> Keyword.fetch!(:valid_domains)
   end
 end
