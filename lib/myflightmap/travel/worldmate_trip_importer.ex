@@ -13,7 +13,7 @@ defmodule Myflightmap.Travel.WorldmateTripImporter do
     do
       multi =
         Multi.new
-        |> Multi.run(:trip, fn _, _->
+        |> Multi.run(:trip, fn _, _ ->
           Travel.get_or_create_trip_by_name(user, trip_name(result))
         end)
 
