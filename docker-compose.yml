@@ -35,8 +35,6 @@ services:
       DB_HOST: db
       DB_USER: app
       DB_PASS: letmein
-    healthcheck:
-      interval: 5m
     volumes:
       - .:/app
       - "static:/app/priv/static"
