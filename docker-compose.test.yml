@@ -4,12 +4,13 @@ services:
   test:
     build:
       context: .
-      target: phoenix_base
-    command: mix do deps.get, test
+      target: builder
+    command: mix do test
     environment:
       DB_HOST: db
       DB_USER: app
       DB_PASS: letmein
+      MIX_ENV: test
     depends_on:
       - db
 
