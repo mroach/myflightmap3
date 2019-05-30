@@ -26,6 +26,8 @@ services:
       context: .
       target: phoenix_base
     command: mix do deps.get, phx.server
+    healthcheck:
+      interval: 5m
     ports:
       - "8000:8000"
     environment:
