@@ -61,6 +61,12 @@ defmodule Myflightmap.Travel.Flight do
     |> String.upcase
   end
 
+  def change_duration(flight, duration) do
+    flight
+    |> change(duration: duration)
+    |> validate_number(:duration, greater_than_or_equal_to: 0)
+  end
+
   def put_movement_date_time(flight, movement, %DateTime{} = datetime)
     when movement in [:depart, :arrive] do
 

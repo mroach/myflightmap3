@@ -19,6 +19,7 @@ services:
     volumes:
       - ".:/app"
       - "static:/app/priv/static"
+      - node_modules:/app/assets/node_modules
 
   app:
     build:
@@ -49,3 +50,4 @@ volumes:
     driver_opts:
       device: "tmpfs"
       type: "tmpfs"
+  node_modules:
