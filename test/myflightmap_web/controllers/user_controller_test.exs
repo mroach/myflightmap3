@@ -50,7 +50,7 @@ defmodule MyflightmapWeb.UserControllerTest do
     setup [:create_user]
 
     test "redirects when data is valid", %{authed_conn: conn, user: user} do
-      update_attrs = %{name: "new name"}
+      update_attrs = %{username: "new name"}
       res = put conn, user_path(conn, :update, user), user: update_attrs
       assert redirected_to(res) == user_path(conn, :show, user)
 
