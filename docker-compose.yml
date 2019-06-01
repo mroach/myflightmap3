@@ -15,7 +15,7 @@ services:
     build:
       context: "."
       dockerfile: "Dockerfile.webpack"
-    command: yarn run watch
+    command: npm run watch
     volumes:
       - ".:/app"
       - "static:/app/priv/static"

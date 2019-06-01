@@ -1,13 +1,11 @@
-FROM node:10-alpine
-
-RUN npm install -g yarn
+FROM node:12-slim
 
 WORKDIR /app/assets
 
-COPY assets/package.json assets/*yarn* ./
+COPY assets/package.json ./
 
-RUN yarn install
+RUN npm install
 
 ENV PATH="${PATH}:/app/assets/node_modules/.bin"
 
-CMD ["yarn", "run", "build"]
+CMD ["npm", "run", "build"]
