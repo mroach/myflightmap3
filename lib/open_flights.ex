@@ -24,7 +24,7 @@ defmodule OpenFlights do
 
     csv_stream
     |> IO.binstream(:line)
-    |> OpenFlights.AirportsCSV.parse_stream(headers: false)
+    |> OpenFlights.AirportsCSV.parse_stream(skip_headers: false)
     |> Stream.map(fn [_id, name, city, country, iata, icao, lat, lon, _altitude, _timezone, _dst, timezone_id, _type, _source] ->
       {lat, _} = Float.parse(lat)
       {lon, _} = Float.parse(lon)

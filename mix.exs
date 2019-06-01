@@ -35,7 +35,7 @@ defmodule Myflightmap.Mixfile do
     [
       {:ecto_sql, "~> 3.0"},
       {:jason, "~> 1.1"},
-      {:phoenix, "~> 1.4.0"},
+      {:phoenix, "~> 1.4.3"},
       {:phoenix_ecto, "~> 4.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_pubsub, "~> 1.0"},
@@ -50,18 +50,17 @@ defmodule Myflightmap.Mixfile do
       # XML parser. Needed for handling Worldmate trip parsing responses
       {:sweet_xml, "~> 0.6.5"},
       {:distillery, "~> 2.0"},
-      {:hackney, "~> 1.14.0"},
+      {:hackney, "~> 1.14"},
       {:tesla, "~> 1.2.1"},
       {:nimble_csv, "~> 0.3"},
 
       # Authentication
-      {:comeonin, "~> 4.1"},
-      {:bcrypt_elixir, "~> 1.0"},
+      {:bcrypt_elixir, "~> 2.0"},
       {:guardian, "~> 1.0"},
 
       # limited envs:
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
       {:ex_machina, "~> 2.2", only: :test},
       {:stream_data, "~> 0.4", only: :test}

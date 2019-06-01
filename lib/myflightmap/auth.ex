@@ -1,7 +1,6 @@
 defmodule Myflightmap.Auth do
   @moduledoc false
 
-  alias Comeonin.Bcrypt
   alias Myflightmap.Accounts
   alias Myflightmap.Accounts.User
 
@@ -12,10 +11,10 @@ defmodule Myflightmap.Auth do
   end
 
   def authenticate_with_password(%User{} = user, pass) do
-    if Bcrypt.checkpw(pass, user.credential.password_hash) do
+    if Bcrypt.verify_pass(pass, user.credential.password_hash) do
       {:ok, user}
     else
-      Bcrypt.dummy_checkpw()
+      Bcrypt.no_user_verify()
       {:error, :not_accepted}
     end
   end

@@ -43,7 +43,9 @@ defmodule Myflightmap.TransportTest do
       assert {:error, %Ecto.Changeset{errors: errors}} = Transport.update_airline(airline, @invalid_attrs)
       assert airline == Transport.get_airline!(airline.id)
 
-      assert {"is invalid", [validation: :inclusion]} = Keyword.get(errors, :country)
+      {"is invalid", country_errors} = Keyword.get(errors, :country)
+
+      assert :inclusion == Keyword.get(country_errors, :validation)
       assert {"has invalid format", [validation: :format]} = Keyword.get(errors, :icao_code)
       assert {"has invalid format", [validation: :format]} = Keyword.get(errors, :iata_code)
       assert {"can't be blank", [validation: :required]} = Keyword.get(errors, :name)
