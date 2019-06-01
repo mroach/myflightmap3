@@ -41,7 +41,7 @@ defmodule MyflightmapWeb.Router do
     pipe_through [:browser, :maybe_auth, :ensure_auth]
 
     resources "/flights", FlightController
-    resources "/users", UserController
+    resources "/users", UserController, except: [:new, :create]
     resources "/trips", TripController
   end
 
