@@ -25,7 +25,6 @@ defmodule Myflightmap.Travel.Trip do
   def changeset(trip, attrs) do
     trip
     |> cast(attrs, [:name, :purpose, :start_date, :end_date, :privacy])
-    |> cast_assoc(:flights, with: &Flight.changeset/2)
     |> validate_required([:name, :privacy])
     |> foreign_key_constraint(:user_id)
   end
