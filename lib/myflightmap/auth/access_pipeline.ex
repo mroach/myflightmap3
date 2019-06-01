@@ -1,4 +1,6 @@
 defmodule Myflightmap.Auth.AccessPipeline do
+  @moduledoc false
+
   use Guardian.Plug.Pipeline, otp_app: :myflightmap
 
   plug Guardian.Plug.VerifySession

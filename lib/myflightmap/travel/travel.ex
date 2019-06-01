@@ -232,8 +232,8 @@ defmodule Myflightmap.Travel do
 
   def preassign_airports(%Flight{} = flight, attrs) do
     flight
-    |> Ecto.Changeset.cast(attrs, [:depart_airport_id, :arrive_airport_id])
-    |> Ecto.Changeset.apply_changes
+    |> Changeset.cast(attrs, [:depart_airport_id, :arrive_airport_id])
+    |> Changeset.apply_changes
   end
 
   # After adding or updating a flight, re-calculate the start and end dates

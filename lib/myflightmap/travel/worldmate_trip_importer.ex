@@ -1,8 +1,8 @@
 defmodule Myflightmap.Travel.WorldmateTripImporter do
   require Logger
+  alias Ecto.Multi
   alias Myflightmap.{Accounts, Repo, Transport, Travel}
   alias Myflightmap.Travel.Flight
-  alias Ecto.Multi
   alias Worldmate.ParseResult
 
   def import(xmlstr) do

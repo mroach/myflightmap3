@@ -1,8 +1,8 @@
 defmodule Myflightmap.Stats do
-  alias Myflightmap.Travel.{Flight, Trip}
   alias Myflightmap.Accounts.User
   alias Myflightmap.Queries.Travel, as: TQ
   alias Myflightmap.Repo
+  alias Myflightmap.Travel.{Flight, Trip}
   import Ecto.Query
 
   @default_top_limit 10
@@ -31,7 +31,7 @@ defmodule Myflightmap.Stats do
     |> query_base()
     |> TQ.top_airports
     |> limit(^result_limit)
-    |> Myflightmap.Repo.all
+    |> Repo.all
   end
 
   def top_airlines_for(entity, result_limit \\ @default_top_limit) do
@@ -39,7 +39,7 @@ defmodule Myflightmap.Stats do
     |> query_base
     |> TQ.top_airlines
     |> limit(^result_limit)
-    |> Myflightmap.Repo.all
+    |> Repo.all
   end
 
   def top_countries_for(entity, result_limit \\ @default_top_limit) do
@@ -47,7 +47,7 @@ defmodule Myflightmap.Stats do
     |> query_base
     |> TQ.top_countries
     |> limit(^result_limit)
-    |> Myflightmap.Repo.all
+    |> Repo.all
     |> Enum.map(fn %{country: code, movements: movements} ->
       %{
         country: load_country(code),
@@ -59,7 +59,7 @@ defmodule Myflightmap.Stats do
   def flight_count(entity) do
     entity
     |> query_base
-    |> Myflightmap.Repo.aggregate(:count, :id)
+    |> Repo.aggregate(:count, :id)
   end
 
   @doc """
@@ -69,7 +69,7 @@ defmodule Myflightmap.Stats do
     entity
     |> query_base
     |> TQ.distinct_airline_count
-    |> Myflightmap.Repo.one
+    |> Repo.one
   end
 
   @doc """
@@ -95,14 +95,14 @@ defmodule Myflightmap.Stats do
     entity
     |> query_base
     |> TQ.distance_summary
-    |> Myflightmap.Repo.one
+    |> Repo.one
   end
 
   def duration(entity) do
     entity
     |> query_base
     |> TQ.duration_summary
-    |> Myflightmap.Repo.one
+    |> Repo.one
   end
 
   defp query_base(%User{id: user_id}) do

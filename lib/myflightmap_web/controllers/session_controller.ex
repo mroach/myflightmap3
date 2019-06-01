@@ -2,7 +2,8 @@ defmodule MyflightmapWeb.SessionController do
   use MyflightmapWeb, :controller
 
   alias Myflightmap.Auth
-  alias Myflightmap.Auth.Guardian
+
+  import Myflightmap.Auth.Guardian.Plug, only: [sign_in: 2, sign_out: 1]
 
   def new(conn, params) do
     conn
@@ -14,7 +15,7 @@ defmodule MyflightmapWeb.SessionController do
     case Auth.authenticate_by_email(email, pass) do
       {:ok, user} ->
         conn
-        |> Guardian.Plug.sign_in(user)
+        |> sign_in(user)
         |> assign(:current_user, user)
         |> put_flash(:success, "Welcome")
         |> redirect_to_destination(params)
@@ -27,7 +28,7 @@ defmodule MyflightmapWeb.SessionController do
 
   def delete(conn, _) do
     conn
-    |> Guardian.Plug.sign_out()
+    |> sign_out()
     |> put_flash(:info, "Ciao!")
     |> redirect(to: home_path(conn, :index))
   end

@@ -3,7 +3,7 @@ defmodule MyflightmapWeb.WorldmateControllerTest do
 
   test "/vendor/worldmate/receive", %{conn: conn} do
     raw_xml = File.read!("./test/fixtures/worldmate-single.xml")
-    
+
     conn =
       conn
       |> put_req_header("content-type", "text/plain;charset=utf-8")

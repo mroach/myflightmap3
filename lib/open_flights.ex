@@ -62,7 +62,12 @@ defmodule OpenFlights do
     |> Enum.reject(&is_nil/1)
     |> Enum.reduce(name, fn word, s -> String.replace(s, ~r/\b#{word}\b/, "") end)
     |> String.trim
-    |> case do "" -> name; generated -> generated end
+    |> case do
+      "" ->
+        name
+      generated ->
+        generated
+    end
   end
 
   @doc """

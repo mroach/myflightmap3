@@ -4,6 +4,7 @@ defmodule MyflightmapWeb.UserController do
   alias Myflightmap.Accounts
   alias Myflightmap.Accounts.User
   alias Myflightmap.Auth.Guardian
+  alias Myflightmap.Stats
 
   def index(conn, _params) do
     users = Accounts.list_users()
@@ -32,8 +33,8 @@ defmodule MyflightmapWeb.UserController do
     user = Accounts.get_user!(id)
 
     conn
-    |> assign(:summary_stats, Myflightmap.Stats.summary_for(user))
-    |> assign(:top_stats, Myflightmap.Stats.top_for(user))
+    |> assign(:summary_stats, Stats.summary_for(user))
+    |> assign(:top_stats, Stats.top_for(user))
     |> assign(:user, user)
     |> render("show.html")
   end

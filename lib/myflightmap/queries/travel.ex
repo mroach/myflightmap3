@@ -1,4 +1,12 @@
 defmodule Myflightmap.Queries.Travel do
+  @moduledoc """
+  Store standard travel-related Ecto queries together in one place.
+  This allows queries to be easily composed.
+
+  Queries in this module are primarily based on flights and airports
+  for helping to generate statistics (see `Myflightmap.Stats`)
+  """
+
   import Ecto.Query, warn: false
   alias Myflightmap.Transport.{Airline, Airport}
   alias Myflightmap.Travel.Flight

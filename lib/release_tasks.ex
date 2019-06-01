@@ -1,4 +1,6 @@
 defmodule Myflightmap.ReleaseTasks do
+  @moduledoc false
+
   @start_apps [
     :postgrex,
     :ecto,

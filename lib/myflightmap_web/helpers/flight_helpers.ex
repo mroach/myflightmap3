@@ -1,8 +1,10 @@
 defmodule MyflightmapWeb.Helpers.FlightHelpers do
+  @moduledoc false
+
   alias Myflightmap.Transport
   alias Myflightmap.Travel.Flight
+  alias MyflightmapWeb.Helpers.{DistanceHelpers, DurationHelpers}
 
-  alias MyflightmapWeb.Helpers
   import MyflightmapWeb.Helpers.AirportHelpers, only: [airport_name: 1]
 
   def seat_class_name(%Flight{seat_class: seat_class}), do: seat_class_name(seat_class)
@@ -38,12 +40,12 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
 
   def formatted_distance(flight, units \\ :km)
   def formatted_distance(%Flight{distance: distance}, units) when is_number(distance) do
-    Helpers.DistanceHelpers.format_distance(distance, units)
+    DistanceHelpers.format_distance(distance, units)
   end
   def formatted_distance(_, _), do: nil
 
   def formatted_duration(%Flight{duration: duration}) when is_number(duration) do
-    Helpers.DurationHelpers.format_duration(duration)
+    DurationHelpers.format_duration(duration)
   end
   def formatted_duration(_), do: nil
 
@@ -72,7 +74,7 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
   end
 
   def formatted_timechange(%Flight{} = flight) do
-    flight |> timezone_change() |> Helpers.DurationHelpers.format_timechange()
+    flight |> timezone_change() |> DurationHelpers.format_timechange()
   end
 
   # Timezone difference in seconds between the two datetimes

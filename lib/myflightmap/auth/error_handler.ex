@@ -2,8 +2,8 @@ defmodule Myflightmap.Auth.ErrorHandler do
   @moduledoc false
 
   import Plug.Conn
-  alias Phoenix.Controller
   alias MyflightmapWeb.Router.Helpers
+  alias Phoenix.Controller
 
   def auth_error(conn, {:unauthenticated, _reason}, _opts) do
     requested = Controller.current_path(conn)

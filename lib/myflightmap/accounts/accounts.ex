@@ -17,14 +17,19 @@ defmodule Myflightmap.Accounts do
   end
 
   def get_user_by_email(email) when is_binary(email) do
-    from(u in User, join: c in assoc(u, :credential), where: c.email == ^email)
+    query = from u in User,
+            join: c in assoc(u, :credential),
+            where: c.email == ^email
+    query
     |> Repo.one
     |> Repo.preload(:credential)
   end
 
   def get_user_by_trip_email_id(trip_email_id) when is_binary(trip_email_id) do
-    from(u in User, where: u.trip_email_id == ^trip_email_id)
-    |> Repo.one
+    query = from u in User,
+            where: u.trip_email_id == ^trip_email_id
+
+    Repo.one(query)
   end
 
   @doc """

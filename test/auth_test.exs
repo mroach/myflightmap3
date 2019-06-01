@@ -1,15 +1,15 @@
 defmodule Myflightmap.AuthTest do
   use Myflightmap.DataCase
 
-  alias Myflightmap.Auth
+  alias Myflightmap.{Accounts, Auth}
 
-  doctest Myflightmap.Auth
+  doctest Auth
 
   test "authenticate_by_email/2 with a valid username and password" do
     email = "test@example.org"
     pass = "letmein"
 
-    {:ok, %{id: user_id}} = Myflightmap.Accounts.register_user(%{
+    {:ok, %{id: user_id}} = Accounts.register_user(%{
       username: "tester",
       credential: %{
         email: email,
@@ -25,7 +25,7 @@ defmodule Myflightmap.AuthTest do
     email = "test@example.org"
     pass = "letmein"
 
-    {:ok, _user} = Myflightmap.Accounts.register_user(%{
+    {:ok, _user} = Accounts.register_user(%{
       username: "tester",
       credential: %{
         email: email,

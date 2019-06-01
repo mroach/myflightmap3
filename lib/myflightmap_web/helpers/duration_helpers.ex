@@ -1,4 +1,6 @@
 defmodule MyflightmapWeb.Helpers.DurationHelpers do
+  @moduledoc false
+
   alias Timex.Duration
 
   @doc """
