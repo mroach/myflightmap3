@@ -4,17 +4,18 @@ services:
   test:
     build:
       context: .
-      target: phoenix_base
-    command: mix test
+      target: builder
+    command: mix do test
     environment:
       DB_HOST: db
       DB_USER: app
       DB_PASS: letmein
+      MIX_ENV: test
     depends_on:
       - db
 
   db:
-    image: postgres:10-alpine
+    image: postgres:11-alpine
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: letmein
