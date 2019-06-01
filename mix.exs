@@ -43,7 +43,7 @@ defmodule Myflightmap.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:countries, "~> 1.5"},
-      # Date/time parsing and formatting. TImezone conversions.
+      # Date/time parsing and formatting. Timezone conversions.
       {:timex, "~> 3.1"},
       {:hashids, "~> 2.0"},
 

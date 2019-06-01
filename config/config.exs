@@ -29,6 +29,9 @@ config :tesla, adapter: Tesla.Adapter.Hackney
 config :myflightmap, Myflightmap.Travel.WorldmateTripImporter,
   valid_domains: ~w(trips.myflightmap.com)
 
+config :myflightmap, Myflightmap.UserEmailId,
+  salt: "saltysalt"
+
 config :myflightmap, Myflightmap.Auth.Guardian,
   issuer: "myflightmap",
   secret_key: "nnMP2E/21SwWTWBQnDDhPfW7q4TddFE17sBhpLOLJ28U5V0znMs7Bzkh76Hd5Ft5"
