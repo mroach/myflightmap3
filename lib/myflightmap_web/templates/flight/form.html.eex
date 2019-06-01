@@ -1,98 +1,126 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
   <%= if @changeset.action do %>
-    <p class="alert alert--warning">
+    <p class="message is-danger">
       Oops, something went wrong! Please check the errors below.
     </p>
   <% end %>
 
-  <div class="row">
-    <div class="column">
-      <%= label f, :flight_code %>
-      <%= text_input f, :flight_code %>
+  <div class="two fields">
+    <div class="field">
+      <label class="label"><%= label f, :flight_code %></label>
+      <div class="control">
+        <%= text_input f, :flight_code, class: "input" %>
+      </div>
       <%= error_tag f, :flight_code %>
     </div>
-    <div class="column">
-      <%= label f, :airline_id %>
-      <%= select f, :airline_id, airline_options(), prompt: "-- Pick --" %>
+    <div class="field">
+      <label class="label"><%= label f, :airline_id %></label>
+      <div class="select">
+        <%= select f, :airline_id, airline_options(), prompt: "-- Pick --" %>
+      </div>
       <%= error_tag f, :airline_id %>
     </div>
   </div>
 
-  <div class="row">
-    <div class="column">
-      <%= label f, :depart_airport_id %>
-      <%= select f, :depart_airport_id, airport_options(), prompt: "-- Pick --" %>
+  <div class="two fields">
+    <div class="field">
+      <label class="label"><%= label f, :depart_airport_id %></label>
+      <div class="select">
+        <%= select f, :depart_airport_id, airport_options(), prompt: "-- Pick --" %>
+      </div>
       <%= error_tag f, :depart_airport_id %>
     </div>
 
-    <div class="column">
-      <%= label f, :arrive_airport_id %>
-      <%= select f, :arrive_airport_id, airport_options(), prompt: "-- Pick --" %>
+    <div class="field">
+      <label class="label"><%= label f, :arrive_airport_id %></label>
+      <div class="select">
+        <%= select f, :arrive_airport_id, airport_options(), prompt: "-- Pick --" %>
+      </div>
       <%= error_tag f, :arrive_airport_id %>
     </div>
   </div>
 
-  <div class="row">
-    <div class="column">
-      <%= label f, :depart_date %>
-      <%= date_input f, :depart_date %>
+  <div class="four fields">
+    <div class="field">
+      <label class="label"><%= label f, :depart_date %></label>
+      <div class="control">
+        <%= date_input f, :depart_date, class: "input" %>
+      </div>
       <%= error_tag f, :depart_date %>
     </div>
-    <div class="column">
-      <%= label f, :depart_time %>
-      <%= time_input f, :depart_time %>
+    <div class="field">
+      <label class="label"><%= label f, :depart_time %></label>
+      <div class="control">
+        <%= time_input f, :depart_time, class: "input" %>
+      </div>
       <%= error_tag f, :depart_time %>
     </div>
-    <div class="column">
-      <%= label f, :arrive_date %>
-      <%= date_input f, :arrive_date %>
+    <div class="field">
+      <label class="label"><%= label f, :arrive_date %></label>
+      <div class="control">
+        <%= date_input f, :arrive_date, class: "input" %>
+      </div>
       <%= error_tag f, :arrive_date %>
     </div>
 
-    <div class="column">
-      <%= label f, :arrive_time %>
-      <%= time_input f, :arrive_time %>
+    <div class="field">
+      <label class="label"><%= label f, :arrive_time %></label>
+      <div class="control">
+        <%= time_input f, :arrive_time, class: "input" %>
+      </div>
       <%= error_tag f, :arrive_time %>
     </div>
   </div>
 
-  <div class="row">
-    <div class="column">
-      <%= label f, :seat_class %>
-      <%= select f, :seat_class, seat_class_options() %>
+  <div class="three fields">
+    <div class="field">
+      <label class="label"><%= label f, :seat_class %></label>
+      <div class="select">
+        <%= select f, :seat_class, seat_class_options() %>
+      </div>
       <%= error_tag f, :seat_class %>
     </div>
-    <div class="column">
-      <%= label f, :seat %>
-      <%= text_input f, :seat %>
+    <div class="field">
+      <label class="label"><%= label f, :seat %></label>
+      <div class="control">
+        <%= text_input f, :seat, class: "input" %>
+      </div>
       <%= error_tag f, :seat %>
     </div>
-    <div class="column">
-      <%= label f, :confirmation_number %>
-      <%= text_input f, :confirmation_number %>
+    <div class="field">
+      <label class="label"><%= label f, :confirmation_number %></label>
+      <div class="control">
+        <%= text_input f, :confirmation_number, class: "input" %>
+      </div>
       <%= error_tag f, :confirmation_number %>
     </div>
   </div>
 
-  <div class="row">
-    <div class="column">
-      <%= label f, :aircraft_type_id %>
-      <%= select f, :aircraft_type_id, aircraft_type_options(), prompt: "-- Pick --" %>
+  <div class="three fields">
+    <div class="field">
+      <label class="label"><%= label f, :aircraft_type_id %></label>
+      <div class="select">
+        <%= select f, :aircraft_type_id, aircraft_type_options(), prompt: "-- Pick --" %>
+      </div>
       <%= error_tag f, :aircraft_type_id %>
     </div>
-    <div class="column">
-      <%= label f, :aircraft_registration %>
-      <%= text_input f, :aircraft_registration %>
+    <div class="field">
+      <label class="label"><%= label f, :aircraft_registration %></label>
+      <div class="control">
+        <%= text_input f, :aircraft_registration, class: "input" %>
+      </div>
       <%= error_tag f, :aircraft_registration %>
     </div>
-    <div class="column">
-      <%= label f, :trip_id %>
-      <%= select f, :trip_id, trip_options(@conn.assigns.current_user), prompt: "-- Pick --" %>
+    <div class="field">
+      <label class="label"><%= label f, :trip_id %></label>
+      <div class="select">
+        <%= select f, :trip_id, trip_options(@conn.assigns.current_user), prompt: "-- Pick --" %>
+      </div>
       <%= error_tag f, :trip_id %>
     </div>
   </div>
 
   <div>
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= submit "Submit", class: "button is-primary" %>
   </div>
 <% end %>

@@ -1,43 +1,40 @@
-<h2>
-  <span class="airport iata_code"><%= @airport.iata_code%></span> <%= @airport.common_name %>
-</h2>
+<section class="hero is-primary">
+  <div class="hero-body">
+    <h1 class="title">
+      <%= @airport.iata_code%></span> - <%= @airport.common_name %>
+    </h1>
+    <h2 class="subtitle is-italic">
+      <%= @airport.full_name %>
+    </h2>
+    <h2 class="subtitle">
+      <%= @airport.city %>, <%= country_name(@airport.country) %> <%= emoji_flag(@airport.country) %>
+    </h2>
+  </div>
+</section>
 
-<ul>
-  <li>
-    <strong><%= gettext("ICAO Code") %>:</strong>
-    <%= @airport.icao_code %>
-  </li>
+<table class="table">
+  <tr>
+    <th><%= gettext("ICAO Code") %></th>
+    <td><%= @airport.icao_code %></td>
+  </tr>
+  <tr>
+    <th><%= gettext("Metro Code") %></th>
+    <td><%= @airport.metro_code || "<None>" %></td>
+  </tr>
+  <tr>
+    <th><%= gettext("Timezone") %></th>
+    <td>
+      <%= @airport.timezone %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= gettext("Coordinates") %></th>
+    <td><%= @airport.coordinates %></td>
+  </tr>
+  <tr>
+    <th><%= gettext("Status") %></th>
+    <td><%= status(@airport) %></td>
+  </tr>
+</table>
 
-  <li>
-    <strong>Metro code:</strong>
-    <%= @airport.metro_code %>
-  </li>
-
-  <li>
-    <strong>Location:</strong>
-    <%= @airport.city %>, <%= country_name(@airport.country) %>
-  </li>
-
-  <li>
-    <strong>Full name:</strong>
-    <%= @airport.full_name %>
-  </li>
-
-  <li>
-    <strong>Timezone:</strong>
-    <%= @airport.timezone %>
-  </li>
-
-  <li>
-    <strong>Coordinates:</strong>
-    <%= @airport.coordinates %>
-  </li>
-
-  <li>
-    <strong>Status:</strong>
-    <%= status(@airport) %>
-  </li>
-</ul>
-
-<span><%= link "Edit", to: airport_path(@conn, :edit, @airport) %></span>
-<span><%= link "Back", to: airport_path(@conn, :index) %></span>
+<div><%= link "Edit", to: airport_path(@conn, :edit, @airport), class: "button is-link" %></div>

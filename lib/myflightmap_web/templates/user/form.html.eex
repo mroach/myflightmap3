@@ -17,6 +17,12 @@
     <%= error_tag f, :username %>
   </div>
 
+  <div class="form-group">
+    <%= label f, :trip_email_id %>
+    <%= text_input f, :trip_email_id %>
+    <%= error_tag f, :trip_email_id %>
+  </div>
+
   <hr />
 
   <%= inputs_for f, :credential, fn cred -> %>
