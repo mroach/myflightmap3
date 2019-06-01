@@ -11,7 +11,7 @@ defmodule Myflightmap.Travel.Trip do
 
   schema "trips" do
     field :name, :string
-    field :privacy, :string
+    field :privacy, :string, default: "public"
     field :purpose, :string
     field :start_date, :date
     field :end_date, :date

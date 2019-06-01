@@ -59,6 +59,18 @@ defmodule Myflightmap.Travel do
     |> Repo.preload([:user, flights: @preload_flight_assocs])
   end
 
+  def get_or_create_trip_by_name(%User{} = user, name) when is_binary(name) do
+    Trip
+    |> where([t], t.user_id == ^user.id and ilike(t.name, ^name))
+    |> Repo.one
+    |> case do
+      %Trip{} = trip ->
+        {:ok, trip}
+      nil ->
+        create_trip(user, %{name: name})
+    end
+  end
+
   @doc """
   Creates a trip for the given user.
 

@@ -6,7 +6,7 @@ defmodule Myflightmap.Accounts do
   import Ecto.Query, warn: false
   alias Myflightmap.Accounts.User
   alias Myflightmap.Repo
-  
+
   @doc """
   Register a new user and create a `Credential`
   """
@@ -20,6 +20,11 @@ defmodule Myflightmap.Accounts do
     from(u in User, join: c in assoc(u, :credential), where: c.email == ^email)
     |> Repo.one
     |> Repo.preload(:credential)
+  end
+
+  def get_user_by_trip_email_id(trip_email_id) when is_binary(trip_email_id) do
+    from(u in User, where: u.trip_email_id == ^trip_email_id)
+    |> Repo.one
   end
 
   @doc """
@@ -67,7 +72,24 @@ defmodule Myflightmap.Accounts do
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()
+    |> case do
+      {:ok, user} ->
+        maybe_set_user_trip_email_id(user)
+      err ->
+        err
+    end
   end
+
+  @doc """
+  If the given `User` doesn't have a `trip_email_id` set, generate one using
+  the `Myflightmap.UserEmailId.encode/1` generator.
+  """
+  @spec maybe_set_user_trip_email_id(User.t()) :: {:ok, User.t()}
+  def maybe_set_user_trip_email_id(%User{id: uid, trip_email_id: nil} = user) do
+    email_id = Myflightmap.UserEmailId.encode(uid)
+    update_user(user, %{trip_email_id: email_id})
+  end
+  def maybe_set_user_trip_email_id(%User{} = user), do: {:ok, user}
 
   @doc """
   Updates a user.

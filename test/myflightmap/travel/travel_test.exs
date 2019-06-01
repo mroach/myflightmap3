@@ -54,6 +54,18 @@ defmodule Myflightmap.TravelTest do
       trip = insert(:trip)
       assert %Ecto.Changeset{} = Travel.change_trip(trip)
     end
+
+    test "get_or_create_trip_by_name/2 returns an existing trip when one exists" do
+      trip = insert(:trip)
+      trip_id = trip.id
+      assert {:ok, %Trip{id: ^trip_id}} = Travel.get_or_create_trip_by_name(trip.user, trip.name)
+    end
+
+    test "get_or_create_trip_by_name/2 returns a new trip when one doesn't exist" do
+      user = insert(:user)
+      name = "super fun trip"
+      assert {:ok, %Trip{user: user, name: ^name}} = Travel.get_or_create_trip_by_name(user, name)
+    end
   end
 
   describe "flights" do
@@ -82,6 +94,7 @@ defmodule Myflightmap.TravelTest do
       user = insert(:user)
       params = params_with_assocs(:flight) |> with_arrival_time
       assert {:ok, %Flight{} = flight} = Travel.create_flight(user, params)
+
       assert flight.flight_code == params.flight_code
       assert flight.distance != nil
       assert flight.duration != nil

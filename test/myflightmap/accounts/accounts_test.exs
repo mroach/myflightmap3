@@ -23,6 +23,17 @@ defmodule Myflightmap.AccountsTest do
       assert {:ok, %User{} = user} = Accounts.create_user(params_for(:user))
     end
 
+    test "create_user/1 with valid data creates a user and assigns trip email id" do
+      {:ok, %User{} = user} = Accounts.create_user(params_for(:user))
+      refute is_nil(user.trip_email_id)
+    end
+
+    test "create_user/1 does not override provided trip email id" do
+      trip_email_id = "asdqwe123"
+      {:ok, %User{} = user} = Accounts.create_user(params_for(:user, trip_email_id: trip_email_id))
+      assert user.trip_email_id == trip_email_id
+    end
+
     test "create_user/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Accounts.create_user(@invalid_attrs)
     end
