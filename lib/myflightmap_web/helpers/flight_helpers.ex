@@ -1,7 +1,6 @@
 defmodule MyflightmapWeb.Helpers.FlightHelpers do
   alias Myflightmap.Transport
   alias Myflightmap.Travel.Flight
-  alias Timex.Duration
 
   alias MyflightmapWeb.Helpers
   import MyflightmapWeb.Helpers.AirportHelpers, only: [airport_name: 1]
@@ -13,7 +12,7 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
     |> Enum.find(fn %{value: value} -> value == seat_class end)
     |> case do
       %{name: name} -> name
-      _ -> nil
+      _ -> seat_class
     end
   end
 
@@ -37,13 +36,16 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
   defp format_arrival_day_offset(offset) when offset > 0, do: "+#{offset}"
   defp format_arrival_day_offset(offset) when offset < 0, do: "+#{offset}"
 
-  def formatted_distance(%Flight{distance: distance}, units \\ :km) when is_number(distance) do
+  def formatted_distance(flight, units \\ :km)
+  def formatted_distance(%Flight{distance: distance}, units) when is_number(distance) do
     Helpers.DistanceHelpers.format_distance(distance, units)
   end
+  def formatted_distance(_, _), do: nil
 
-  def formatted_duration(%Flight{duration: duration}) do
+  def formatted_duration(%Flight{duration: duration}) when is_number(duration) do
     Helpers.DurationHelpers.format_duration(duration)
   end
+  def formatted_duration(_), do: nil
 
   def airline_name(%Flight{airline: %{name: name}}), do: name
   def airline_name(_), do: nil
