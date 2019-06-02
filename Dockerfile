@@ -7,7 +7,7 @@ FROM elixir:1.8-alpine AS phoenix_base
 
 # Need inotify for watchers to work
 # Need build-base to build native extensions (bcrypt requires it)
-RUN apk --no-cache add inotify-tools build-base
+RUN apk --no-cache add inotify-tools build-base git
 
 WORKDIR /app
 
