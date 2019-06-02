@@ -35,7 +35,8 @@ config :myflightmap, MyflightmapWeb.Endpoint,
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/myflightmap_web/views/.*(ex)$},
-      ~r{lib/myflightmap_web/templates/.*(eex)$}
+      ~r{lib/myflightmap_web/templates/.*(eex)$},
+      ~r{lib/myflightmap_web/live/.*(ex)$}
     ]
   ]
 

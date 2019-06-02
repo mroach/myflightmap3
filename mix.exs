@@ -46,6 +46,7 @@ defmodule Myflightmap.Mixfile do
       # Date/time parsing and formatting. Timezone conversions.
       {:timex, "~> 3.1"},
       {:hashids, "~> 2.0"},
+      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
 
       # XML parser. Needed for handling Worldmate trip parsing responses
       {:sweet_xml, "~> 0.6.5"},

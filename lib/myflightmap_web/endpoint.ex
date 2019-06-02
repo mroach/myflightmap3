@@ -2,6 +2,7 @@ defmodule MyflightmapWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :myflightmap
 
   socket "/socket", MyflightmapWeb.UserSocket
+  socket "/live", Phoenix.LiveView.Socket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
