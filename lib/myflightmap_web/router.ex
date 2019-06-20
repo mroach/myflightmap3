@@ -44,6 +44,8 @@ defmodule MyflightmapWeb.Router do
     resources "/flights", FlightController
     resources "/users", UserController, except: [:new, :create]
     resources "/trips", TripController
+
+    live "/airports/search", AirportSearchLive
   end
 
   scope "/system", MyflightmapWeb do

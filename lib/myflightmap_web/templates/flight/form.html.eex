@@ -5,6 +5,8 @@
     </p>
   <% end %>
 
+  <%= live_render(@conn, MyflightmapWeb.AirportSearchLive) %>
+
   <div class="two fields">
     <div class="field">
       <label class="label"><%= label f, :flight_code %></label>

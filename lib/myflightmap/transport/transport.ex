@@ -220,6 +220,22 @@ defmodule Myflightmap.Transport do
   """
   def get_airport!(id), do: Repo.get!(Airport, id)
 
+  @doc """
+  Get an airport by its three-character IATA `code`. Any `code` that's not
+  exactly 3 bytes long (they're only ever basic ASCII) is not an IATA
+  code and immediately returns `nil`.
+
+  Returns either the single `Airport` or `nil`.
+  """
+  @spec get_airport_by_iata(String.t()) :: Airport.t() | nil
+  def get_airport_by_iata(code) when byte_size(code) == 3 do
+    # Codes are stored in the database in all caps, so upcase to avoid case match issues
+    code = code |> String.upcase
+
+    Repo.get_by(Airport, iata_code: code)
+  end
+  def get_airport_by_iata(_), do: nil
+
   def get_airport_by_iata!(code), do: Repo.get_by!(Airport, iata_code: code)
 
   def get_airport_by_icao!(code), do: Repo.get_by!(Airport, icao_code: code)
