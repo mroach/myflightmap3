@@ -9,7 +9,7 @@
     "jquery": "^3.4.1",
     "phoenix": "~1.4",
     "phoenix_html": "~2.13",
-    "phoenix_live_view": "0.1.0-dev"
+    "phoenix_live_view": "0.13.3"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
