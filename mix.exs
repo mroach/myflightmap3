@@ -51,7 +51,7 @@ defmodule Myflightmap.Mixfile do
       {:sweet_xml, "~> 0.6.5"},
       {:distillery, "~> 2.0"},
       {:hackney, "~> 1.14"},
-      {:tesla, "~> 1.2.1"},
+      {:tesla, "~> 1.4.0"},
       {:nimble_csv, "~> 0.3"},
 
       # Authentication
