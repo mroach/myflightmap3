@@ -1,11 +1,11 @@
 FROM node:12-slim
 
-WORKDIR /app/assets
+WORKDIR /opt/app/assets
 
 COPY assets/package.json ./
 
 RUN npm install
 
-ENV PATH="${PATH}:/app/assets/node_modules/.bin"
+ENV PATH="${PATH}:/opt/app/assets/node_modules/.bin"
 
 CMD ["npm", "run", "build"]

@@ -9,7 +9,7 @@ FROM elixir:1.8-alpine AS phoenix_base
 # Need build-base to build native extensions (bcrypt requires it)
 RUN apk --no-cache add inotify-tools build-base
 
-WORKDIR /app
+WORKDIR /opt/app
 
 RUN mix do local.hex --force, local.rebar --force
 
@@ -60,9 +60,9 @@ EXPOSE 4000
 # bash and openssl are required to run the release
 RUN apk add --no-cache bash openssl
 
-WORKDIR /app
+WORKDIR /opt/app
 
-COPY --from=release_builder /app/_build/prod/rel/myflightmap/ .
+COPY --from=release_builder /opt/app/_build/prod/rel/myflightmap/ .
 
 HEALTHCHECK CMD wget -q -O /dev/null http://localhost:4000/system/alive || exit 1
 

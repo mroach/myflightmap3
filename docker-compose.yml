@@ -17,9 +17,9 @@ services:
       dockerfile: "Dockerfile.webpack"
     command: npm run watch
     volumes:
-      - ".:/app"
-      - "static:/app/priv/static"
-      - node_modules:/app/assets/node_modules
+      - .:/opt/app
+      - static:/opt/app/priv/static
+      - node_modules:/opt/app/assets/node_modules
 
   app:
     build:
@@ -36,8 +36,8 @@ services:
       DB_USER: app
       DB_PASS: letmein
     volumes:
-      - .:/app
-      - "static:/app/priv/static"
+      - .:/opt/app
+      - static:/opt/app/priv/static
     depends_on:
       - db
       - webpack
