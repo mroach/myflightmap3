@@ -9,6 +9,8 @@ FROM elixir:1.8-alpine AS phoenix_base
 # Need build-base to build native extensions (bcrypt requires it)
 RUN apk --no-cache add inotify-tools build-base
 
+RUN mkdir -p /opt/mix/build /opt/mix/deps
+
 WORKDIR /opt/app
 
 RUN mix do local.hex --force, local.rebar --force

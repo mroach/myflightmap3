@@ -35,9 +35,13 @@ services:
       DB_HOST: db
       DB_USER: app
       DB_PASS: letmein
+      MIX_BUILD_PATH: /opt/mix/build
+      MIX_DEPS_PATH: /opt/mix/deps
     volumes:
       - .:/opt/app
       - static:/opt/app/priv/static
+      - mix_build:/opt/mix/build
+      - mix_deps:/opt/mix/deps
     depends_on:
       - db
       - webpack
@@ -49,3 +53,5 @@ volumes:
       device: "tmpfs"
       type: "tmpfs"
   node_modules:
+  mix_build:
+  mix_deps:
