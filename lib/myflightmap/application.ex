@@ -6,6 +6,7 @@ defmodule Myflightmap.Application do
   def start(_type, _args) do
     children = [
       Myflightmap.Repo,
+      {Phoenix.PubSub, name: MyflightmapWeb.PubSub},
       MyflightmapWeb.Endpoint
     ]
 

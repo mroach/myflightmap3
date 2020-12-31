@@ -13,7 +13,8 @@ config :myflightmap,
 config :myflightmap, MyflightmapWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "CMzrEz4+CMGzENGalD8xyRPCv25m7h1chEtLORG7dQz7gzNhD5YzKSojRyDl9LLQ",
-  render_errors: [view: MyflightmapWeb.ErrorView, accepts: ~w(html json)]
+  render_errors: [view: MyflightmapWeb.ErrorView, accepts: ~w(html json)],
+  pubsub_server: MyflightmapWeb.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
