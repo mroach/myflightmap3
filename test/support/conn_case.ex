@@ -15,12 +15,12 @@ defmodule MyflightmapWeb.ConnCase do
 
   use ExUnit.CaseTemplate
   alias Ecto.Adapters.SQL.Sandbox
-  alias Phoenix.ConnTest
 
   using do
     quote do
       # Import conveniences for testing with connections
-      use Phoenix.ConnTest
+      import Plug.Conn
+      import Phoenix.ConnTest
       alias MyflightmapWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
@@ -36,9 +36,9 @@ defmodule MyflightmapWeb.ConnCase do
       Sandbox.mode(Myflightmap.Repo, {:shared, self()})
     end
 
-    conn = ConnTest.build_conn()
+    conn = Phoenix.ConnTest.build_conn()
     authed_conn = guardian_login(conn)
-    {:ok, conn: ConnTest.build_conn(), authed_conn: authed_conn}
+    {:ok, conn: Phoenix.ConnTest.build_conn(), authed_conn: authed_conn}
   end
 
   def guardian_login(conn) do

@@ -5,7 +5,7 @@ defmodule Point do
   should be added to constrain the latitude and longitude (x and y).
   """
 
-  @behaviour Ecto.Type
+  use Ecto.Type
 
   @enforce_keys [:x, :y]
 

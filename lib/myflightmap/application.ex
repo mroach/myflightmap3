@@ -1,25 +1,12 @@
 defmodule Myflightmap.Application do
-  @moduledoc """
-  Entry point to the application
-  """
+  @moduledoc false
 
   use Application
-  alias Myflightmap.Repo
-  alias MyflightmapWeb.Endpoint
 
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
   def start(_type, _args) do
-    import Supervisor.Spec
-
-    # Define workers and child supervisors to be supervised
     children = [
-      # Start the Ecto repository
-      supervisor(Repo, []),
-      # Start the endpoint when the application starts
-      supervisor(Endpoint, []),
-      # Start your own worker by calling: Myflightmap.Worker.start_link(arg1, arg2, arg3)
-      # worker(Myflightmap.Worker, [arg1, arg2, arg3]),
+      Myflightmap.Repo,
+      MyflightmapWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -31,7 +18,7 @@ defmodule Myflightmap.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    Endpoint.config_change(changed, removed)
+    MyflightmapWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

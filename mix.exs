@@ -5,7 +5,7 @@ defmodule Myflightmap.Mixfile do
     [
       app: :myflightmap,
       version: "0.0.1",
-      elixir: "~> 1.4",
+      elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
@@ -33,25 +33,24 @@ defmodule Myflightmap.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:ecto_sql, "~> 3.0"},
-      {:jason, "~> 1.1"},
-      {:phoenix, "~> 1.4.3"},
-      {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_html, "~> 2.10"},
-      {:phoenix_pubsub, "~> 1.0"},
+      {:ecto_sql, "~> 3.5"},
+      {:jason, "~> 1.2"},
+      {:phoenix, "~> 1.5.7"},
+      {:phoenix_ecto, "~> 4.2"},
+      {:phoenix_html, "~> 2.14"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
-      {:countries, "~> 1.5"},
+      {:countries, "~> 1.6"},
       # Date/time parsing and formatting. Timezone conversions.
-      {:timex, "~> 3.1"},
+      {:timex, "~> 3.6"},
       {:hashids, "~> 2.0"},
 
       # XML parser. Needed for handling Worldmate trip parsing responses
       {:sweet_xml, "~> 0.6.5"},
       {:distillery, "~> 2.0"},
       {:hackney, "~> 1.14"},
-      {:tesla, "~> 1.2.1"},
+      {:tesla, "~> 1.4"},
       {:nimble_csv, "~> 0.3"},
 
       # Authentication
@@ -59,8 +58,8 @@ defmodule Myflightmap.Mixfile do
       {:guardian, "~> 1.0"},
 
       # limited envs:
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:phoenix_live_reload, "~> 1.3", only: :dev},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
       {:ex_machina, "~> 2.2", only: :test},
       {:stream_data, "~> 0.4", only: :test}
