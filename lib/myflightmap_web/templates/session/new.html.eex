@@ -3,7 +3,7 @@
 <div class="columns">
 
   <div class="column">
-    <%= form_for @conn, session_path(@conn, :create), [method: "post", as: :session], fn f -> %>
+    <%= form_for @conn, Routes.session_path(@conn, :create), [method: "post", as: :session], fn f -> %>
       <%= hidden_input f, :return_to, value: @return_to %>
 
       <div class="field">
@@ -24,7 +24,7 @@
   </div>
 
   <div class="column">
-    <%= link("Sign up", to: user_path(@conn, :new), class: "button is-link is-medium") %>
+    <%= link("Sign up", to: Routes.user_path(@conn, :new), class: "button is-link is-medium") %>
   </div>
 
 </div>

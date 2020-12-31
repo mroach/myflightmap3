@@ -23,7 +23,7 @@ defmodule MyflightmapWeb.UserController do
         |> put_flash(:info, "User created successfully.")
         |> Guardian.Plug.sign_in(user)
         |> assign(:current_user, user)
-        |> redirect(to: user_path(conn, :show, user))
+        |> redirect(to: Routes.user_path(conn, :show, user))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -52,7 +52,7 @@ defmodule MyflightmapWeb.UserController do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: user_path(conn, :show, user))
+        |> redirect(to: Routes.user_path(conn, :show, user))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)
     end
@@ -64,6 +64,6 @@ defmodule MyflightmapWeb.UserController do
 
     conn
     |> put_flash(:info, "User deleted successfully.")
-    |> redirect(to: user_path(conn, :index))
+    |> redirect(to: Routes.user_path(conn, :index))
   end
 end

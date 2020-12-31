@@ -1,6 +1,6 @@
 <h2>Users</h2>
 
-<div><%= link "New User", to: user_path(@conn, :new) %></div>
+<div><%= link "New User", to: Routes.user_path(@conn, :new) %></div>
 
 <table class="table">
   <thead>
@@ -13,7 +13,7 @@
 <%= for user <- @users do %>
     <tr>
       <td><%= user.name %></td>
-      <td><%= link(user.username, to: user_path(@conn, :show, user)) %></td>
+      <td><%= link(user.username, to: Routes.user_path(@conn, :show, user)) %></td>
     </tr>
 <% end %>
   </tbody>

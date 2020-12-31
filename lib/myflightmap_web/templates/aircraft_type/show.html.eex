@@ -28,5 +28,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: aircraft_type_path(@conn, :edit, @aircraft_type) %></span>
-<span><%= link "Back", to: aircraft_type_path(@conn, :index) %></span>
+<span><%= link "Edit", to: Routes.aircraft_type_path(@conn, :edit, @aircraft_type) %></span>
+<span><%= link "Back", to: Routes.aircraft_type_path(@conn, :index) %></span>

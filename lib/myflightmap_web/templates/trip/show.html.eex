@@ -10,7 +10,7 @@
 <%= for flight <- @trip.flights do %>
   <tr>
     <td>
-      <%= link date_time_format(flight.depart_date, "%d %B"), to: flight_path(@conn, :show, flight) %>
+      <%= link date_time_format(flight.depart_date, "%d %B"), to: Routes.flight_path(@conn, :show, flight) %>
     </td>
     <td>
       <div>
@@ -31,4 +31,4 @@
 <% end %>
 </table>
 
-<span><%= link "Edit", to: trip_path(@conn, :edit, @trip), class: "button is-link" %></span>
+<span><%= link "Edit", to: Routes.trip_path(@conn, :edit, @trip), class: "button is-link" %></span>

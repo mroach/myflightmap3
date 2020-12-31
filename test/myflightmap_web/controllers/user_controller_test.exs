@@ -7,14 +7,14 @@ defmodule MyflightmapWeb.UserControllerTest do
 
   describe "index" do
     test "lists all users", %{authed_conn: conn} do
-      res = get conn, user_path(conn, :index)
+      res = get conn, Routes.user_path(conn, :index)
       assert html_response(res, 200) =~ "Users"
     end
   end
 
   describe "new user" do
     test "renders form", %{conn: conn} do
-      conn = get conn, user_path(conn, :new)
+      conn = get conn, Routes.user_path(conn, :new)
       assert html_response(conn, 200) =~ "New User"
     end
   end
@@ -22,17 +22,17 @@ defmodule MyflightmapWeb.UserControllerTest do
   describe "create user" do
     test "redirects to show when data is valid", %{authed_conn: conn} do
       user_params = params_for(:user)
-      res = post conn, user_path(conn, :create), user: user_params
+      res = post conn, Routes.user_path(conn, :create), user: user_params
 
       assert %{id: id} = redirected_params(res)
-      assert redirected_to(res) == user_path(conn, :show, id)
+      assert redirected_to(res) == Routes.user_path(conn, :show, id)
 
-      conn = get conn, user_path(conn, :show, id)
+      conn = get conn, Routes.user_path(conn, :show, id)
       assert html_response(conn, 200) =~ String.downcase(user_params.username)
     end
 
     test "renders errors when data is invalid", %{authed_conn: conn} do
-      conn = post conn, user_path(conn, :create), user: @invalid_attrs
+      conn = post conn, Routes.user_path(conn, :create), user: @invalid_attrs
       assert html_response(conn, 200) =~ "New User"
     end
   end
@@ -41,7 +41,7 @@ defmodule MyflightmapWeb.UserControllerTest do
     setup [:create_user]
 
     test "renders form for editing chosen user", %{authed_conn: conn, user: user} do
-      conn = get conn, user_path(conn, :edit, user)
+      conn = get conn, Routes.user_path(conn, :edit, user)
       assert html_response(conn, 200) =~ "Edit User"
     end
   end
@@ -51,15 +51,15 @@ defmodule MyflightmapWeb.UserControllerTest do
 
     test "redirects when data is valid", %{authed_conn: conn, user: user} do
       update_attrs = %{username: "new name"}
-      res = put conn, user_path(conn, :update, user), user: update_attrs
-      assert redirected_to(res) == user_path(conn, :show, user)
+      res = put conn, Routes.user_path(conn, :update, user), user: update_attrs
+      assert redirected_to(res) == Routes.user_path(conn, :show, user)
 
-      res = get conn, user_path(conn, :show, user)
+      res = get conn, Routes.user_path(conn, :show, user)
       assert html_response(res, 200) =~ "new name"
     end
 
     test "renders errors when data is invalid", %{authed_conn: conn, user: user} do
-      conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
+      conn = put conn, Routes.user_path(conn, :update, user), user: @invalid_attrs
       assert html_response(conn, 200) =~ "Edit User"
     end
   end
@@ -68,10 +68,10 @@ defmodule MyflightmapWeb.UserControllerTest do
     setup [:create_user]
 
     test "deletes chosen user", %{authed_conn: conn, user: user} do
-      res = delete conn, user_path(conn, :delete, user)
-      assert redirected_to(res) == user_path(conn, :index)
+      res = delete conn, Routes.user_path(conn, :delete, user)
+      assert redirected_to(res) == Routes.user_path(conn, :index)
       assert_error_sent 404, fn ->
-        get conn, user_path(conn, :show, user)
+        get conn, Routes.user_path(conn, :show, user)
       end
     end
   end

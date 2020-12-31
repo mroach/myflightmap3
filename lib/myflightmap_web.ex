@@ -20,9 +20,10 @@ defmodule MyflightmapWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: MyflightmapWeb
+
       import Plug.Conn
-      import MyflightmapWeb.Router.Helpers
       import MyflightmapWeb.Gettext
+      alias MyflightmapWeb.Router.Helpers, as: Routes
     end
   end
 
@@ -37,9 +38,10 @@ defmodule MyflightmapWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import MyflightmapWeb.Router.Helpers
       import MyflightmapWeb.ErrorHelpers
       import MyflightmapWeb.Gettext
+
+      alias MyflightmapWeb.Router.Helpers, as: Routes
     end
   end
 

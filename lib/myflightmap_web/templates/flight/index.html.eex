@@ -1,6 +1,6 @@
 <h2 class="title">Flights</h2>
 
-<div><%= link "New Flight", to: flight_path(@conn, :new), class: "button is-link" %></div>
+<div><%= link "New Flight", to: Routes.flight_path(@conn, :new), class: "button is-link" %></div>
 
 <table class="table">
   <thead>
@@ -16,11 +16,11 @@
 <%= for flight <- @flights do %>
     <tr>
       <td>
-        <div><%= link flight.user.username, to: user_path(@conn, :show, flight.user_id) %></div>
-        <div><%= if flight.trip_id, do: link flight.trip.name, to: trip_path(@conn, :show, flight.trip_id) %></div>
+        <div><%= link flight.user.username, to: Routes.user_path(@conn, :show, flight.user_id) %></div>
+        <div><%= if flight.trip_id, do: link flight.trip.name, to: Routes.trip_path(@conn, :show, flight.trip_id) %></div>
       </td>
       <td>
-        <%= link date_time_format(flight.depart_date, "%Y-%m-%d"), to: flight_path(@conn, :show, flight) %>
+        <%= link date_time_format(flight.depart_date, "%Y-%m-%d"), to: Routes.flight_path(@conn, :show, flight) %>
         <div>
           <%= date_time_format flight.depart_time, "%H:%M" %> -
           <%= date_time_format flight.arrive_time, "%H:%M" %> <%= formatted_arrival_day_offset(flight) %>

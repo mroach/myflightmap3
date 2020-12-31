@@ -28,4 +28,4 @@
   </tr>
 </table>
 
-<div><%= link "Edit", to: airline_path(@conn, :edit, @airline), class: "button is-link" %></div>
+<div><%= link "Edit", to: Routes.airline_path(@conn, :edit, @airline), class: "button is-link" %></div>

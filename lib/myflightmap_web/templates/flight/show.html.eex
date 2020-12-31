@@ -72,9 +72,9 @@
 
   <li>
     <strong>Trip:</strong>
-    <%= if @flight.trip, do: link @flight.trip.name, to: trip_path(@conn, :show, @flight.trip.id) %>
+    <%= if @flight.trip, do: link @flight.trip.name, to: Routes.trip_path(@conn, :show, @flight.trip.id) %>
   </li>
 
 </ul>
 
-<div><%= link "Edit", to: flight_path(@conn, :edit, @flight), class: "button is-link" %></div>
+<div><%= link "Edit", to: Routes.flight_path(@conn, :edit, @flight), class: "button is-link" %></div>

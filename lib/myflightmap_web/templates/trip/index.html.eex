@@ -1,6 +1,6 @@
 <h2 class="title">Trips</h2>
 
-<div><%= link "New Trip", to: trip_path(@conn, :new), class: "button is-link" %></div>
+<div><%= link "New Trip", to: Routes.trip_path(@conn, :new), class: "button is-link" %></div>
 
 <table class="ui table">
   <thead>
@@ -15,8 +15,8 @@
   <tbody>
 <%= for trip <- @trips do %>
     <tr>
-      <td><%= link(trip.user.username, to: user_path(@conn, :show, trip.user)) %></td>
-      <td><%= link(trip.name, to: trip_path(@conn, :show, trip)) %></td>
+      <td><%= link(trip.user.username, to: Routes.user_path(@conn, :show, trip.user)) %></td>
+      <td><%= link(trip.name, to: Routes.trip_path(@conn, :show, trip)) %></td>
       <td><%= trip.purpose %></td>
       <td><%= trip.start_date %> - <%= trip.end_date %></td>
       <td><%= trip.privacy %></td>

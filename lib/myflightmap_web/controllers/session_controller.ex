@@ -22,7 +22,7 @@ defmodule MyflightmapWeb.SessionController do
       {:error, reason} ->
         conn
         |> put_flash(:error, "Login failed: #{ reason }")
-        |> redirect(to: session_path(conn, :new))
+        |> redirect(to: Routes.session_path(conn, :new))
     end
   end
 
@@ -30,7 +30,7 @@ defmodule MyflightmapWeb.SessionController do
     conn
     |> sign_out()
     |> put_flash(:info, "Ciao!")
-    |> redirect(to: home_path(conn, :index))
+    |> redirect(to: Routes.home_path(conn, :index))
   end
 
   defp redirect_to_destination(conn, %{"session" => %{"return_to" => path}})
@@ -38,6 +38,6 @@ defmodule MyflightmapWeb.SessionController do
     redirect(conn, to: path)
   end
   defp redirect_to_destination(conn, _) do
-    redirect(conn, to: home_path(conn, :index))
+    redirect(conn, to: Routes.home_path(conn, :index))
   end
 end

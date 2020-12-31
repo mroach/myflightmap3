@@ -20,7 +20,7 @@ defmodule MyflightmapWeb.FlightController do
       {:ok, flight} ->
         conn
         |> put_flash(:info, "Flight created successfully.")
-        |> redirect(to: flight_path(conn, :show, flight))
+        |> redirect(to: Routes.flight_path(conn, :show, flight))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -44,7 +44,7 @@ defmodule MyflightmapWeb.FlightController do
       {:ok, flight} ->
         conn
         |> put_flash(:info, "Flight updated successfully.")
-        |> redirect(to: flight_path(conn, :show, flight))
+        |> redirect(to: Routes.flight_path(conn, :show, flight))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", flight: flight, changeset: changeset)
     end
@@ -56,6 +56,6 @@ defmodule MyflightmapWeb.FlightController do
 
     conn
     |> put_flash(:info, "Flight deleted successfully.")
-    |> redirect(to: flight_path(conn, :index))
+    |> redirect(to: Routes.flight_path(conn, :index))
   end
 end

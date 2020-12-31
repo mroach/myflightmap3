@@ -20,7 +20,7 @@ defmodule MyflightmapWeb.TripController do
       {:ok, trip} ->
         conn
         |> put_flash(:info, "Trip created successfully.")
-        |> redirect(to: trip_path(conn, :show, trip))
+        |> redirect(to: Routes.trip_path(conn, :show, trip))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -48,7 +48,7 @@ defmodule MyflightmapWeb.TripController do
       {:ok, trip} ->
         conn
         |> put_flash(:info, "Trip updated successfully.")
-        |> redirect(to: trip_path(conn, :show, trip))
+        |> redirect(to: Routes.trip_path(conn, :show, trip))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", trip: trip, changeset: changeset)
     end
@@ -60,6 +60,6 @@ defmodule MyflightmapWeb.TripController do
 
     conn
     |> put_flash(:info, "Trip deleted successfully.")
-    |> redirect(to: trip_path(conn, :index))
+    |> redirect(to: Routes.trip_path(conn, :index))
   end
 end
