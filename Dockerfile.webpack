@@ -1,11 +1,16 @@
-FROM node:12-slim
+FROM node:14-slim AS base
+
+ENV NODE_MODULES_DIR=/opt/node_modules
+ENV PATH="${PATH}:${NODE_MODULES_DIR}/.bin"
 
 WORKDIR /opt/app/assets
+VOLUME /opt/app
+
+################################################################################
+FROM base
 
 COPY assets/package.json ./
 
 RUN npm install
-
-ENV PATH="${PATH}:/opt/app/assets/node_modules/.bin"
 
 CMD ["npm", "run", "build"]

@@ -15,11 +15,11 @@ services:
     build:
       context: "."
       dockerfile: "Dockerfile.webpack"
-    command: npm run watch
+      target: base
+    command: ["sh", "-c", "yarn install --modules-folder $${NODE_MODULES_DIR} && npm run watch"]
     volumes:
       - .:/opt/app
-      - static:/opt/app/priv/static
-      - node_modules:/opt/app/assets/node_modules
+      - node_modules:/opt/node_modules
 
   app:
     build:
@@ -39,7 +39,6 @@ services:
       MIX_DEPS_PATH: /opt/mix/deps
     volumes:
       - .:/opt/app
-      - static:/opt/app/priv/static
       - mix_build:/opt/mix/build
       - mix_deps:/opt/mix/deps
     depends_on:
@@ -48,10 +47,6 @@ services:
 
 volumes:
   pg_data:
-  static:
-    driver_opts:
-      device: "tmpfs"
-      type: "tmpfs"
-  node_modules:
   mix_build:
   mix_deps:
+  node_modules:
