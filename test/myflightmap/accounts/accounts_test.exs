@@ -20,7 +20,7 @@ defmodule Myflightmap.AccountsTest do
     end
 
     test "create_user/1 with valid data creates a user" do
-      assert {:ok, %User{} = user} = Accounts.create_user(params_for(:user))
+      assert {:ok, %User{} = _user} = Accounts.create_user(params_for(:user))
     end
 
     test "create_user/1 with valid data creates a user and assigns trip email id" do

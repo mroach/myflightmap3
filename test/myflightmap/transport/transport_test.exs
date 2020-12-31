@@ -21,7 +21,7 @@ defmodule Myflightmap.TransportTest do
     end
 
     test "create_airline/1 with valid data creates a airline" do
-      assert {:ok, %Airline{} = airline} = Transport.create_airline(params_for(:airline))
+      assert {:ok, %Airline{} = _airline} = Transport.create_airline(params_for(:airline))
     end
 
     test "create_airline/1 with invalid data returns error changeset" do
@@ -79,7 +79,7 @@ defmodule Myflightmap.TransportTest do
     end
 
     test "create_airport/1 with valid data creates a airport" do
-      assert {:ok, %Airport{} = airport} = Transport.create_airport(params_for(:airport))
+      assert {:ok, %Airport{} = _airport} = Transport.create_airport(params_for(:airport))
     end
 
     test "create_airport/1 with invalid data returns error changeset" do

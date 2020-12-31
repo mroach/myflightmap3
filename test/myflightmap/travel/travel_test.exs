@@ -23,7 +23,7 @@ defmodule Myflightmap.TravelTest do
 
     test "create_trip/1 with valid data creates a trip" do
       user = insert(:user)
-      assert {:ok, %Trip{} = trip} = Travel.create_trip(user, params_for(:trip))
+      assert {:ok, %Trip{} = _trip} = Travel.create_trip(user, params_for(:trip))
     end
 
     test "create_trip/1 with invalid data returns error changeset" do
@@ -64,7 +64,7 @@ defmodule Myflightmap.TravelTest do
     test "get_or_create_trip_by_name/2 returns a new trip when one doesn't exist" do
       user = insert(:user)
       name = "super fun trip"
-      assert {:ok, %Trip{user: user, name: ^name}} = Travel.get_or_create_trip_by_name(user, name)
+      assert {:ok, %Trip{user: ^user, name: ^name}} = Travel.get_or_create_trip_by_name(user, name)
     end
   end
 
