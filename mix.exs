@@ -60,7 +60,7 @@ defmodule Myflightmap.Mixfile do
       # limited envs:
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:ex_machina, "~> 2.2", only: :test},
       {:stream_data, "~> 0.4", only: :test}
     ]
