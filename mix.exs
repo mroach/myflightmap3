@@ -40,7 +40,7 @@ defmodule Myflightmap.Mixfile do
       {:phoenix_html, "~> 2.14"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
-      {:gettext, "~> 0.11"},
+      {:gettext, "~> 0.20"},
       {:countries, "~> 1.6"},
       # Date/time parsing and formatting. Timezone conversions.
       {:timex, "~> 3.6"},
