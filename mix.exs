@@ -35,7 +35,7 @@ defmodule Myflightmap.Mixfile do
     [
       {:ecto_sql, "~> 3.5"},
       {:jason, "~> 1.2"},
-      {:phoenix, "~> 1.5.7"},
+      {:phoenix, "~> 1.6.0"},
       {:phoenix_ecto, "~> 4.2"},
       {:phoenix_html, "~> 2.14"},
       {:plug_cowboy, "~> 2.0"},
