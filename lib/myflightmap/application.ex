@@ -3,9 +3,11 @@ defmodule Myflightmap.Application do
 
   use Application
 
+  @impl true
   def start(_type, _args) do
     children = [
       Myflightmap.Repo,
+      MyflightmapWeb.Telemetry,
       {Phoenix.PubSub, name: MyflightmapWeb.PubSub},
       MyflightmapWeb.Endpoint
     ]
