@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="csrf-token" content={csrf_token_value()}>
+    <%= live_title_tag assigns[:page_title] || "", suffix: " · My Flight Map" %>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar" role="navigation">
+        <div class="container">
+          <div class="navbar-brand">
+            <%= link("My Flight Map", to: Routes.home_path(@conn, :index), class: "navbar-item") %>
+
+            <a role="button" class="navbar-burger burger" data-target="main-nav">
+              <span></span>
+              <span></span>
+              <span></span>
+            </a>
+          </div>
+
+          <div class="navbar-menu" id="main-nav">
+            <div class="navbar-start">
+              <%= link("Flights", to: Routes.flight_path(@conn, :index), class: "navbar-item") %>
+              <%= link("Trips", to: Routes.trip_path(@conn, :index), class: "navbar-item") %>
+            </div>
+
+            <div class="navbar-end">
+              <%= if assigns[:current_user] do %>
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <%= link(assigns[:current_user].username, to: Routes.user_path(@conn, :show, assigns[:current_user].id), class: "navbar-link") %>
+
+                  <div class="navbar-dropdown">
+                    <%= link("Logout", to: Routes.session_path(@conn, :delete), method: :delete, class: "navbar-item") %>
+                  </div>
+                </div>
+              <% else %>
+                <%= link("Login", to: Routes.session_path(@conn, :new), class: "navbar-item") %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <%= @inner_content %>
+  </body>
+</html>

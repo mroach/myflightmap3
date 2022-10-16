@@ -1,13 +1,18 @@
 # This is a multi-stage Dockerfile
 
+ARG elixir_ver=1.14
+
 ################################################################################
 # == Base
 # Elixir base image for running development server and tools
-FROM elixir:1.11-alpine AS phoenix_base
+FROM elixir:${elixir_ver} AS phoenix_base
 
-# Need inotify for watchers to work
-# Need build-base to build native extensions (bcrypt requires it)
-RUN apk --no-cache add inotify-tools build-base
+ARG node_ver=16.x
+
+RUN apt-get update && apt-get install -y inotify-tools build-essential apt-utils
+
+RUN (curl -SsL https://deb.nodesource.com/setup_${node_ver} | bash) \
+	&& apt-get install -y nodejs
 
 RUN mkdir -p /opt/mix/build /opt/mix/deps
 
@@ -52,15 +57,13 @@ RUN mix do release --env=${MIX_ENV}
 # == Production runnable image
 #
 # Final production-ready image. Only contains the app binaries and static assets
-FROM alpine:latest AS myflightmap_prod
+# debian:stable is what the `elixir:{ver}` images are based on.
+FROM debian:stable AS myflightmap_prod
 
 ENV MIX_ENV prod
 ENV PORT 4000
 
 EXPOSE 4000
-
-# bash and openssl are required to run the release
-RUN apk add --no-cache bash openssl
 
 WORKDIR /opt/app
 

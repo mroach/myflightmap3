@@ -4,7 +4,8 @@ defmodule MyflightmapWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
+    plug :put_root_layout, {MyflightmapWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -52,5 +53,15 @@ defmodule MyflightmapWeb.Router do
 
   scope "/vendor", MyflightmapWeb do
     post "/worldmate/receive", WorldmateController, :receive
+  end
+
+  if Mix.env() in [:dev, :test] do
+    import Phoenix.LiveDashboard.Router
+
+    scope "/" do
+      pipe_through :browser
+
+      live_dashboard "/dashboard", metrics: MyflightmapWeb.Telemetry
+    end
   end
 end

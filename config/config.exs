@@ -3,7 +3,7 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
-use Mix.Config
+import Config
 
 # General application configuration
 config :myflightmap,
@@ -13,8 +13,9 @@ config :myflightmap,
 config :myflightmap, MyflightmapWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "CMzrEz4+CMGzENGalD8xyRPCv25m7h1chEtLORG7dQz7gzNhD5YzKSojRyDl9LLQ",
-  render_errors: [view: MyflightmapWeb.ErrorView, accepts: ~w(html json)],
-  pubsub_server: MyflightmapWeb.PubSub
+  render_errors: [view: MyflightmapWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: MyflightmapWeb.PubSub,
+  live_view: [signing_salt: "x9OVow7tR0Do05Dun6pA1TWiIwqJ1l63"]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -38,6 +39,24 @@ config :myflightmap, Myflightmap.Auth.Guardian,
 config :myflightmap, Myflightmap.Auth.AccessPipeline,
   module: Myflightmap.Auth.Guardian,
   error_handler: Myflightmap.Auth.ErrorHandler
+
+# Ass SASS compilation support
+config :dart_sass,
+  version: "1.54.5",
+  default: [
+    args: ~w(--load-path=#{Mix.Project.deps_path()} css:../priv/static/assets),
+    cd: Path.expand("../assets", __DIR__)
+  ]
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.14.29",
+  default: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Mix.Project.deps_path()}
+  ]
 
 # In dev env, use `mix test.watch` to automatically run tests and credo
 # every time a file is saved. Faster TDD response cycle.

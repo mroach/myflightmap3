@@ -1,0 +1,11 @@
+<main role="main" class="section">
+  <div class="container">
+    <%= for {type, msg} <- get_flash(@conn) do %>
+      <article class="message is-{error_class(type)}">
+        <div class="message-body"><%= msg %></div>
+      </article>
+    <% end %>
+
+    <%= @inner_content %>
+  </div>
+</main>
