@@ -1,18 +1,18 @@
 # This is a multi-stage Dockerfile
 
-ARG elixir_ver=1.14
+ARG elixir_version=1.14.1
+ARG otp_version=25.1.1
+ARG debian_version=bullseye-20220801-slim
+
+ARG builder_image="hexpm/elixir:${elixir_version}-erlang-${otp_version}-debian-${debian_version}"
+ARG runner_image="debian:${debian_version}"
 
 ################################################################################
 # == Base
 # Elixir base image for running development server and tools
-FROM elixir:${elixir_ver} AS phoenix_base
-
-ARG node_ver=16.x
+FROM ${builder_image} AS base
 
 RUN apt-get update && apt-get install -y inotify-tools build-essential apt-utils
-
-RUN (curl -SsL https://deb.nodesource.com/setup_${node_ver} | bash) \
-	&& apt-get install -y nodejs
 
 RUN mkdir -p /opt/mix/build /opt/mix/deps
 
@@ -27,48 +27,61 @@ CMD ["mix", "phx.server"]
 
 ################################################################################
 # == Base image for including source files we'd need to compile the app
-FROM phoenix_base AS builder
+FROM base AS builder
 
-ENV MIX_ENV prod
+ENV MIX_ENV=prod
 
 COPY mix.exs mix.lock ./
 
-RUN mix do deps.get, deps.compile
+RUN mix deps.get --only ${MIX_ENV}
+RUN mkdir config
 
-COPY config/ ./config
-COPY lib/ ./lib
-COPY priv/ ./priv
-COPY test/ ./test
-COPY rel/ ./rel
+# copy compile-time config files before we compile dependencies
+# to ensure any relevant config change will trigger the dependencies
+# to be re-compiled.
+COPY config/config.exs config/${MIX_ENV}.exs config/
+RUN mix deps.compile
 
+COPY lib lib
+COPY priv priv
+COPY assets assets
 
-################################################################################
-# == Production release builder
-#
-# This will use distillery to create a tarball of binaries and static files
-# needed to run the app. Then we only need those files in a container for
-# the app to run. We don't need Elixir, Erlang, anything else.
-FROM builder as release_builder
+RUN mix assets.deploy
+RUN mix compile
 
-RUN mix do release --env=${MIX_ENV}
+COPY config/runtime.exs config/
+COPY rel rel
+RUN mix release
 
 
 ################################################################################
 # == Production runnable image
 #
 # Final production-ready image. Only contains the app binaries and static assets
-# debian:stable is what the `elixir:{ver}` images are based on.
-FROM debian:stable AS myflightmap_prod
+FROM ${runner_image}
 
-ENV MIX_ENV prod
-ENV PORT 4000
+RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales \
+  && apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+ # Set the locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+
+ENV MIX_ENV=prod \
+    PORT=4000 \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
 
 EXPOSE 4000
 
 WORKDIR /opt/app
 
-COPY --from=release_builder /opt/app/_build/prod/rel/myflightmap/ .
+RUN chown nobody /opt/app
+
+COPY --from=builder --chown=nobody:root /opt/app/_build/${MIX_ENV}/rel/myflightmap ./
+
+USER nobody
 
 HEALTHCHECK CMD wget -q -O /dev/null http://localhost:4000/system/alive || exit 1
 
-CMD ["bin/myflightmap", "foreground"]
+CMD ["/opt/app/bin/server"]
