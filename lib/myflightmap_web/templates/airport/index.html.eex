@@ -1,8 +1,10 @@
-<h2 class="title">Airports</h2>
+<h2 class="title is-2">Airports</h2>
 
-<div><%= link "New Airport", to: Routes.airport_path(@conn, :new), class: "button is-link" %></div>
+<div class="block">
+  <%= link "New Airport", to: Routes.airport_path(@conn, :new), class: "button is-link" %>
+</div>
 
-<table class="table is-narrow">
+<table class="table is-narrow is-striped">
   <thead>
     <tr>
       <th><%= gettext("IATA Code") %></th>

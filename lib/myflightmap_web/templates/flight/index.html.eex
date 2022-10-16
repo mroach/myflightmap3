@@ -1,8 +1,10 @@
-<h2 class="title">Flights</h2>
+<h2 class="title is-2">Flights</h2>
 
-<div><%= link "New Flight", to: Routes.flight_path(@conn, :new), class: "button is-link" %></div>
+<div class="block">
+  <%= link "New Flight", to: Routes.flight_path(@conn, :new), class: "button is-link" %>
+</div>
 
-<table class="table">
+<table class="table is-fullwidth is-striped">
   <thead>
     <tr>
       <th>User</th>

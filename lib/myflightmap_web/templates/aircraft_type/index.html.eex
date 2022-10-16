@@ -1,8 +1,10 @@
-<h2 class="title">Aircraft Types</h2>
+<h2 class="title is-2">Aircraft Types</h2>
 
-<div><%= link "New Aircraft Type", to: Routes.aircraft_type_path(@conn, :new), class: "button is-link" %></div>
+<div class="block">
+  <%= link "New Aircraft Type", to: Routes.aircraft_type_path(@conn, :new), class: "button is-link" %>
+</div>
 
-<table class="table is-narrow">
+<table class="table is-narrow is-fullwidth is-striped">
   <thead>
     <tr>
       <th>IATA</th>

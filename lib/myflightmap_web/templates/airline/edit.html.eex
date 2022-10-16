@@ -1,4 +1,4 @@
-<h2>Edit Airline</h2>
+<h2 title="title is-2">Edit Airline</h2>
 
 <%= render "form.html", Map.put(assigns, :action, Routes.airline_path(@conn, :update, @airline)) %>
 

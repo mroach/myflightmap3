@@ -1,8 +1,10 @@
-<h2>Users</h2>
+<h2 class="title is-2">Users</h2>
 
-<div><%= link "New User", to: Routes.user_path(@conn, :new) %></div>
+<div class="block">
+  <%= link "New User", to: Routes.user_path(@conn, :new), class: "button is-link" %>
+</div>
 
-<table class="table">
+<table class="table is-fullwidth">
   <thead>
     <tr>
       <th>Name</th>

@@ -14,7 +14,9 @@
       <nav class="navbar" role="navigation">
         <div class="container">
           <div class="navbar-brand">
-            <%= link("My Flight Map", to: Routes.home_path(@conn, :index), class: "navbar-item") %>
+            <div class="navbar-item">
+              <strong><%= link("My Flight Map", to: Routes.home_path(@conn, :index)) %></strong>
+            </div>
 
             <a role="button" class="navbar-burger burger" data-target="main-nav">
               <span></span>

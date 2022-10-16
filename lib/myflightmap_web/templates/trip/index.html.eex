@@ -1,8 +1,10 @@
-<h2 class="title">Trips</h2>
+<h2 class="title is-2">Trips</h2>
 
-<div><%= link "New Trip", to: Routes.trip_path(@conn, :new), class: "button is-link" %></div>
+<div class="block">
+  <%= link "New Trip", to: Routes.trip_path(@conn, :new), class: "button is-link" %>
+ </div>
 
-<table class="ui table">
+<table class="table is-fullwidth is-striped">
   <thead>
     <tr>
       <th>User</th>

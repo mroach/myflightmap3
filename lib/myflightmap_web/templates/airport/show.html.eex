@@ -3,10 +3,10 @@
     <h1 class="title">
       <%= @airport.iata_code%></span> - <%= @airport.common_name %>
     </h1>
-    <h2 class="subtitle is-italic">
+    <h2 class="subtitle is-italic is-2">
       <%= @airport.full_name %>
     </h2>
-    <h2 class="subtitle">
+    <h3 class="subtitle is-3">
       <%= @airport.city %>, <%= country_name(@airport.country) %> <%= emoji_flag(@airport.country) %>
     </h2>
   </div>

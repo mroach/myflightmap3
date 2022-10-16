@@ -1,5 +1,5 @@
-<h2 class="title"><%= @trip.name %> by <%= @trip.user.username %></h2>
-<h3 class="subtitle"><%= date_time_format(@trip.start_date) %> - <%= date_time_format(@trip.end_date) %></h3>
+<h2 class="title is-2"><%= @trip.name %> by <%= @trip.user.username %></h2>
+<h3 class="subtitle is-3"><%= date_time_format(@trip.start_date) %> - <%= date_time_format(@trip.end_date) %></h3>
 
 
 <%= render(MyflightmapWeb.StatsView, "summary.html", summary: @summary_stats) %>
