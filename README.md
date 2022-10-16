@@ -1,7 +1,5 @@
 # Myflightmap
 
-[![CircleCI](https://circleci.com/gh/mroach/myflightmap3.svg?style=svg)](https://circleci.com/gh/mroach/myflightmap3)
-
 ## Running with Docker
 
 This app is Dockerized so getting up and running should be easy.
