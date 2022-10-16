@@ -8,11 +8,11 @@ defmodule Myflightmap.AircraftTypeFactory do
   defmacro __using__(_opts) do
     quote do
       def manufacturer_code do
-        ~w[BOEING AIRBUS EMBRAER BAE ATR] |> Enum.random
+        ~w[BOEING AIRBUS EMBRAER BAE ATR] |> Enum.random()
       end
 
       def engine_type do
-        ["Jet", "Turboprop/Turboshaft", "Piston"] |> Enum.random
+        ["Jet", "Turboprop/Turboshaft", "Piston"] |> Enum.random()
       end
 
       def aircraft_type_factory do

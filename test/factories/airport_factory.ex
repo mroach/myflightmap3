@@ -11,7 +11,7 @@ defmodule Myflightmap.AirportFactory do
       # Latitude limits are -90 to +90
       # Longitude limits are -180 to +180
       def coordinates do
-        gen = fn lim -> :rand.uniform * lim * Enum.random([1, -1]) end
+        gen = fn lim -> :rand.uniform() * lim * Enum.random([1, -1]) end
         Point.new(gen.(90), gen.(180))
       end
 

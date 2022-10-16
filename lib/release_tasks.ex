@@ -46,9 +46,9 @@ defmodule Myflightmap.ReleaseTasks do
 
     repo_underscore =
       repo
-      |> Module.split
-      |> List.last
-      |> Macro.underscore
+      |> Module.split()
+      |> List.last()
+      |> Macro.underscore()
 
     priv_dir = :code.priv_dir(app)
 

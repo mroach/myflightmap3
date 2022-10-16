@@ -30,5 +30,4 @@ config :myflightmap, Myflightmap.Repo,
   database: System.get_env("DB_NAME") || "myflightmap_prod",
   pool_size: 15
 
-config :myflightmap, Myflightmap.UserEmailId,
-  salt: System.get_env("USER_EMAIL_ID_SALT")
+config :myflightmap, Myflightmap.UserEmailId, salt: System.get_env("USER_EMAIL_ID_SALT")

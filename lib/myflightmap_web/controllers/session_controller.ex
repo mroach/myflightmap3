@@ -19,9 +19,10 @@ defmodule MyflightmapWeb.SessionController do
         |> assign(:current_user, user)
         |> put_flash(:success, "Welcome")
         |> redirect_to_destination(params)
+
       {:error, reason} ->
         conn
-        |> put_flash(:error, "Login failed: #{ reason }")
+        |> put_flash(:error, "Login failed: #{reason}")
         |> redirect(to: Routes.session_path(conn, :new))
     end
   end
@@ -34,9 +35,10 @@ defmodule MyflightmapWeb.SessionController do
   end
 
   defp redirect_to_destination(conn, %{"session" => %{"return_to" => path}})
-    when byte_size(path) > 0 do
+       when byte_size(path) > 0 do
     redirect(conn, to: path)
   end
+
   defp redirect_to_destination(conn, _) do
     redirect(conn, to: Routes.home_path(conn, :index))
   end

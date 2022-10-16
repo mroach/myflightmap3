@@ -34,7 +34,7 @@ defmodule Worldmate.ParseResult do
 
   def from_xml(xmlstr) do
     xmlstr
-    |> ItineraryParser.parse_xml
+    |> ItineraryParser.parse_xml()
     |> case do
       {:ok, doc} -> {:ok, ItineraryParser.to_parse_result(doc)}
       {:error, _} = res -> res

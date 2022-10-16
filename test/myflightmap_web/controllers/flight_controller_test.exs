@@ -7,14 +7,14 @@ defmodule MyflightmapWeb.FlightControllerTest do
 
   describe "index" do
     test "lists all flights", %{authed_conn: conn} do
-      conn = get conn, Routes.flight_path(conn, :index)
+      conn = get(conn, Routes.flight_path(conn, :index))
       assert html_response(conn, 200) =~ "Flights"
     end
   end
 
   describe "new flight" do
     test "renders form", %{authed_conn: conn} do
-      conn = get conn, Routes.flight_path(conn, :new)
+      conn = get(conn, Routes.flight_path(conn, :new))
       assert html_response(conn, 200) =~ "New Flight"
     end
   end
@@ -27,7 +27,7 @@ defmodule MyflightmapWeb.FlightControllerTest do
       assert %{id: id} = redirected_params(res)
       assert redirected_to(res) == Routes.flight_path(conn, :show, id)
 
-      res = get conn, Routes.flight_path(conn, :show, id)
+      res = get(conn, Routes.flight_path(conn, :show, id))
       assert html_response(res, 200) =~ params.flight_code
     end
 
@@ -41,7 +41,7 @@ defmodule MyflightmapWeb.FlightControllerTest do
     setup [:create_flight]
 
     test "renders form for editing chosen flight", %{authed_conn: conn, flight: flight} do
-      conn = get conn, Routes.flight_path(conn, :edit, flight)
+      conn = get(conn, Routes.flight_path(conn, :edit, flight))
       assert html_response(conn, 200) =~ "Edit Flight"
     end
   end
@@ -54,7 +54,7 @@ defmodule MyflightmapWeb.FlightControllerTest do
       res = put conn, Routes.flight_path(conn, :update, flight), flight: update_attrs
       assert redirected_to(res) == Routes.flight_path(conn, :show, flight)
 
-      res = get conn, Routes.flight_path(conn, :show, flight)
+      res = get(conn, Routes.flight_path(conn, :show, flight))
       assert html_response(res, 200) =~ update_attrs.seat
     end
 
@@ -68,10 +68,11 @@ defmodule MyflightmapWeb.FlightControllerTest do
     setup [:create_flight]
 
     test "deletes chosen flight", %{authed_conn: conn, flight: flight} do
-      res = delete conn, Routes.flight_path(conn, :delete, flight)
+      res = delete(conn, Routes.flight_path(conn, :delete, flight))
       assert redirected_to(res) == Routes.flight_path(conn, :index)
+
       assert_error_sent 404, fn ->
-        get conn, Routes.flight_path(conn, :show, flight)
+        get(conn, Routes.flight_path(conn, :show, flight))
       end
     end
   end

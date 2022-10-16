@@ -29,8 +29,7 @@ config :tesla, adapter: Tesla.Adapter.Hackney
 config :myflightmap, Myflightmap.Travel.WorldmateTripImporter,
   valid_domains: ~w(trips.myflightmap.com)
 
-config :myflightmap, Myflightmap.UserEmailId,
-  salt: "saltysalt"
+config :myflightmap, Myflightmap.UserEmailId, salt: "saltysalt"
 
 config :myflightmap, Myflightmap.Auth.Guardian,
   issuer: "myflightmap",
@@ -60,14 +59,14 @@ config :esbuild,
 
 # In dev env, use `mix test.watch` to automatically run tests and credo
 # every time a file is saved. Faster TDD response cycle.
-if Mix.env == :dev do
+if Mix.env() == :dev do
   config :mix_test_watch,
     tasks: [
       "test",
-      "credo --strict",
+      "credo --strict"
     ]
 end
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

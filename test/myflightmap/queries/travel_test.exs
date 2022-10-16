@@ -13,7 +13,7 @@ defmodule Myflightmap.Queries.TravelTest do
 
     assert f2.depart_airport.id == f1.arrive_airport.id
 
-    result = Myflightmap.Queries.Travel.top_airports |> Repo.all
+    result = Myflightmap.Queries.Travel.top_airports() |> Repo.all()
 
     assert 2 == Enum.find(result, fn a -> a.airport.id == airport.id end).movements
   end

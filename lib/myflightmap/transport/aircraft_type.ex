@@ -20,7 +20,14 @@ defmodule Myflightmap.Transport.AircraftType do
   @doc false
   def changeset(aircraft_type, attrs) do
     aircraft_type
-    |> cast(attrs, [:iata_code, :icao_code, :manufacturer_code, :description, :engine_type, :engine_count])
+    |> cast(attrs, [
+      :iata_code,
+      :icao_code,
+      :manufacturer_code,
+      :description,
+      :engine_type,
+      :engine_count
+    ])
     |> validate_required([:iata_code, :description])
     |> unique_constraint(:iata_code)
     |> validate_number(:engine_count, greater_than: 0, less_than: 10)

@@ -11,7 +11,7 @@ defmodule Worldmate do
   """
   def parse_xml_itinerary!(xmlstr) do
     xmlstr
-    |> ItineraryParser.parse_xml!
-    |> ItineraryParser.to_parse_result
+    |> ItineraryParser.parse_xml!()
+    |> ItineraryParser.to_parse_result()
   end
 end

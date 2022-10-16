@@ -21,12 +21,14 @@ defmodule MyflightmapWeb.Helpers.DurationHelpers do
   """
   def format_timechange(0), do: nil
   def format_timechange(nil), do: nil
+
   def format_timechange(change) when is_integer(change) do
     sign = if change < 0, do: "-", else: "+"
+
     change
-    |> Kernel.abs
-    |> Duration.from_seconds
-    |> Duration.to_clock
+    |> Kernel.abs()
+    |> Duration.from_seconds()
+    |> Duration.to_clock()
     |> format_clock
     |> (fn s -> sign <> s end).()
   end
@@ -52,20 +54,23 @@ defmodule MyflightmapWeb.Helpers.DurationHelpers do
 
   def format_duration(nil), do: nil
   def format_duration(0), do: nil
+
   def format_duration(minutes) when is_number(minutes) do
     minutes
-    |> Duration.from_minutes
-    |> Duration.to_clock
+    |> Duration.from_minutes()
+    |> Duration.to_clock()
     |> format_clock()
   end
 
   def hours(nil), do: nil
   def hours(0), do: 0
+
   def hours(minutes) when is_number(minutes) do
     {hrs, _, _, _} =
       minutes
-      |> Duration.from_minutes
-      |> Duration.to_clock
+      |> Duration.from_minutes()
+      |> Duration.to_clock()
+
     hrs
   end
 end

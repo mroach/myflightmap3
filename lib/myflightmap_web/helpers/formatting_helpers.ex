@@ -4,9 +4,11 @@ defmodule MyflightmapWeb.Helpers.FormattingHelpers do
   """
   def emoji_flag(%{country: code}), do: code |> emoji_flag
   def emoji_flag(%{country_code: code}), do: code |> emoji_flag
+
   def emoji_flag(code) when is_binary(code) do
-    code |> Unicode.emoji_flag
+    code |> Unicode.emoji_flag()
   end
+
   def emoji_flag(_), do: nil
 
   @doc """
@@ -22,5 +24,6 @@ defmodule MyflightmapWeb.Helpers.FormattingHelpers do
       _ -> code
     end
   end
+
   def country_name(_), do: nil
 end

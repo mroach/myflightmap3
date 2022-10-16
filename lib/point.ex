@@ -12,9 +12,9 @@ defmodule Point do
   defstruct [:x, :y]
 
   @type t :: %__MODULE__{
-    x: float,
-    y: float
-  }
+          x: float,
+          y: float
+        }
 
   def type, do: __MODULE__
 
@@ -24,12 +24,14 @@ defmodule Point do
       _ -> :error
     end
   end
+
   def cast(tuple) when is_tuple(tuple) do
     case Point.new(tuple) do
       %Point{} = p -> {:ok, p}
       _ -> :error
     end
   end
+
   def cast(%Point{} = p), do: {:ok, p}
   def cast(_), do: :error
 
@@ -61,13 +63,13 @@ defmodule Point do
   """
   def new(x, y) when is_binary(x) and is_binary(y) do
     with {x_val, _rem} <- Float.parse(x),
-         {y_val, _rem} <- Float.parse(y)
-    do
+         {y_val, _rem} <- Float.parse(y) do
       new(x_val, y_val)
     else
       err -> err
     end
   end
+
   def new(x, y) when is_float(x) and is_float(y), do: %Point{x: x, y: y}
   def new(_, _), do: :error
 
@@ -82,8 +84,7 @@ defmodule Point do
   """
   def parse(str) when is_binary(str) do
     with [x, y] <- String.split(str, ~r/[,\s]+/),
-         %Point{} = p <- Point.new(x, y)
-    do
+         %Point{} = p <- Point.new(x, y) do
       p
     else
       err -> {:error, err}
@@ -94,5 +95,5 @@ defmodule Point do
 end
 
 defimpl Phoenix.HTML.Safe, for: Point do
-  def to_iodata(%Point{} = p), do: p |> Point.to_s |> Plug.HTML.html_escape
+  def to_iodata(%Point{} = p), do: p |> Point.to_s() |> Plug.HTML.html_escape()
 end

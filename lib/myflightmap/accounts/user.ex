@@ -37,7 +37,7 @@ defmodule Myflightmap.Accounts.User do
   # the need for a function in the index definition or using Postgres `citext`
   def normalize_username(str) do
     str
-    |> String.trim
-    |> String.downcase
+    |> String.trim()
+    |> String.downcase()
   end
 end

@@ -19,7 +19,7 @@ defmodule Myflightmap.Transport do
 
   def list_seat_class_options do
     list_seat_classes()
-    |> Enum.map(fn %{value: value, name: name} -> {name, value} end )
+    |> Enum.map(fn %{value: value, name: name} -> {name, value} end)
   end
 
   @doc """
@@ -34,16 +34,17 @@ defmodule Myflightmap.Transport do
   def list_airlines do
     Airline
     |> order_by(:name)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def list_airline_options do
-    query = from a in Airline,
-            order_by: a.iata_code,
-            select: {a.id, a.iata_code, a.name}
+    query =
+      from a in Airline,
+        order_by: a.iata_code,
+        select: {a.id, a.iata_code, a.name}
 
     query
-    |> Repo.all
+    |> Repo.all()
     |> Enum.map(fn {id, iata, name} -> {"#{iata} #{name}", id} end)
   end
 
@@ -168,7 +169,7 @@ defmodule Myflightmap.Transport do
       "BHZ" => ~w[CNF PLU],
       "BUE" => ~w[EZE AEP],
       "RIO" => ~w[GIG SDU],
-      "SAO" => ~w[GRU CGH VCP],
+      "SAO" => ~w[GRU CGH VCP]
     }
   end
 
@@ -191,16 +192,17 @@ defmodule Myflightmap.Transport do
   def list_airports do
     Airport
     |> order_by(:iata_code)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def list_airport_options do
-    query = from a in Airport,
-            order_by: a.iata_code,
-            select: {a.id, a.common_name, a.iata_code}
+    query =
+      from a in Airport,
+        order_by: a.iata_code,
+        select: {a.id, a.common_name, a.iata_code}
 
     query
-    |> Repo.all
+    |> Repo.all()
     |> Enum.map(fn {id, name, iata} -> {"#{iata} - #{name}", id} end)
   end
 
@@ -290,13 +292,13 @@ defmodule Myflightmap.Transport do
   end
 
   def distance_between_airports(airport_1_id, airport_2_id)
-    when is_integer(airport_1_id) and is_integer(airport_2_id) do
-
+      when is_integer(airport_1_id) and is_integer(airport_2_id) do
     airport_1 = get_airport!(airport_1_id)
     airport_2 = get_airport!(airport_2_id)
 
     distance_between_airports(airport_1, airport_2)
   end
+
   def distance_between_airports(%Airport{coordinates: c1}, %Airport{coordinates: c2}) do
     Geo.haversine(c1, c2)
   end
@@ -315,7 +317,7 @@ defmodule Myflightmap.Transport do
   def list_aircraft_types do
     AircraftType
     |> order_by(:icao_code)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def list_aircraft_type_options do

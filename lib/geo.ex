@@ -10,7 +10,7 @@ defmodule Geo do
   @earth_radius_nm 3440.065
   @feet_per_sm 5280
 
-  @d2r :math.pi / 180
+  @d2r :math.pi() / 180
 
   @units [:km, :sm, :nm, :m, :ft]
 
@@ -36,7 +36,7 @@ defmodule Geo do
     iex> Geo.great_circle_distance({-23.435555, -46.473055}, {-26.133693, 28.242317}, :sm) |> Float.floor
     4622.0
   """
-  def great_circle_distance(p1, p2, unit) when unit in(@units) do
+  def great_circle_distance(p1, p2, unit) when unit in @units do
     radians_to(haversine(p1, p2), unit)
   end
 
@@ -48,7 +48,9 @@ defmodule Geo do
   For example, multiple the result of this function by the Earth's radius in
   kilometres and you get the distance between the two given points in kilometres.
   """
-  def haversine(%{x: lat1, y: lon1}, %{x: lat2, y: lon2}), do: haversine({lat1, lon1}, {lat2, lon2})
+  def haversine(%{x: lat1, y: lon1}, %{x: lat2, y: lon2}),
+    do: haversine({lat1, lon1}, {lat2, lon2})
+
   def haversine({lat1, lon1}, {lat2, lon2}) do
     dlat = deg_to_rad(lat2 - lat1)
     dlon = deg_to_rad(lon2 - lon1)
@@ -56,9 +58,10 @@ defmodule Geo do
     radlat1 = deg_to_rad(lat1)
     radlat2 = deg_to_rad(lat2)
 
-    a = :math.pow(:math.sin(dlat / 2), 2) +
+    a =
+      :math.pow(:math.sin(dlat / 2), 2) +
         :math.pow(:math.sin(dlon / 2), 2) *
-        :math.cos(radlat1) * :math.cos(radlat2)
+          :math.cos(radlat1) * :math.cos(radlat2)
 
     2 * :math.atan2(:math.sqrt(a), :math.sqrt(1 - a))
   end

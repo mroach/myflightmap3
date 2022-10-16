@@ -20,6 +20,7 @@ defmodule MyflightmapWeb.AirportController do
         conn
         |> put_flash(:info, "Airport created successfully.")
         |> redirect(to: Routes.airport_path(conn, :show, airport))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -30,8 +31,10 @@ defmodule MyflightmapWeb.AirportController do
       cond do
         Regex.match?(~r/\A[A-Z]{3}\z/, id) ->
           Transport.get_airport_by_iata!(id)
+
         Regex.match?(~r/\A[A-Z]{4}\z/, id) ->
           Transport.get_airport_by_icao!(id)
+
         true ->
           Transport.get_airport!(id)
       end
@@ -53,6 +56,7 @@ defmodule MyflightmapWeb.AirportController do
         conn
         |> put_flash(:info, "Airport updated successfully.")
         |> redirect(to: Routes.airport_path(conn, :show, airport))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", airport: airport, changeset: changeset)
     end

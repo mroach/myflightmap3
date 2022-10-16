@@ -10,6 +10,9 @@ defmodule WorldmateTest do
     result = Worldmate.parse_xml_itinerary!(xmlstr)
 
     assert %ParseResult{
-      flights: [%Worldmate.Flight{}], headers: _, status: _} = result
+             flights: [%Worldmate.Flight{}],
+             headers: _,
+             status: _
+           } = result
   end
 end

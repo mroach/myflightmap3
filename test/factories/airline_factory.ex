@@ -8,7 +8,7 @@ defmodule Myflightmap.AirlineFactory do
   defmacro __using__(_opts) do
     quote do
       def alliance do
-        ~w[staralliance oneworld skyteam] |> Enum.random
+        ~w[staralliance oneworld skyteam] |> Enum.random()
       end
 
       def airline_factory do

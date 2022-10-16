@@ -9,8 +9,9 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
 
   def seat_class_name(%Flight{seat_class: seat_class}), do: seat_class_name(seat_class)
   def seat_class_name(nil), do: nil
+
   def seat_class_name(seat_class) do
-    Transport.list_seat_classes
+    Transport.list_seat_classes()
     |> Enum.find(fn %{value: value} -> value == seat_class end)
     |> case do
       %{name: name} -> name
@@ -39,14 +40,17 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
   defp format_arrival_day_offset(offset) when offset < 0, do: "+#{offset}"
 
   def formatted_distance(flight, units \\ :km)
+
   def formatted_distance(%Flight{distance: distance}, units) when is_number(distance) do
     DistanceHelpers.format_distance(distance, units)
   end
+
   def formatted_distance(_, _), do: nil
 
   def formatted_duration(%Flight{duration: duration}) when is_number(duration) do
     DurationHelpers.format_duration(duration)
   end
+
   def formatted_duration(_), do: nil
 
   def airline_name(%Flight{airline: %{name: name}}), do: name
@@ -65,8 +69,7 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
   """
   def timezone_change(%Flight{} = flight) do
     with %DateTime{} = depart_at <- Flight.depart_at(flight),
-         %DateTime{} = arrive_at <- Flight.arrive_at(flight)
-    do
+         %DateTime{} = arrive_at <- Flight.arrive_at(flight) do
       timezone_difference(arrive_at, depart_at)
     else
       _ -> nil
@@ -79,6 +82,6 @@ defmodule MyflightmapWeb.Helpers.FlightHelpers do
 
   # Timezone difference in seconds between the two datetimes
   defp timezone_difference(%DateTime{} = t1, %DateTime{} = t2) do
-    (t1.utc_offset + t1.std_offset) - (t2.utc_offset + t2.std_offset)
+    t1.utc_offset + t1.std_offset - (t2.utc_offset + t2.std_offset)
   end
 end

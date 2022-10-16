@@ -17,136 +17,217 @@ alias Myflightmap.Transport.{AircraftType, Airline, Airport}
 
 airlines = [
   %Airline{
-    iata_code: "LH", icao_code: "DLH", country: "DE", commenced_on: ~D[1953-01-06],
+    iata_code: "LH",
+    icao_code: "DLH",
+    country: "DE",
+    commenced_on: ~D[1953-01-06],
     name: "Lufthansa",
     alliance: "staralliance"
   },
   %Airline{
-    iata_code: "SR", icao_code: "SWR", country: "CH", commenced_on: ~D[1931-03-26],
+    iata_code: "SR",
+    icao_code: "SWR",
+    country: "CH",
+    commenced_on: ~D[1931-03-26],
     name: "Swissair",
     ceased_on: ~D[2002-03-31]
   },
   %Airline{
-    iata_code: "LX", icao_code: "CRX", country: "CH", commenced_on: ~D[1978-11-18],
+    iata_code: "LX",
+    icao_code: "CRX",
+    country: "CH",
+    commenced_on: ~D[1978-11-18],
     name: "Crossair",
     ceased_on: ~D[2002-03-31]
   },
   %Airline{
-    iata_code: "LX", icao_code: "SWR", country: "CH", commenced_on: ~D[2002-03-31],
+    iata_code: "LX",
+    icao_code: "SWR",
+    country: "CH",
+    commenced_on: ~D[2002-03-31],
     name: "Swiss International Air Lines",
     alliance: "staralliance"
   },
   %Airline{
-    iata_code: "SK", icao_code: "SAS", country: "SE", commenced_on: ~D[1946-08-01],
+    iata_code: "SK",
+    icao_code: "SAS",
+    country: "SE",
+    commenced_on: ~D[1946-08-01],
     name: "SAS Scandinavian Airlines",
     alliance: "staralliance"
   },
   %Airline{
-    iata_code: "KL", icao_code: "KLM", country: "NL", commenced_on: ~D[1919-08-07],
+    iata_code: "KL",
+    icao_code: "KLM",
+    country: "NL",
+    commenced_on: ~D[1919-08-07],
     name: "KLM Royal Dutch Airlines",
     alliance: "skyteam"
   },
   %Airline{
-    iata_code: "SQ", icao_code: "SIA", country: "SG", commenced_on: ~D[1972-08-01],
+    iata_code: "SQ",
+    icao_code: "SIA",
+    country: "SG",
+    commenced_on: ~D[1972-08-01],
     name: "Singapore Airlines",
     alliance: "skyteam"
   },
   %Airline{
-    iata_code: "QF", icao_code: "QFA", country: "AU", commenced_on: ~D[1921-03-01],
+    iata_code: "QF",
+    icao_code: "QFA",
+    country: "AU",
+    commenced_on: ~D[1921-03-01],
     name: "Qantas",
     alliance: "oneworld"
-  },
+  }
 ]
 
 for airline <- airlines do
   if nil == Myflightmap.Repo.get_by(Airline, Map.take(airline, [:iata_code, :name])) do
-    {:ok, _record} = airline
-      |> Map.from_struct
-      |> Myflightmap.Transport.create_airline
+    {:ok, _record} =
+      airline
+      |> Map.from_struct()
+      |> Myflightmap.Transport.create_airline()
   else
-    IO.puts "Airline #{airline.name} already exists"
+    IO.puts("Airline #{airline.name} already exists")
   end
 end
 
 airports = [
   %Airport{
-    iata_code: "SIN", icao_code: "WSSS", country: "SG",
-    coordinates: {1.359167, 103.989444}, timezone: "Asia/Singapore",
-    city: "Singapore", common_name: "Singapore Changi"
+    iata_code: "SIN",
+    icao_code: "WSSS",
+    country: "SG",
+    coordinates: {1.359167, 103.989444},
+    timezone: "Asia/Singapore",
+    city: "Singapore",
+    common_name: "Singapore Changi"
   },
   %Airport{
-    iata_code: "HND", icao_code: "RJTT", country: "JP", metro_code: "TYO",
-    coordinates: {35.553333, 139.781111}, timezone: "Asia/Tokyo",
-    city: "Tokyo", common_name: "Tokyo Haneda",
+    iata_code: "HND",
+    icao_code: "RJTT",
+    country: "JP",
+    metro_code: "TYO",
+    coordinates: {35.553333, 139.781111},
+    timezone: "Asia/Tokyo",
+    city: "Tokyo",
+    common_name: "Tokyo Haneda"
   },
   %Airport{
-    iata_code: "NRT", icao_code: "RJAA", country: "JP", metro_code: "TYO",
-    coordinates: {35.765278, 140.385556}, timezone: "Asia/Tokyo",
-    city: "Tokyo", common_name: "Tokyo Narita",
+    iata_code: "NRT",
+    icao_code: "RJAA",
+    country: "JP",
+    metro_code: "TYO",
+    coordinates: {35.765278, 140.385556},
+    timezone: "Asia/Tokyo",
+    city: "Tokyo",
+    common_name: "Tokyo Narita"
   },
   %Airport{
-    iata_code: "HAM", icao_code: "EDDH", country: "DE", city: "Hamburg",
-    coordinates: {53.630278, 9.991111}, timezone: "Europe/Berlin",
+    iata_code: "HAM",
+    icao_code: "EDDH",
+    country: "DE",
+    city: "Hamburg",
+    coordinates: {53.630278, 9.991111},
+    timezone: "Europe/Berlin",
     common_name: "Hamburg Airport"
   },
   %Airport{
-    iata_code: "BKK", icao_code: "VTBS", country: "TH", metro_code: "BKK",
-    coordinates: {13.6925, 100.75}, timezone: "Asia/Bangkok",
-    city: "Bangkok", common_name: "Bangkok Suvarnabhumi"
+    iata_code: "BKK",
+    icao_code: "VTBS",
+    country: "TH",
+    metro_code: "BKK",
+    coordinates: {13.6925, 100.75},
+    timezone: "Asia/Bangkok",
+    city: "Bangkok",
+    common_name: "Bangkok Suvarnabhumi"
   },
   %Airport{
-    iata_code: "DMK", icao_code: "VTBD", country: "TH", metro_code: "BKK",
-    coordinates: {13.9125, 100.606667}, timezone: "Asia/Bangkok",
-    city: "Bangkok", common_name: "Bangkok Don Mueang"
+    iata_code: "DMK",
+    icao_code: "VTBD",
+    country: "TH",
+    metro_code: "BKK",
+    coordinates: {13.9125, 100.606667},
+    timezone: "Asia/Bangkok",
+    city: "Bangkok",
+    common_name: "Bangkok Don Mueang"
   },
   %Airport{
-    iata_code: "LHR", icao_code: "EGLL", country: "GB", metro_code: "LON",
-    coordinates: {51.4775, -0.461389}, timezone: "Europe/London",
-    city: "London", common_name: "London Heathrow"
+    iata_code: "LHR",
+    icao_code: "EGLL",
+    country: "GB",
+    metro_code: "LON",
+    coordinates: {51.4775, -0.461389},
+    timezone: "Europe/London",
+    city: "London",
+    common_name: "London Heathrow"
   },
   %Airport{
-    iata_code: "LGW", icao_code: "EGKK", country: "GB", metro_code: "LON",
-    coordinates: {51.148056, -0.190278}, timezone: "Europe/London",
-    city: "London", common_name: "London Gatwick"
+    iata_code: "LGW",
+    icao_code: "EGKK",
+    country: "GB",
+    metro_code: "LON",
+    coordinates: {51.148056, -0.190278},
+    timezone: "Europe/London",
+    city: "London",
+    common_name: "London Gatwick"
   },
   %Airport{
-    iata_code: "HKG", icao_code: "VHHH", country: "HK",
-    coordinates: {22.32861, 114.194167}, timezone: "Asia/Hong_Kong",
-    city: "Hong Kong", common_name: "Hong Kong Kai Tak",
-    opened_on: ~D[1925-01-01], closed_on: ~D[1998-07-06]
+    iata_code: "HKG",
+    icao_code: "VHHH",
+    country: "HK",
+    coordinates: {22.32861, 114.194167},
+    timezone: "Asia/Hong_Kong",
+    city: "Hong Kong",
+    common_name: "Hong Kong Kai Tak",
+    opened_on: ~D[1925-01-01],
+    closed_on: ~D[1998-07-06]
   },
   %Airport{
-    iata_code: "HKG", icao_code: "VHHH", country: "HK",
-    coordinates: {22.308889, 113.91444}, timezone: "Asia/Hong_Kong",
-    city: "Hong Kong", common_name: "Hong Kong International",
+    iata_code: "HKG",
+    icao_code: "VHHH",
+    country: "HK",
+    coordinates: {22.308889, 113.91444},
+    timezone: "Asia/Hong_Kong",
+    city: "Hong Kong",
+    common_name: "Hong Kong International",
     opened_on: ~D[1998-07-06]
   },
   %Airport{
-    iata_code: "BOS", icao_code: "KBOS", country: "US",
-    coordinates: {42.363056, -71.006389}, timezone: "America/New_York",
-    city: "Boston", common_name: "Boston Logan",
+    iata_code: "BOS",
+    icao_code: "KBOS",
+    country: "US",
+    coordinates: {42.363056, -71.006389},
+    timezone: "America/New_York",
+    city: "Boston",
+    common_name: "Boston Logan",
     opened_on: ~D[1923-09-08]
   },
   %Airport{
-    iata_code: "PER", icao_code: "YPPH", country: "AU",
-    coordinates: {-31.940278, 115.966944}, timezone: "Australia/Perth",
-    city: "Perth", common_name: "Perth Airport"
+    iata_code: "PER",
+    icao_code: "YPPH",
+    country: "AU",
+    coordinates: {-31.940278, 115.966944},
+    timezone: "Australia/Perth",
+    city: "Perth",
+    common_name: "Perth Airport"
   }
 ]
 
-OpenFlights.get_airports
+OpenFlights.get_airports()
 |> Stream.filter(fn ap -> ap[:iata_code] && ap[:timezone] end)
 |> Enum.each(fn airport ->
   if nil == Myflightmap.Repo.get_by(Airport, iata_code: airport.iata_code) do
     case Myflightmap.Transport.create_airport(airport) do
       {:ok, _record} ->
-        IO.puts "Created #{airport.iata_code}"
+        IO.puts("Created #{airport.iata_code}")
+
       {:error, changeset} ->
-        IO.warn "Failed to create #{airport.iata_code}"
+        IO.warn("Failed to create #{airport.iata_code}")
         IO.inspect(:stderr, changeset, label: "Changeset dump")
     end
   else
-    IO.puts "Airport #{airport.iata_code} already exists"
+    IO.puts("Airport #{airport.iata_code} already exists")
   end
 end)
 
@@ -421,7 +502,7 @@ YS11	YS1	NAMC YS-11
 """
 
 aircraft_data
-|> String.trim
+|> String.trim()
 |> String.split("\n")
 |> Enum.map(fn line ->
   [icao, iata, desc] = String.split(line, "\t")
@@ -433,15 +514,16 @@ end)
 
 for path <- Path.wildcard("priv/data/icao/aircraft_types/*.json") do
   path
-  |> File.read!
+  |> File.read!()
   |> Jason.decode!(%{keys: :atoms})
   |> Enum.each(fn data ->
     attrs =
       data
       |> Map.take([:engine_type, :engine_count, :manufacturer_code])
-      |> Map.to_list
+      |> Map.to_list()
 
     icao_code = data.tdesig
+
     from(a in AircraftType, where: a.icao_code == ^icao_code)
     |> Repo.update_all(set: attrs)
   end)

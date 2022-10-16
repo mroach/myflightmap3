@@ -7,14 +7,14 @@ defmodule MyflightmapWeb.TripControllerTest do
 
   describe "index" do
     test "lists all trips", %{authed_conn: conn} do
-      conn = get conn, Routes.trip_path(conn, :index)
+      conn = get(conn, Routes.trip_path(conn, :index))
       assert html_response(conn, 200) =~ "Trips"
     end
   end
 
   describe "new trip" do
     test "renders form", %{authed_conn: conn} do
-      conn = get conn, Routes.trip_path(conn, :new)
+      conn = get(conn, Routes.trip_path(conn, :new))
       assert html_response(conn, 200) =~ "New Trip"
     end
   end
@@ -27,7 +27,7 @@ defmodule MyflightmapWeb.TripControllerTest do
       assert %{id: id} = redirected_params(res)
       assert redirected_to(res) == Routes.trip_path(conn, :show, id)
 
-      res = get conn, Routes.trip_path(conn, :show, id)
+      res = get(conn, Routes.trip_path(conn, :show, id))
       assert html_response(res, 200) =~ params.name
     end
 
@@ -41,7 +41,7 @@ defmodule MyflightmapWeb.TripControllerTest do
     setup [:create_trip]
 
     test "renders form for editing chosen trip", %{authed_conn: conn, trip: trip} do
-      conn = get conn, Routes.trip_path(conn, :edit, trip)
+      conn = get(conn, Routes.trip_path(conn, :edit, trip))
       assert html_response(conn, 200) =~ "Edit Trip"
     end
   end
@@ -54,7 +54,7 @@ defmodule MyflightmapWeb.TripControllerTest do
       res = put conn, Routes.trip_path(conn, :update, trip), trip: update_attrs
       assert redirected_to(res) == Routes.trip_path(conn, :show, trip)
 
-      res = get conn, Routes.trip_path(conn, :show, trip)
+      res = get(conn, Routes.trip_path(conn, :show, trip))
       assert html_response(res, 200) =~ update_attrs.name
     end
 
@@ -68,10 +68,11 @@ defmodule MyflightmapWeb.TripControllerTest do
     setup [:create_trip]
 
     test "deletes chosen trip", %{authed_conn: conn, trip: trip} do
-      res = delete conn, Routes.trip_path(conn, :delete, trip)
+      res = delete(conn, Routes.trip_path(conn, :delete, trip))
       assert redirected_to(res) == Routes.trip_path(conn, :index)
+
       assert_error_sent 404, fn ->
-        get conn, Routes.trip_path(conn, :show, trip)
+        get(conn, Routes.trip_path(conn, :show, trip))
       end
     end
   end

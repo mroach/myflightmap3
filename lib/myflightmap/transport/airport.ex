@@ -24,8 +24,18 @@ defmodule Myflightmap.Transport.Airport do
   end
 
   @writable_attributes [
-    :iata_code, :icao_code, :metro_code, :country, :city, :timezone,
-    :full_name, :common_name, :coordinates, :opened_on, :closed_on]
+    :iata_code,
+    :icao_code,
+    :metro_code,
+    :country,
+    :city,
+    :timezone,
+    :full_name,
+    :common_name,
+    :coordinates,
+    :opened_on,
+    :closed_on
+  ]
 
   @doc false
   def changeset(airport, attrs) do
