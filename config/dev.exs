@@ -60,7 +60,8 @@ db_config =
     password: System.get_env("DB_PASS"),
     database: System.get_env("DB_NAME") || "myflightmap_dev",
     hostname: System.get_env("DB_HOST") || "localhost",
-    pool_size: 10
+    pool_size: 10,
+    show_sensitive_data_on_connection_error: true
   ]
   |> Enum.reject(fn {_, val} -> is_nil(val) end)
 
