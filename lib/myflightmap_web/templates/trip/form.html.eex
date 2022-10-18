@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, [class: "ui form"], fn f -> %>
+<%= form_for @changeset, @action, fn f -> %>
   <%= if @changeset.action do %>
     <div class="message is-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
@@ -6,24 +6,30 @@
   <% end %>
 
   <div class="field">
-    <label><%= label f, :name %></label>
-    <%= text_input f, :name %>
+    <label class="label"><%= label f, :name %></label>
+    <div class="control">
+      <%= text_input f, :name, class: "input" %>
+    </div>
     <%= error_tag f, :name %>
   </div>
 
   <div class="field">
-    <label><%= label f, :purpose %></label>
-    <%= text_input f, :purpose %>
+    <label class="label"><%= label f, :purpose %></label>
+    <div class="control">
+      <%= text_input f, :purpose, class: "input" %>
+    </div>
     <%= error_tag f, :purpose %>
   </div>
 
   <div class="field">
-    <label><%= label f, :privacy %></label>
-    <%= text_input f, :privacy %>
+    <label class="label"><%= label f, :privacy %></label>
+    <div class="control">
+      <%= text_input f, :privacy, class: "input" %>
+    </div>
     <%= error_tag f, :privacy %>
   </div>
 
   <div>
-    <%= submit "Submit", class: "ui primary button" %>
+    <%= submit "Submit", class: "button is-primary" %>
   </div>
 <% end %>
