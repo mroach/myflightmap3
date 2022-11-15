@@ -7,7 +7,7 @@ defmodule CommonValueFactory do
 
   def iata_code do
     [?A..?Z, ?0..?9]
-    |> Enum.concat
+    |> Enum.concat()
     |> StreamData.string(min_length: 2, max_length: 2)
     |> Enum.at(0)
   end
@@ -19,19 +19,22 @@ defmodule CommonValueFactory do
   end
 
   def country_code do
-    Countries.all |> Enum.random |> Map.get(:alpha2)
+    Countries.all() |> Enum.random() |> Map.get(:alpha2)
   end
 
   def timezone do
-    Tzdata.canonical_zone_list |> Enum.random
+    Tzdata.canonical_zone_list() |> Enum.random()
   end
 
   def email_address do
     domains = ~w[example.com example.org example.net example.edu]
+
     generator =
-      ExUnitProperties.gen all name <- StreamData.string(:alphanumeric),
-                               name != "",
-                               domain <- StreamData.member_of(domains) do
+      ExUnitProperties.gen all(
+                             name <- StreamData.string(:alphanumeric),
+                             name != "",
+                             domain <- StreamData.member_of(domains)
+                           ) do
         name <> "@" <> domain
       end
 

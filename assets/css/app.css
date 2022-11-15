@@ -1,24 +1,9 @@
-.statistics {
-  display: flex;
-  margin: 1em -1.5em -1em;
-  flex-wrap: wrap;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.phx-no-feedback.invalid-feedback, .phx-no-feedback .invalid-feedback {
+  display: none;
 }
-.statistics > .statistic {
-  margin: 0 1.5em 1em;
-  flex-grow: 1;
-}
-.statistic {
-  display: inline-flex;
-  flex-direction: column;
-  margin: 1em 0;
-}
-.statistic-value {
-  font-size: 3rem;
-  font-weight: 400;
-  text-align: center;
-}
-.statistic-label {
-  text-transform: uppercase;
-  text-align: center;
-  font-weight: 700;
-}
+
+.mapbox-improve-map { display: none; }

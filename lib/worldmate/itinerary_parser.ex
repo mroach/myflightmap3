@@ -13,10 +13,11 @@ defmodule Worldmate.ItineraryParser do
   the call to return a standard `{:ok, result}` or `{:error, reason}`
   """
   def parse_xml(xmlstr) when is_binary(xmlstr) do
-    {:ok, xmlstr |> SweetXml.parse |> root()}
+    {:ok, xmlstr |> SweetXml.parse() |> root()}
   catch
     :exit, e -> {:error, e}
   end
+
   def parse_xml!(xmlstr) when is_binary(xmlstr) do
     case parse_xml(xmlstr) do
       {:ok, result} -> result
@@ -28,6 +29,7 @@ defmodule Worldmate.ItineraryParser do
   Convert the entire response into a single map
   """
   def to_parse_result(nil), do: nil
+
   def to_parse_result(root) when is_tuple(root) do
     %ParseResult{
       status: status(root),
@@ -81,7 +83,8 @@ defmodule Worldmate.ItineraryParser do
   defp parse_flight(node) when is_tuple(node) do
     node
     |> xmap(
-      confirmation_number: ~x"./booking-details/confirmation-number/text()"s |> transform_by(&groom_string/1),
+      confirmation_number:
+        ~x"./booking-details/confirmation-number/text()"s |> transform_by(&groom_string/1),
       operator: ~x"./operated-by" |> transform_by(&parse_flight_code/1),
       flight_code: ~x"./details" |> transform_by(&parse_flight_code/1),
       departure: ~x"./departure" |> transform_by(&parse_movement/1),
@@ -104,6 +107,7 @@ defmodule Worldmate.ItineraryParser do
     |> Map.delete(:operator)
     |> Map.put(:codeshare, nil)
   end
+
   defp put_codeshare(%{operator: operator, flight_code: codeshare} = data) do
     data
     |> Map.delete(:operator)
@@ -113,6 +117,7 @@ defmodule Worldmate.ItineraryParser do
   end
 
   defp parse_flight_code(nil), do: nil
+
   defp parse_flight_code(node) do
     node
     |> xmap(
@@ -122,6 +127,7 @@ defmodule Worldmate.ItineraryParser do
   end
 
   defp parse_movement(nil), do: nil
+
   defp parse_movement(node) do
     node
     |> xmap(
@@ -135,6 +141,7 @@ defmodule Worldmate.ItineraryParser do
   end
 
   defp parse_airport(nil), do: nil
+
   defp parse_airport(node) do
     node
     |> xmap(
@@ -147,6 +154,7 @@ defmodule Worldmate.ItineraryParser do
   end
 
   defp parse_aircraft(nil), do: nil
+
   defp parse_aircraft(node) do
     node
     |> xmap(
@@ -157,6 +165,7 @@ defmodule Worldmate.ItineraryParser do
   end
 
   defp parse_date_time(nil), do: nil
+
   defp parse_date_time(timestr) do
     case DateTime.from_iso8601(timestr) do
       {:ok, dt, _} -> dt
@@ -166,9 +175,10 @@ defmodule Worldmate.ItineraryParser do
 
   # trim a string and convert empty string to `nil`
   defp groom_string(nil), do: nil
+
   defp groom_string(str) when is_binary(str) do
     str
-    |> String.trim
+    |> String.trim()
     |> case do
       "" -> nil
       s -> s

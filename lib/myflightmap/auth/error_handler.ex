@@ -7,6 +7,7 @@ defmodule Myflightmap.Auth.ErrorHandler do
 
   def auth_error(conn, {:unauthenticated, _reason}, _opts) do
     requested = Controller.current_path(conn)
+
     conn
     |> Controller.put_flash(:error, "Login required")
     |> Controller.redirect(to: Routes.session_path(conn, :new, return_to: requested))

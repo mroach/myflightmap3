@@ -19,7 +19,7 @@ defmodule Myflightmap.Transport do
 
   def list_seat_class_options do
     list_seat_classes()
-    |> Enum.map(fn %{value: value, name: name} -> {name, value} end )
+    |> Enum.map(fn %{value: value, name: name} -> {name, value} end)
   end
 
   @doc """
@@ -31,19 +31,19 @@ defmodule Myflightmap.Transport do
       [%Airline{}, ...]
 
   """
-  def list_airlines do
-    Airline
-    |> order_by(:name)
-    |> Repo.all
+  def list_airlines(opts \\ []) do
+    pagination = Keyword.get(opts, :pagination, [])
+    Repo.paginate(from(a in Airline, order_by: a.iata_code), pagination)
   end
 
   def list_airline_options do
-    query = from a in Airline,
-            order_by: a.iata_code,
-            select: {a.id, a.iata_code, a.name}
+    query =
+      from a in Airline,
+        order_by: a.iata_code,
+        select: {a.id, a.iata_code, a.name}
 
     query
-    |> Repo.all
+    |> Repo.all()
     |> Enum.map(fn {id, iata, name} -> {"#{iata} #{name}", id} end)
   end
 
@@ -63,7 +63,13 @@ defmodule Myflightmap.Transport do
   """
   def get_airline!(id), do: Repo.get!(Airline, id)
 
-  def get_airline_by_iata!(code), do: Repo.get_by!(Airline, iata_code: code)
+  def get_airline_by_iata(code) do
+    Repo.get_by(Airline, iata_code: String.upcase(code))
+  end
+
+  def get_airline_by_iata!(code) do
+    Repo.get_by!(Airline, iata_code: String.upcase(code))
+  end
 
   @doc """
   Creates a airline.
@@ -168,7 +174,7 @@ defmodule Myflightmap.Transport do
       "BHZ" => ~w[CNF PLU],
       "BUE" => ~w[EZE AEP],
       "RIO" => ~w[GIG SDU],
-      "SAO" => ~w[GRU CGH VCP],
+      "SAO" => ~w[GRU CGH VCP]
     }
   end
 
@@ -188,19 +194,19 @@ defmodule Myflightmap.Transport do
       [%Airport{}, ...]
 
   """
-  def list_airports do
-    Airport
-    |> order_by(:iata_code)
-    |> Repo.all
+  def list_airports(opts \\ []) do
+    pagination = Keyword.get(opts, :pagination, [])
+    Repo.paginate(from(a in Airport, order_by: a.iata_code), pagination)
   end
 
   def list_airport_options do
-    query = from a in Airport,
-            order_by: a.iata_code,
-            select: {a.id, a.common_name, a.iata_code}
+    query =
+      from a in Airport,
+        order_by: a.iata_code,
+        select: {a.id, a.common_name, a.iata_code}
 
     query
-    |> Repo.all
+    |> Repo.all()
     |> Enum.map(fn {id, name, iata} -> {"#{iata} - #{name}", id} end)
   end
 
@@ -220,9 +226,112 @@ defmodule Myflightmap.Transport do
   """
   def get_airport!(id), do: Repo.get!(Airport, id)
 
-  def get_airport_by_iata!(code), do: Repo.get_by!(Airport, iata_code: code)
+  def get_airport_by_iata(code) do
+    Repo.get_by(Airport, iata_code: String.upcase(code))
+  end
 
-  def get_airport_by_icao!(code), do: Repo.get_by!(Airport, icao_code: code)
+  def get_airport_by_iata!(code) do
+    Repo.get_by!(Airport, iata_code: String.upcase(code))
+  end
+
+  def get_airport_by_icao!(code) do
+    Repo.get_by!(Airport, icao_code: String.upcase(code))
+  end
+
+  def search_airports_query(term) do
+    starts_with_term = "#{term}%"
+    contains_term = "%#{term}%"
+
+    from(a in Airport,
+      where:
+        ilike(a.iata_code, ^term) or
+          ilike(a.city, ^contains_term) or
+          ilike(a.common_name, ^contains_term) or
+          ilike(a.full_name, ^contains_term),
+      select: %{
+        airport: a,
+        match_rank:
+          fragment(
+            """
+              CASE
+                WHEN iata_code = UPPER(?) THEN 1
+                WHEN iata_code ILIKE ? THEN 2
+                WHEN common_name ILIKE ? THEN 3
+                WHEN full_name ILIKE ? THEN 4
+                WHEN city ILIKE ? THEN 5
+                ELSE 10
+              END
+            """,
+            ^term,
+            ^starts_with_term,
+            ^starts_with_term,
+            ^starts_with_term,
+            ^starts_with_term
+          )
+          |> selected_as(:match_rank)
+      },
+      order_by: [
+        selected_as(:match_rank),
+        {:desc, a.flight_count},
+        a.iata_code,
+        a.common_name,
+        a.full_name,
+        a.city
+      ],
+    )
+  end
+
+  def search_airports(term, limit \\ 20) do
+    from(a in search_airports_query(term), limit: ^limit) |> Repo.all
+  end
+
+  def search_airports_paginated(term, pagination \\ []) do
+    from(a in search_airports_query(term)) |> Repo.paginate(pagination)
+  end
+
+  def search_airlines_query(term) do
+    starts_with_term = "#{term}%"
+    contains_term = "%#{term}%"
+
+    from(a in Airline,
+      where:
+        ilike(a.iata_code, ^term) or
+          ilike(a.icao_code, ^term) or
+          ilike(a.name, ^contains_term),
+      select: %{
+        airline: a,
+        match_rank:
+          fragment(
+            """
+              CASE
+                WHEN iata_code = UPPER(?) THEN 1
+                WHEN icao_code = UPPER(?) THEN 1
+                WHEN name ILIKE ? THEN 2
+                ELSE 10
+              END
+            """,
+            ^term,
+            ^term,
+            ^starts_with_term
+          )
+          |> selected_as(:match_rank)
+      },
+      order_by: [
+        selected_as(:match_rank),
+        {:desc, a.flight_count},
+        a.iata_code,
+        a.name
+      ],
+    )
+  end
+
+  def search_airlines(term, limit \\ 20) do
+    from(a in search_airlines_query(term), limit: ^limit) |> Repo.all
+  end
+
+  def search_airlines_paginated(term, pagination \\ []) do
+    from(a in search_airlines_query(term)) |> Repo.paginate(pagination)
+  end
 
   @doc """
   Creates a airport.
@@ -290,13 +399,13 @@ defmodule Myflightmap.Transport do
   end
 
   def distance_between_airports(airport_1_id, airport_2_id)
-    when is_integer(airport_1_id) and is_integer(airport_2_id) do
-
+      when is_integer(airport_1_id) and is_integer(airport_2_id) do
     airport_1 = get_airport!(airport_1_id)
     airport_2 = get_airport!(airport_2_id)
 
     distance_between_airports(airport_1, airport_2)
   end
+
   def distance_between_airports(%Airport{coordinates: c1}, %Airport{coordinates: c2}) do
     Geo.haversine(c1, c2)
   end
@@ -315,7 +424,7 @@ defmodule Myflightmap.Transport do
   def list_aircraft_types do
     AircraftType
     |> order_by(:icao_code)
-    |> Repo.all
+    |> Repo.all()
   end
 
   def list_aircraft_type_options do

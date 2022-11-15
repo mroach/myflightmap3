@@ -7,15 +7,16 @@ defmodule MyflightmapWeb.AirportControllerTest do
 
   describe "index" do
     setup [:create_airport]
+
     test "lists all airports", %{conn: conn} do
-      conn = get conn, Routes.airport_path(conn, :index)
+      conn = get(conn, Routes.airport_path(conn, :index))
       assert html_response(conn, 200) =~ "Airports"
     end
   end
 
   describe "new airport" do
     test "renders form", %{conn: conn} do
-      conn = get conn, Routes.airport_path(conn, :new)
+      conn = get(conn, Routes.airport_path(conn, :new))
       assert html_response(conn, 200) =~ "New Airport"
     end
   end
@@ -28,7 +29,7 @@ defmodule MyflightmapWeb.AirportControllerTest do
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.airport_path(conn, :show, id)
 
-      conn = get conn, Routes.airport_path(conn, :show, id)
+      conn = get(conn, Routes.airport_path(conn, :show, id))
       assert html_response(conn, 200) =~ params.common_name
     end
 
@@ -42,7 +43,7 @@ defmodule MyflightmapWeb.AirportControllerTest do
     setup [:create_airport]
 
     test "renders form for editing chosen airport", %{conn: conn, airport: airport} do
-      conn = get conn, Routes.airport_path(conn, :edit, airport)
+      conn = get(conn, Routes.airport_path(conn, :edit, airport))
       assert html_response(conn, 200) =~ "Edit"
     end
   end
@@ -55,7 +56,7 @@ defmodule MyflightmapWeb.AirportControllerTest do
       conn = put conn, Routes.airport_path(conn, :update, airport), airport: update_attrs
       assert redirected_to(conn) == Routes.airport_path(conn, :show, airport)
 
-      conn = get conn, Routes.airport_path(conn, :show, airport)
+      conn = get(conn, Routes.airport_path(conn, :show, airport))
       assert html_response(conn, 200) =~ update_attrs.common_name
     end
 
@@ -69,10 +70,11 @@ defmodule MyflightmapWeb.AirportControllerTest do
     setup [:create_airport]
 
     test "deletes chosen airport", %{conn: conn, airport: airport} do
-      conn = delete conn, Routes.airport_path(conn, :delete, airport)
+      conn = delete(conn, Routes.airport_path(conn, :delete, airport))
       assert redirected_to(conn) == Routes.airport_path(conn, :index)
+
       assert_error_sent 404, fn ->
-        get conn, Routes.airport_path(conn, :show, airport)
+        get(conn, Routes.airport_path(conn, :show, airport))
       end
     end
   end

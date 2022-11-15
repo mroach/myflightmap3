@@ -9,14 +9,45 @@ defmodule Myflightmap.Queries.Travel do
 
   import Ecto.Query, warn: false
   alias Myflightmap.Transport.{Airline, Airport}
-  alias Myflightmap.Travel.Flight
+  alias Myflightmap.Travel.{Flight, Trip}
+
+  @doc """
+  Get a count of unique airport pairings from flights.
+  For example flights BOS-LHR and LHR-BOS are one pairing with a count of 2
+  """
+  def unique_route_pairs(query \\ Flight) do
+    id_pairs = from(f in query,
+      select: %{
+        ap1_id: fragment("least(?, ?)", f.depart_airport_id, f.arrive_airport_id),
+        ap2_id: fragment("greatest(?, ?)", f.depart_airport_id, f.arrive_airport_id),
+        count: count()
+      },
+      group_by: fragment("1, 2")
+    )
+
+    from p in subquery(id_pairs),
+      join: ap1 in Airport, on: ap1.id == p.ap1_id,
+      join: ap2 in Airport, on: ap2.id == p.ap2_id,
+      select: %{airport_1: ap1, airport_2: ap2, count: p.count}
+  end
+
+  def top_routes(query \\ Flight) do
+    from f in query,
+    select: %{
+      origin: f.depart_airport_id,
+      destination: f.arrive_airport_id,
+      count: count()
+    },
+    group_by: fragment("1, 2"),
+    order_by: fragment("3 DESC")
+  end
 
   def top_airports(query \\ Flight) do
     from a in Airport,
-    join: m in subquery(airport_movement_counts(query)),
+      join: m in subquery(airport_movement_counts(query)),
       on: m.airport_id == a.id,
-    order_by: [desc: m.movements],
-    select: %{airport: a, movements: m.movements}
+      order_by: [desc: m.movements],
+      select: %{airport: a, movements: m.movements}
   end
 
   @doc """
@@ -24,10 +55,10 @@ defmodule Myflightmap.Queries.Travel do
   """
   def top_airlines(query \\ Flight) do
     from a in Airline,
-    join: m in subquery(airline_movement_counts(query)),
+      join: m in subquery(airline_movement_counts(query)),
       on: m.airline_id == a.id,
-    order_by: [desc: m.movements],
-    select: %{airline: a, movements: m.movements}
+      order_by: [desc: m.movements],
+      select: %{airline: a, movements: m.movements}
   end
 
   @doc """
@@ -38,18 +69,18 @@ defmodule Myflightmap.Queries.Travel do
   """
   def top_countries(query \\ Flight) do
     from a in Airport,
-    join: m in subquery(airport_movements(query)),
+      join: m in subquery(airport_movements(query)),
       on: m.airport_id == a.id,
-    group_by: a.country,
-    order_by: [desc: count(a.country)],
-    select: %{country: a.country, movements: count(a.country)}
+      group_by: a.country,
+      order_by: [desc: count(a.country)],
+      select: %{country: a.country, movements: count(a.country)}
   end
 
   def distinct_country_count(query \\ Flight) do
     from a in Airport,
-    join: m in subquery(airport_movements(query)),
+      join: m in subquery(airport_movements(query)),
       on: m.airport_id == a.id,
-    select: count(a.country, :distinct)
+      select: count(a.country, :distinct)
   end
 
   @doc """
@@ -64,36 +95,36 @@ defmodule Myflightmap.Queries.Travel do
 
   def distinct_airline_count(query \\ Flight) do
     from f in query,
-    select: count(f.airline_id, :distinct)
+      select: count(f.airline_id, :distinct)
   end
 
   def duration_summary(query \\ Flight) do
     from f in query,
-    select: %{
-      avg: avg(f.duration),
-      sum: sum(f.duration),
-      min: min(f.duration),
-      max: max(f.duration)
-    }
+      select: %{
+        avg: avg(f.duration),
+        sum: sum(f.duration),
+        min: min(f.duration),
+        max: max(f.duration)
+      }
   end
 
   def distance_summary(query \\ Flight) do
     from f in query,
-    select: %{
-      avg: avg(f.distance),
-      sum: sum(f.distance),
-      min: min(f.distance),
-      max: max(f.distance)
-    }
+      select: %{
+        avg: avg(f.distance),
+        sum: sum(f.distance),
+        min: min(f.distance),
+        max: max(f.distance)
+      }
   end
 
   defp airline_movement_counts(query \\ Flight) do
     from f in query,
-    group_by: f.airline_id,
-    select: %{
-      airline_id: f.airline_id,
-      movements: count(f.airline_id)
-    }
+      group_by: f.airline_id,
+      select: %{
+        airline_id: f.airline_id,
+        movements: count(f.airline_id)
+      }
   end
 
   @doc """
@@ -102,17 +133,16 @@ defmodule Myflightmap.Queries.Travel do
   """
   defp airport_movement_counts(query \\ Flight) do
     from m in subquery(airport_movements(query)),
-    group_by: m.airport_id,
-    select: %{
-      airport_id: m.airport_id,
-      movements: count(m.airport_id)
-    }
+      group_by: m.airport_id,
+      select: %{
+        airport_id: m.airport_id,
+        movements: count(m.airport_id)
+      }
   end
 
   # Extracts the departure or arrival airport ID as a single field
   defp movements(query, field)
-    when field in [:depart_airport_id, :arrive_airport_id] do
-
+       when field in [:depart_airport_id, :arrive_airport_id] do
     from f in query, select: %{airport_id: field(f, ^field)}
   end
 end

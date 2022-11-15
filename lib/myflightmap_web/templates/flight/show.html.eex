@@ -5,24 +5,24 @@
       <h1 class="title">
         <%= if @flight.airline, do: @flight.airline.name %> <%= @flight.flight_code %>
       </h1>
-      <h2 class="subtitle">
+      <h4 class="subtitle is-4">
         <%= date_time_format @flight.depart_date, "%A, %d %B %Y" %>
-      </h2>
+      </h4>
 
       <div class="columns">
         <div class="column">
-          <h1 class="title is-size-4">
+          <h4 class="title is-4">
             <%= depart_airport_name(@flight) %> (<%= @flight.depart_airport.iata_code %>)
-          </h1>
+          </h4>
           <h2 class="subtitle"><%= date_time_format @flight.depart_time, "%H:%M" %></h2>
         </div>
-        <div class="column has-text-centered is-size-2">
+        <div class="column is-2" style="text-alight: center">
           ➡
         </div>
         <div class="column">
-          <h1 class="title is-size-4">
+          <h4 class="title is-4">
             <%= arrive_airport_name(@flight) %> (<%= @flight.arrive_airport.iata_code %>)
-          </h1>
+          </h4>
           <h2 class="subtitle">
             <%= date_time_format @flight.arrive_time, "%H:%M" %> <%= formatted_arrival_day_offset(@flight) %>
           </h2>

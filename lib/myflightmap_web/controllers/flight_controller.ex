@@ -16,11 +16,13 @@ defmodule MyflightmapWeb.FlightController do
 
   def create(conn, %{"flight" => flight_params}) do
     user = conn.assigns.current_user
+
     case Travel.create_flight(user, flight_params) do
       {:ok, flight} ->
         conn
         |> put_flash(:info, "Flight created successfully.")
         |> redirect(to: Routes.flight_path(conn, :show, flight))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -45,6 +47,7 @@ defmodule MyflightmapWeb.FlightController do
         conn
         |> put_flash(:info, "Flight updated successfully.")
         |> redirect(to: Routes.flight_path(conn, :show, flight))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", flight: flight, changeset: changeset)
     end

@@ -9,8 +9,8 @@ defmodule Myflightmap.TripFactory do
         %Myflightmap.Travel.Trip{
           user: build(:user),
           name: StreamData.string(:alphanumeric, min_length: 3) |> Enum.at(0),
-          privacy: ~w[public private] |> Enum.random,
-          purpose: ~w[business pleasure] |> Enum.random
+          privacy: ~w[public private] |> Enum.random(),
+          purpose: ~w[business pleasure] |> Enum.random()
         }
       end
     end

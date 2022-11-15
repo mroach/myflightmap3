@@ -20,6 +20,7 @@ defmodule MyflightmapWeb.AircraftTypeController do
         conn
         |> put_flash(:info, "Aircraft type created successfully.")
         |> redirect(to: Routes.aircraft_type_path(conn, :show, aircraft_type))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -44,6 +45,7 @@ defmodule MyflightmapWeb.AircraftTypeController do
         conn
         |> put_flash(:info, "Aircraft type updated successfully.")
         |> redirect(to: Routes.aircraft_type_path(conn, :show, aircraft_type))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", aircraft_type: aircraft_type, changeset: changeset)
     end

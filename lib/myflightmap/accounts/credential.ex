@@ -4,14 +4,14 @@ defmodule Myflightmap.Accounts.Credential do
   their login credentials with an email address and hashed password
   """
 
-  use Ecto.Schema
+  use Myflightmap.Schema
   import Ecto.Changeset
   alias Myflightmap.Accounts.User
 
   schema "credentials" do
     field :email, :string
     field :password_hash, :string
-    belongs_to :user, User
+    belongs_to :user, User, references: :binary_id
 
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
@@ -36,14 +36,15 @@ defmodule Myflightmap.Accounts.Credential do
   # the need for a function in the index definition or using Postgres `citext`
   def normalize_email(str) do
     str
-    |> String.trim
-    |> String.downcase
+    |> String.trim()
+    |> String.downcase()
   end
 
   def put_hashed_password(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
         put_change(changeset, :password_hash, Bcrypt.hash_pwd_salt(password))
+
       _ ->
         changeset
     end

@@ -3,9 +3,12 @@ defmodule Myflightmap.Accounts.User do
   Schema for users
   """
 
-  use Ecto.Schema
+  use Myflightmap.Schema
   import Ecto.Changeset
   alias Myflightmap.Accounts.Credential
+
+  @primary_key {:id, :binary_id, autogenerate: false}
+  @foreign_key_type :binary_id
 
   schema "users" do
     field :name, :string
@@ -37,7 +40,7 @@ defmodule Myflightmap.Accounts.User do
   # the need for a function in the index definition or using Postgres `citext`
   def normalize_username(str) do
     str
-    |> String.trim
-    |> String.downcase
+    |> String.trim()
+    |> String.downcase()
   end
 end

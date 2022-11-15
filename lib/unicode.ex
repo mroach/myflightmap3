@@ -11,8 +11,12 @@ defmodule Unicode do
   Example:
       iex> Unicode.emoji_flag("au")
       "🇦🇺"
+
+      iex> Unicode.emoji_flag(nil)
+      nil
   """
-  def emoji_flag(str) when is_binary(str), do: str |> String.upcase |> regional_indicator
+  def emoji_flag(str) when is_binary(str), do: str |> String.upcase() |> regional_indicator
+  def emoji_flag(_), do: nil
 
   @doc """
   Take two ASCII characters and convert them to their Unicode
@@ -22,10 +26,12 @@ defmodule Unicode do
   def regional_indicator(<<a, b>>) do
     [a, b]
     |> Enum.map(&regional_indicator/1)
-    |> List.to_string
+    |> List.to_string()
   end
+
   def regional_indicator(char) when is_number(char) and char >= ?A and char <= ?Z do
     char + @regional_indicator_start - ?A
   end
+
   def regional_indicator(_), do: nil
 end

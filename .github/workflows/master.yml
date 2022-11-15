@@ -1,0 +1,24 @@
+name: Master
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: docker-compose pull
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
+      - run: docker-compose build
+
+      - run: docker-compose run --rm -e MIX_ENV=test app mix do deps.get, test
+
+      - run: docker-compose run --rm app mix format --check-formatted

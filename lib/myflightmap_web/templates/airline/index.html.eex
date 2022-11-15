@@ -1,8 +1,10 @@
-<h2 class="title">Airlines</h2>
+<h2 class="title is-2">Airlines</h2>
 
-<div><%= link "New Airline", to: Routes.airline_path(@conn, :new), class: "button is-link" %></div>
+<div class="block">
+  <%= link "New Airline", to: Routes.airline_path(@conn, :new), class: "button is-link" %>
+</div>
 
-<table class="table">
+<table class="table is-fullwidth">
   <thead>
     <tr>
       <th>IATA</th>

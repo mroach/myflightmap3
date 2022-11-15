@@ -3,8 +3,11 @@ defmodule OpenFlightsTest do
   import Tesla.Mock
 
   setup do
-    mock fn
-      %{method: :get, url: "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat"} ->
+    mock(fn
+      %{
+        method: :get,
+        url: "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat"
+      } ->
         %Tesla.Env{
           status: 200,
           body: ~S"""
@@ -13,7 +16,7 @@ defmodule OpenFlightsTest do
           511,"Brough Airport","Brough","United Kingdom",\N,"EGNB",53.7197,-0.566333,12,0,"E","Europe/London","airport","OurAirports"
           """
         }
-    end
+    end)
 
     :ok
   end
@@ -32,7 +35,8 @@ defmodule OpenFlightsTest do
       metro_code: nil,
       coordinates: {60.593299865722656, 16.951400756835938}
     }
-    assert expected == OpenFlights.get_airports |> Enum.at(0)
+
+    assert expected == OpenFlights.get_airports() |> Enum.at(0)
 
     expected = %{
       full_name: "London Heathrow Airport",
@@ -45,10 +49,11 @@ defmodule OpenFlightsTest do
       metro_code: "LON",
       coordinates: {51.4706, -0.461941}
     }
-    assert expected == OpenFlights.get_airports |> Enum.at(1)
+
+    assert expected == OpenFlights.get_airports() |> Enum.at(1)
   end
 
   test "get_airports/1 replaces `\\N` with `nil`" do
-    assert %{iata_code: nil, icao_code: "EGNB"} = OpenFlights.get_airports |> Enum.at(2)
+    assert %{iata_code: nil, icao_code: "EGNB"} = OpenFlights.get_airports() |> Enum.at(2)
   end
 end

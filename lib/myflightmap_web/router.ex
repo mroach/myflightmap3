@@ -4,7 +4,8 @@ defmodule MyflightmapWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
+    plug :put_root_layout, {MyflightmapWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -30,19 +31,26 @@ defmodule MyflightmapWeb.Router do
     post "/session", SessionController, :create
     delete "/session", SessionController, :delete
 
-    resources "/aircraft_types", AircraftTypeController
-    resources "/airlines", AirlineController
-    resources "/airports", AirportController
-
     resources "/users", UserController, only: [:new, :create]
   end
 
   scope "/", MyflightmapWeb do
     pipe_through [:browser, :maybe_auth, :ensure_auth]
 
-    resources "/flights", FlightController
-    resources "/users", UserController, except: [:new, :create]
-    resources "/trips", TripController
+    live "/airlines", AirlineLive.Index
+    live "/airports", AirportLive.Index
+
+    resources "/aircraft_types", AircraftTypeController
+
+    live "/flights", FlightLive.Index
+    live "/flights/new", FlightLive.Edit
+    live "/flights/:id", FlightLive.Show
+    live "/flights/:id/edit", FlightLive.Edit
+
+    live "/trips", TripLive.Index
+    live "/trips/new", TripLive.Edit
+    live "/trips/:id", TripLive.Show
+    live "/trips/:id/edit", TripLive.Edit
   end
 
   scope "/system", MyflightmapWeb do
@@ -52,5 +60,15 @@ defmodule MyflightmapWeb.Router do
 
   scope "/vendor", MyflightmapWeb do
     post "/worldmate/receive", WorldmateController, :receive
+  end
+
+  if Mix.env() in [:dev, :test] do
+    import Phoenix.LiveDashboard.Router
+
+    scope "/" do
+      pipe_through :browser
+
+      live_dashboard "/dashboard", metrics: MyflightmapWeb.Telemetry
+    end
   end
 end

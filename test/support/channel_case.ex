@@ -28,9 +28,11 @@ defmodule MyflightmapWeb.ChannelCase do
 
   setup tags do
     :ok = Sandbox.checkout(Myflightmap.Repo)
+
     unless tags[:async] do
       Sandbox.mode(Myflightmap.Repo, {:shared, self()})
     end
+
     :ok
   end
 end

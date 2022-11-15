@@ -64,7 +64,9 @@ defmodule Myflightmap.TravelTest do
     test "get_or_create_trip_by_name/2 returns a new trip when one doesn't exist" do
       user = insert(:user)
       name = "super fun trip"
-      assert {:ok, %Trip{user: ^user, name: ^name}} = Travel.get_or_create_trip_by_name(user, name)
+
+      assert {:ok, %Trip{user: ^user, name: ^name}} =
+               Travel.get_or_create_trip_by_name(user, name)
     end
   end
 
@@ -78,7 +80,7 @@ defmodule Myflightmap.TravelTest do
       # `Ecto.Association.NotLoaded` values on associatins.
       # So just compare on IDs rather than the whole map
       flight = insert(:flight).id
-      assert Travel.list_flights() |> Enum.map(&(&1.id)) == [flight]
+      assert Travel.list_flights() |> Enum.map(& &1.id) == [flight]
     end
 
     test "get_flight_with_assocs!/1 returns the flight with given id" do

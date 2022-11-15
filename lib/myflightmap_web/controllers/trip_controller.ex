@@ -16,11 +16,13 @@ defmodule MyflightmapWeb.TripController do
 
   def create(conn, %{"trip" => trip_params}) do
     user = conn.assigns.current_user
+
     case Travel.create_trip(user, trip_params) do
       {:ok, trip} ->
         conn
         |> put_flash(:info, "Trip created successfully.")
         |> redirect(to: Routes.trip_path(conn, :show, trip))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -49,6 +51,7 @@ defmodule MyflightmapWeb.TripController do
         conn
         |> put_flash(:info, "Trip updated successfully.")
         |> redirect(to: Routes.trip_path(conn, :show, trip))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", trip: trip, changeset: changeset)
     end

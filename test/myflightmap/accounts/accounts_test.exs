@@ -30,7 +30,10 @@ defmodule Myflightmap.AccountsTest do
 
     test "create_user/1 does not override provided trip email id" do
       trip_email_id = "asdqwe123"
-      {:ok, %User{} = user} = Accounts.create_user(params_for(:user, trip_email_id: trip_email_id))
+
+      {:ok, %User{} = user} =
+        Accounts.create_user(params_for(:user, trip_email_id: trip_email_id))
+
       assert user.trip_email_id == trip_email_id
     end
 

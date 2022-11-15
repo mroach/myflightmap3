@@ -9,10 +9,9 @@ defmodule Myflightmap.Travel.WorldmateTripImporter do
     result = Worldmate.parse_xml_itinerary!(xmlstr)
 
     with :ok <- check_status(result),
-         {:ok, user} <- load_user(result)
-    do
+         {:ok, user} <- load_user(result) do
       multi =
-        Multi.new
+        Multi.new()
         |> Multi.run(:trip, fn _, _ ->
           Travel.get_or_create_trip_by_name(user, trip_name(result))
         end)
@@ -46,12 +45,15 @@ defmodule Myflightmap.Travel.WorldmateTripImporter do
       err -> err
     end
   end
+
   def load_user(trip_email_id) when is_binary(trip_email_id) do
     case Accounts.get_user_by_trip_email_id(trip_email_id) do
       nil ->
-        Logger.error "No user found with trip email '#{trip_email_id}'"
+        Logger.error("No user found with trip email '#{trip_email_id}'")
         {:error, :user_not_found}
-      user -> {:ok, user}
+
+      user ->
+        {:ok, user}
     end
   end
 
@@ -68,6 +70,7 @@ defmodule Myflightmap.Travel.WorldmateTripImporter do
   """
   def recipient(email) do
     [user, domain | _] = String.split(email, "@")
+
     case Enum.member?(valid_domains(), domain) do
       true -> {:ok, user}
       _ -> {:error, :invalid_domain}

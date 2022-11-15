@@ -3,7 +3,7 @@ defmodule Myflightmap.Transport.Airport do
   Schema for airports
   """
 
-  use Ecto.Schema
+  use Myflightmap.Schema
   import Ecto.Changeset
   alias Myflightmap.Values
 
@@ -19,13 +19,24 @@ defmodule Myflightmap.Transport.Airport do
     field :opened_on, :date
     field :closed_on, :date
     field :timezone, :string
+    field :flight_count, :integer
 
     timestamps()
   end
 
   @writable_attributes [
-    :iata_code, :icao_code, :metro_code, :country, :city, :timezone,
-    :full_name, :common_name, :coordinates, :opened_on, :closed_on]
+    :iata_code,
+    :icao_code,
+    :metro_code,
+    :country,
+    :city,
+    :timezone,
+    :full_name,
+    :common_name,
+    :coordinates,
+    :opened_on,
+    :closed_on
+  ]
 
   @doc false
   def changeset(airport, attrs) do

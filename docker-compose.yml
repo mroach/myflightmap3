@@ -2,7 +2,7 @@ version: "3.6"
 
 services:
   db:
-    image: postgres:11-alpine
+    image: postgres:14
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: letmein
@@ -11,20 +11,10 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
 
-  webpack:
-    build:
-      context: "."
-      dockerfile: "Dockerfile.webpack"
-      target: base
-    command: ["sh", "-c", "yarn install --modules-folder $${NODE_MODULES_DIR} && npm run watch"]
-    volumes:
-      - .:/opt/app
-      - node_modules:/opt/node_modules
-
   app:
     build:
       context: .
-      target: phoenix_base
+      target: base
     command: mix do deps.get, phx.server
     healthcheck:
       interval: 5m
@@ -43,10 +33,8 @@ services:
       - mix_deps:/opt/mix/deps
     depends_on:
       - db
-      - webpack
 
 volumes:
   pg_data:
   mix_build:
   mix_deps:
-  node_modules:

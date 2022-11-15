@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -10,7 +10,11 @@ config :myflightmap, MyflightmapWeb.Endpoint,
   http: [port: System.get_env("PORT")],
   debug_errors: true,
   code_reloader: true,
-  check_origin: false
+  check_origin: false,
+  watchers: [
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
+  ]
 
 # ## SSL Support
 #
@@ -32,10 +36,10 @@ config :myflightmap, MyflightmapWeb.Endpoint,
 config :myflightmap, MyflightmapWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
-      ~r{priv/gettext/.*(po)$},
-      ~r{lib/myflightmap_web/views/.*(ex)$},
-      ~r{lib/myflightmap_web/templates/.*(eex)$}
+      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/gettext/.*(po)$",
+      ~r"lib/myflightmap_web/(live|views)/.*(ex)$",
+      ~r"lib/myflightmap_web/templates/.*(eex)$"
     ]
   ]
 
@@ -53,7 +57,8 @@ db_config =
     password: System.get_env("DB_PASS"),
     database: System.get_env("DB_NAME") || "myflightmap_dev",
     hostname: System.get_env("DB_HOST") || "localhost",
-    pool_size: 10
+    pool_size: 10,
+    show_sensitive_data_on_connection_error: true
   ]
   |> Enum.reject(fn {_, val} -> is_nil(val) end)
 

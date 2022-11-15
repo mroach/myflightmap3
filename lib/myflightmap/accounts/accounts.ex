@@ -13,21 +13,24 @@ defmodule Myflightmap.Accounts do
   def register_user(attrs \\ %{}) do
     %User{}
     |> User.registration_changeset(attrs)
-    |> Repo.insert
+    |> Repo.insert(returning: [:id])
   end
 
   def get_user_by_email(email) when is_binary(email) do
-    query = from u in User,
-            join: c in assoc(u, :credential),
-            where: c.email == ^email
+    query =
+      from u in User,
+        join: c in assoc(u, :credential),
+        where: c.email == ^email
+
     query
-    |> Repo.one
+    |> Repo.one()
     |> Repo.preload(:credential)
   end
 
   def get_user_by_trip_email_id(trip_email_id) when is_binary(trip_email_id) do
-    query = from u in User,
-            where: u.trip_email_id == ^trip_email_id
+    query =
+      from u in User,
+        where: u.trip_email_id == ^trip_email_id
 
     Repo.one(query)
   end
@@ -80,6 +83,7 @@ defmodule Myflightmap.Accounts do
     |> case do
       {:ok, user} ->
         maybe_set_user_trip_email_id(user)
+
       err ->
         err
     end
@@ -94,6 +98,7 @@ defmodule Myflightmap.Accounts do
     email_id = Myflightmap.UserEmailId.encode(uid)
     update_user(user, %{trip_email_id: email_id})
   end
+
   def maybe_set_user_trip_email_id(%User{} = user), do: {:ok, user}
 
   @doc """

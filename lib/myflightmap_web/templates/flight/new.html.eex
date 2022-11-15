@@ -1,4 +1,4 @@
-<h2>New Flight</h2>
+<h2 class="title is-2">New Flight</h2>
 
 <%= render "form.html", Map.put(assigns, :action, Routes.flight_path(@conn, :create)) %>
 

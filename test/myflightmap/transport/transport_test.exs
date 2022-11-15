@@ -40,7 +40,10 @@ defmodule Myflightmap.TransportTest do
 
     test "update_airline/2 with invalid data returns error changeset" do
       airline = insert(:airline)
-      assert {:error, %Ecto.Changeset{errors: errors}} = Transport.update_airline(airline, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{errors: errors}} =
+               Transport.update_airline(airline, @invalid_attrs)
+
       assert airline == Transport.get_airline!(airline.id)
 
       {"is invalid", country_errors} = Keyword.get(errors, :country)
@@ -89,10 +92,12 @@ defmodule Myflightmap.TransportTest do
     test "update_airport/2 with valid data updates the airport" do
       airport = insert(:airport)
       new_coords = coordinates()
+
       update_attrs = %{
         coordinates: new_coords,
         full_name: "Tycho"
       }
+
       assert {:ok, airport} = Transport.update_airport(airport, update_attrs)
       assert %Airport{} = airport
       assert airport.coordinates == new_coords
@@ -157,7 +162,10 @@ defmodule Myflightmap.TransportTest do
     test "update_aircraft_type/2 with invalid data returns error changeset" do
       aircraft_type = insert(:aircraft_type)
       invalid_attrs = %{description: nil}
-      assert {:error, %Ecto.Changeset{}} = Transport.update_aircraft_type(aircraft_type, invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Transport.update_aircraft_type(aircraft_type, invalid_attrs)
+
       assert aircraft_type == Transport.get_aircraft_type!(aircraft_type.id)
     end
 

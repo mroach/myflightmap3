@@ -6,9 +6,9 @@ defmodule Myflightmap.Mixfile do
       app: :myflightmap,
       version: "0.0.1",
       elixir: "~> 1.11",
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: [:phoenix] ++ Mix.compilers(),
+      start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
     ]
@@ -26,42 +26,52 @@ defmodule Myflightmap.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support", "test/factories"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
   #
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:ecto_sql, "~> 3.5"},
-      {:jason, "~> 1.2"},
-      {:phoenix, "~> 1.5.7"},
-      {:phoenix_ecto, "~> 4.2"},
-      {:phoenix_html, "~> 2.14"},
-      {:plug_cowboy, "~> 2.0"},
+      {:phoenix, "~> 1.6.14"},
+      {:phoenix_ecto, "~> 4.4"},
+      {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
-      {:gettext, "~> 0.11"},
-      {:countries, "~> 1.6"},
+      {:phoenix_html, "~> 3.0"},
+      {:phoenix_live_dashboard, "~> 0.7"},
+      {:phoenix_live_view, "~> 0.18.2"},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 1.0"},
+      {:gettext, "~> 0.18"},
+      {:jason, "~> 1.2"},
+      {:plug_cowboy, "~> 2.5"},
+      {:heroicons, "~> 0.5"},
+
       # Date/time parsing and formatting. Timezone conversions.
       {:timex, "~> 3.6"},
       {:hashids, "~> 2.0"},
 
+      # ISO List of countries
+      {:countries, "~> 1.6"},
+
       # XML parser. Needed for handling Worldmate trip parsing responses
       {:sweet_xml, "~> 0.6.5"},
-      {:distillery, "~> 2.0"},
       {:hackney, "~> 1.14"},
       {:tesla, "~> 1.4"},
       {:nimble_csv, "~> 0.3"},
 
       # Authentication
-      {:bcrypt_elixir, "~> 2.0"},
-      {:guardian, "~> 1.0"},
+      {:bcrypt_elixir, "~> 3.0"},
+      {:guardian, "~> 2.3"},
 
       # limited envs:
+      {:esbuild, "~> 0.4", only: :dev},
+      {:tailwind, "~> 0.1.6", only: :dev},
+      {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
-      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
-      {:ex_machina, "~> 2.2", only: :test},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
+      {:ex_machina, "~> 2.7", only: :test},
       {:stream_data, "~> 0.4", only: :test}
     ]
   end
@@ -74,9 +84,15 @@ defmodule Myflightmap.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
+      setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      "assets.deploy": [
+        "esbuild default --minify",
+        "tailwind default --minify",
+        "phx.digest"
+      ]
     ]
   end
 end
