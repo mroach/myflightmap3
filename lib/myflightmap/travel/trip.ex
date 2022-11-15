@@ -4,7 +4,7 @@ defmodule Myflightmap.Travel.Trip do
   These are optional in the trip logging realms
   """
 
-  use Ecto.Schema
+  use Myflightmap.Schema
   import Ecto.Changeset
   alias Myflightmap.Accounts.User
   alias Myflightmap.Travel.Flight

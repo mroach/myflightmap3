@@ -95,7 +95,10 @@ defmodule MyflightmapWeb do
 
       import MyflightmapWeb.ErrorHelpers
       import MyflightmapWeb.Gettext
+      import MyflightmapWeb.CoreComponents
       alias MyflightmapWeb.Router.Helpers, as: Routes
+
+      alias Phoenix.LiveView.JS
     end
   end
 

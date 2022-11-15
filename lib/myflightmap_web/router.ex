@@ -31,19 +31,26 @@ defmodule MyflightmapWeb.Router do
     post "/session", SessionController, :create
     delete "/session", SessionController, :delete
 
-    resources "/aircraft_types", AircraftTypeController
-    resources "/airlines", AirlineController
-    resources "/airports", AirportController
-
     resources "/users", UserController, only: [:new, :create]
   end
 
   scope "/", MyflightmapWeb do
     pipe_through [:browser, :maybe_auth, :ensure_auth]
 
-    resources "/flights", FlightController
-    resources "/users", UserController, except: [:new, :create]
-    resources "/trips", TripController
+    live "/airlines", AirlineLive.Index
+    live "/airports", AirportLive.Index
+
+    resources "/aircraft_types", AircraftTypeController
+
+    live "/flights", FlightLive.Index
+    live "/flights/new", FlightLive.Edit
+    live "/flights/:id", FlightLive.Show
+    live "/flights/:id/edit", FlightLive.Edit
+
+    live "/trips", TripLive.Index
+    live "/trips/new", TripLive.Edit
+    live "/trips/:id", TripLive.Show
+    live "/trips/:id/edit", TripLive.Edit
   end
 
   scope "/system", MyflightmapWeb do

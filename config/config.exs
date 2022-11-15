@@ -9,6 +9,15 @@ import Config
 config :myflightmap,
   ecto_repos: [Myflightmap.Repo]
 
+config :myflightmap, Myflightmap.Repo,
+  migration_primary_key: [
+    type: :binary_id,
+    default: {:fragment, "gen_random_uuid()"}
+  ],
+  migration_timestamps: [
+    default: {:fragment, "NOW()"}
+  ]
+
 # Configures the endpoint
 config :myflightmap, MyflightmapWeb.Endpoint,
   url: [host: "localhost"],
@@ -39,11 +48,14 @@ config :myflightmap, Myflightmap.Auth.AccessPipeline,
   module: Myflightmap.Auth.Guardian,
   error_handler: Myflightmap.Auth.ErrorHandler
 
-# Ass SASS compilation support
-config :dart_sass,
-  version: "1.54.5",
+config :tailwind,
+  version: "3.2.1",
   default: [
-    args: ~w(--load-path=#{Mix.Project.deps_path()} css:../priv/static/assets),
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
     cd: Path.expand("../assets", __DIR__)
   ]
 
@@ -52,7 +64,7 @@ config :esbuild,
   version: "0.14.29",
   default: [
     args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+      ~w(js/app.js --bundle --target=es2019 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Mix.Project.deps_path()}
   ]

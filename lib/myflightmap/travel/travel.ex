@@ -29,10 +29,30 @@ defmodule Myflightmap.Travel do
       [%Trip{}, ...]
 
   """
-  def list_trips do
-    Trip
+  def list_trips(owner_id) do
+    from(t in Trip, where: t.user_id == ^owner_id, order_by: [desc: t.start_date])
     |> Repo.all()
-    |> Repo.preload(:user)
+  end
+
+  def list_trips_with_assocs(owner_id) do
+    owner_id
+    |> list_trips()
+    |> Repo.preload([flights: @preload_flight_assocs])
+  end
+
+  def list_flights_in_trip(trip_id) do
+    from(f in Flight,
+        where: f.trip_id == ^trip_id,
+        order_by: [asc: f.depart_date]
+    )
+    |> Repo.all()
+    |> Repo.preload(@preload_flight_assocs)
+  end
+
+  def list_unique_route_pairs_in_trip(trip_id) do
+    from(f in Flight, where: f.trip_id == ^trip_id)
+    |> Myflightmap.Queries.Travel.unique_route_pairs()
+    |> Repo.all
   end
 
   @doc """
@@ -64,7 +84,7 @@ defmodule Myflightmap.Travel do
   def get_trip_with_assocs!(id) do
     id
     |> get_trip!
-    |> Repo.preload([:user, flights: @preload_flight_assocs])
+    |> Repo.preload([:user])
   end
 
   def get_or_create_trip_by_name(%User{} = user, name) when is_binary(name) do
@@ -92,10 +112,16 @@ defmodule Myflightmap.Travel do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_trip(user, attrs \\ %{}) do
-    %Trip{user: user}
-    |> Trip.changeset(attrs)
-    |> Repo.insert()
+  def create_trip(%User{} = user, attrs) do
+    create_trip(%Trip{user: user}, attrs)
+  end
+
+  def create_trip(attrs) when is_map(attrs) do
+    create_trip(%Trip{}, attrs)
+  end
+
+  def create_trip(%Trip{} = trip, attrs) when is_map(attrs) do
+    trip |> Trip.changeset(attrs) |> Repo.insert
   end
 
   @doc """
@@ -141,12 +167,12 @@ defmodule Myflightmap.Travel do
       %Ecto.Changeset{source: %Trip{}}
 
   """
-  def change_trip(%Trip{} = trip) do
-    Trip.changeset(trip, %{})
+  def change_trip(%Trip{} = trip, attrs \\ %{}) do
+    Trip.changeset(trip, attrs)
   end
 
   @doc """
-  Returns the list of flights.
+  Returns the list of flights owned by the given user ID.
 
   ## Examples
 
@@ -154,13 +180,18 @@ defmodule Myflightmap.Travel do
       [%Flight{}, ...]
 
   """
-  def list_flights do
-    query = from f in Flight, order_by: [desc: f.depart_date]
+  def list_flights(owner_id) do
+    query = from(f in Flight,
+      where: [user_id: ^owner_id],
+      order_by: [desc: f.depart_date]
+    )
+
     Repo.all(query)
   end
 
-  def list_flights_with_assocs do
-    list_flights()
+  def list_flights_with_assocs(owner_id) do
+    owner_id
+    |> list_flights()
     |> Repo.preload(@preload_flight_assocs)
   end
 
@@ -203,7 +234,7 @@ defmodule Myflightmap.Travel do
   end
 
   def create_flight(%User{} = user, attrs) when is_map(attrs) do
-    %Flight{user: user} |> create_flight(attrs)
+    %Flight{user_id: user.id} |> create_flight(attrs)
   end
 
   def create_flight(attrs) when is_map(attrs) do
@@ -225,26 +256,16 @@ defmodule Myflightmap.Travel do
   def update_flight(flight, attrs), do: insert_or_update_flight(flight, attrs)
 
   defp insert_or_update_flight(%Flight{} = flight, attrs) do
-    changeset =
-      flight
-      |> preassign_airports(attrs)
-      |> Repo.preload([:depart_airport, :arrive_airport])
-      |> Flight.changeset(attrs)
+    changeset = Flight.changeset(flight, attrs)
 
     Multi.new()
-    |> Multi.insert_or_update(:flight, changeset)
+    |> Multi.insert_or_update(:flight, changeset, returning: [:id])
     |> Multi.run(:trip_dates, &update_trip_dates/2)
     |> Repo.transaction()
     |> case do
       {:ok, %{flight: flight}} -> {:ok, flight}
       {:error, _, changeset, _} -> {:error, changeset}
     end
-  end
-
-  def preassign_airports(%Flight{} = flight, attrs) do
-    flight
-    |> Changeset.cast(attrs, [:depart_airport_id, :arrive_airport_id])
-    |> Changeset.apply_changes()
   end
 
   # After adding or updating a flight, re-calculate the start and end dates
@@ -267,7 +288,7 @@ defmodule Myflightmap.Travel do
   """
   def get_trip_dates(%Trip{id: trip_id}), do: get_trip_dates(trip_id)
 
-  def get_trip_dates(trip_id) when is_integer(trip_id) do
+  def get_trip_dates(trip_id) do
     query =
       from f in Flight,
         where: f.trip_id == ^trip_id,
@@ -308,7 +329,7 @@ defmodule Myflightmap.Travel do
       %Ecto.Changeset{source: %Flight{}}
 
   """
-  def change_flight(%Flight{} = flight) do
-    Flight.changeset(flight, %{})
+  def change_flight(%Flight{} = flight, attrs \\ %{}) do
+    Flight.changeset(flight, attrs)
   end
 end

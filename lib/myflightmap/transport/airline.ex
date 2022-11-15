@@ -3,7 +3,7 @@ defmodule Myflightmap.Transport.Airline do
   Schema for airlines
   """
 
-  use Ecto.Schema
+  use Myflightmap.Schema
   import Ecto.Changeset
   alias Myflightmap.Values
 
@@ -15,6 +15,7 @@ defmodule Myflightmap.Transport.Airline do
     field :commenced_on, :date
     field :ceased_on, :date
     field :alliance, :string
+    field :flight_count, :integer
 
     timestamps()
   end

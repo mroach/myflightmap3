@@ -4,14 +4,14 @@ defmodule Myflightmap.Accounts.Credential do
   their login credentials with an email address and hashed password
   """
 
-  use Ecto.Schema
+  use Myflightmap.Schema
   import Ecto.Changeset
   alias Myflightmap.Accounts.User
 
   schema "credentials" do
     field :email, :string
     field :password_hash, :string
-    belongs_to :user, User
+    belongs_to :user, User, references: :binary_id
 
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true

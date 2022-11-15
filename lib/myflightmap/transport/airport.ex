@@ -3,7 +3,7 @@ defmodule Myflightmap.Transport.Airport do
   Schema for airports
   """
 
-  use Ecto.Schema
+  use Myflightmap.Schema
   import Ecto.Changeset
   alias Myflightmap.Values
 
@@ -19,6 +19,7 @@ defmodule Myflightmap.Transport.Airport do
     field :opened_on, :date
     field :closed_on, :date
     field :timezone, :string
+    field :flight_count, :integer
 
     timestamps()
   end

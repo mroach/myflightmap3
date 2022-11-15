@@ -3,8 +3,8 @@ defmodule Myflightmap.Repo.Migrations.CreateAircraftTypes do
 
   def change do
     create table(:aircraft_types) do
-      add :iata_code, :string, size: 3, null: false
-      add :icao_code, :string, size: 4
+      add :iata_code, :string, size: 3
+      add :icao_code, :string, size: 4, null: false
       add :manufacturer_code, :string
       add :description, :string, null: false
       add :engine_type, :string

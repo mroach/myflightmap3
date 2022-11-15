@@ -3,8 +3,9 @@ defmodule Myflightmap.Travel.Flight do
   A flight owned by a user.
   """
 
-  use Ecto.Schema
+  use Myflightmap.Schema
   import Ecto.Changeset
+  import Ecto.Query, only: [from: 2]
   alias Myflightmap.Accounts.User
   alias Myflightmap.Transport
   alias Myflightmap.Transport.{AircraftType, Airline, Airport}
@@ -33,6 +34,7 @@ defmodule Myflightmap.Travel.Flight do
   end
 
   @writable_attributes [
+    :user_id,
     :trip_id,
     :airline_id,
     :depart_airport_id,
@@ -49,12 +51,18 @@ defmodule Myflightmap.Travel.Flight do
     :confirmation_number
   ]
 
+  @required_attributes [
+    :depart_date,
+    :user_id,
+    :depart_airport_id,
+    :arrive_airport_id
+  ]
+
   @doc false
   def changeset(flight, attrs) do
     flight
-    |> cast(attrs, @writable_attributes)
-    |> validate_required([:depart_date])
-    |> update_change(:flight_code, &normalize_flight_code/1)
+    |> prepare_change(attrs)
+    |> validate_required(@required_attributes)
     |> maybe_update_distance()
     |> maybe_update_duration()
     |> foreign_key_constraint(:user_id)
@@ -63,7 +71,40 @@ defmodule Myflightmap.Travel.Flight do
     |> foreign_key_constraint(:arrive_airport_id)
     |> foreign_key_constraint(:aircraft_type_id)
     |> foreign_key_constraint(:airline_id)
+    |> prepare_changes(fn changeset ->
+      changeset
+      |> update_counter_cache(:airline)
+      |> update_counter_cache(:depart_airport)
+      |> update_counter_cache(:arrive_airport)
+    end)
   end
+
+  def prepare_change(flight, attrs) do
+    flight
+    |> cast(attrs, @writable_attributes)
+    |> update_change(:flight_code, &normalize_flight_code/1)
+  end
+
+  defp update_counter_cache(c, _), do: c
+  # defp update_counter_cache(changeset, assoc_name, counter_field \\ :flight_count) do
+  #   %{field: field, related: related, related_key: related_key, owner_key: owner_key} =
+  #     __schema__(:association, assoc_name)
+
+  #   old_fk_id = Map.fetch!(changeset.data, field)
+  #   new_fk_id = get_change(changeset, field)
+
+  #   if new_fk_id do
+  #     if old_fk_id do
+  #       query = from related, where: ^[{related_key, old_fk_id}]
+  #       changeset.repo.update_all(query, inc: [{counter_field, -1}])
+  #     end
+
+  #     query = from related, where: ^[{related_key, new_fk_id}]
+  #     changeset.repo.update_all(query, inc: [{counter_field, 1}])
+  #   end
+
+  #   changeset
+  # end
 
   def normalize_flight_code(nil), do: nil
 
@@ -86,6 +127,7 @@ defmodule Myflightmap.Travel.Flight do
     |> Map.put(:"#{movement}_time", datetime |> DateTime.to_time() |> Time.truncate(:second))
   end
 
+  # TODO: Fix all this stuff that relied on associations being loaded.
   def maybe_update_distance(changeset) do
     with true <- Ecto.assoc_loaded?(changeset.data.depart_airport),
          true <- Ecto.assoc_loaded?(changeset.data.arrive_airport) do

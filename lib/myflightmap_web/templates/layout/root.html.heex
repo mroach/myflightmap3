@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-gray-100 dark:bg-gray-700">
   <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -8,46 +8,28 @@
     <%= live_title_tag assigns[:page_title] || "", suffix: " · My Flight Map" %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <script defer data-domain="myflightmap.com" src="https://plausible.io/js/script.js"></script>
   </head>
-  <body>
-    <header>
-      <nav class="navbar" role="navigation">
-        <div class="container">
-          <div class="navbar-brand">
-            <div class="navbar-item">
-              <strong><%= link("My Flight Map", to: Routes.home_path(@conn, :index)) %></strong>
-            </div>
+  <body class="h-full">
+    <div class="min-h-full">
+      <%= render "_nav.html", conn: @conn %>
 
-            <a role="button" class="navbar-burger burger" data-target="main-nav">
-              <span></span>
-              <span></span>
-              <span></span>
-            </a>
+      <%= if assigns[:page_title] do %>
+        <header class="bg-white shadow dark:bg-gray-700">
+          <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-200"><%= assigns[:page_title] %></h1>
           </div>
+        </header>
+      <% end %>
 
-          <div class="navbar-menu" id="main-nav">
-            <div class="navbar-start">
-              <%= link("Flights", to: Routes.flight_path(@conn, :index), class: "navbar-item") %>
-              <%= link("Trips", to: Routes.trip_path(@conn, :index), class: "navbar-item") %>
-            </div>
-
-            <div class="navbar-end">
-              <%= if assigns[:current_user] do %>
-                <div class="navbar-item has-dropdown is-hoverable">
-                  <%= link(assigns[:current_user].username, to: Routes.user_path(@conn, :show, assigns[:current_user].id), class: "navbar-link") %>
-
-                  <div class="navbar-dropdown">
-                    <%= link("Logout", to: Routes.session_path(@conn, :delete), method: :delete, class: "navbar-item") %>
-                  </div>
-                </div>
-              <% else %>
-                <%= link("Login", to: Routes.session_path(@conn, :new), class: "navbar-item") %>
-              <% end %>
-            </div>
-          </div>
+      <main class="dark:bg-gray-900">
+        <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+          <%= @inner_content %>
         </div>
-      </nav>
-    </header>
-    <%= @inner_content %>
+      </main>
+    </div>
   </body>
 </html>

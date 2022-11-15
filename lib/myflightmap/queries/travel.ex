@@ -9,7 +9,38 @@ defmodule Myflightmap.Queries.Travel do
 
   import Ecto.Query, warn: false
   alias Myflightmap.Transport.{Airline, Airport}
-  alias Myflightmap.Travel.Flight
+  alias Myflightmap.Travel.{Flight, Trip}
+
+  @doc """
+  Get a count of unique airport pairings from flights.
+  For example flights BOS-LHR and LHR-BOS are one pairing with a count of 2
+  """
+  def unique_route_pairs(query \\ Flight) do
+    id_pairs = from(f in query,
+      select: %{
+        ap1_id: fragment("least(?, ?)", f.depart_airport_id, f.arrive_airport_id),
+        ap2_id: fragment("greatest(?, ?)", f.depart_airport_id, f.arrive_airport_id),
+        count: count()
+      },
+      group_by: fragment("1, 2")
+    )
+
+    from p in subquery(id_pairs),
+      join: ap1 in Airport, on: ap1.id == p.ap1_id,
+      join: ap2 in Airport, on: ap2.id == p.ap2_id,
+      select: %{airport_1: ap1, airport_2: ap2, count: p.count}
+  end
+
+  def top_routes(query \\ Flight) do
+    from f in query,
+    select: %{
+      origin: f.depart_airport_id,
+      destination: f.arrive_airport_id,
+      count: count()
+    },
+    group_by: fragment("1, 2"),
+    order_by: fragment("3 DESC")
+  end
 
   def top_airports(query \\ Flight) do
     from a in Airport,

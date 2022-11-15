@@ -13,7 +13,7 @@ defmodule Myflightmap.Accounts do
   def register_user(attrs \\ %{}) do
     %User{}
     |> User.registration_changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(returning: [:id])
   end
 
   def get_user_by_email(email) when is_binary(email) do

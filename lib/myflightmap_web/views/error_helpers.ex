@@ -9,8 +9,13 @@ defmodule MyflightmapWeb.ErrorHelpers do
   Generates tag for inlined form input errors.
   """
   def error_tag(form, field) do
-    Enum.map(Keyword.get_values(form.errors, field), fn error ->
-      content_tag(:span, translate_error(error), class: "help-block")
+    form.errors
+    |> Keyword.get_values(field)
+    |> Enum.map(fn error ->
+      content_tag(:span, translate_error(error),
+        class: "invalid-feedback mt-2 text-sm text-red-600 dark:text-red-500",
+        phx_feedback_for: input_name(form, field)
+      )
     end)
   end
 
