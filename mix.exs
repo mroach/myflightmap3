@@ -47,7 +47,7 @@ defmodule Myflightmap.Mixfile do
       {:hashids, "~> 2.0"},
 
       # XML parser. Needed for handling Worldmate trip parsing responses
-      {:sweet_xml, "~> 0.6.5"},
+      {:sweet_xml, "~> 0.7.0"},
       {:distillery, "~> 2.0"},
       {:hackney, "~> 1.14"},
       {:tesla, "~> 1.4"},
