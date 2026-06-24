@@ -54,7 +54,7 @@ defmodule Myflightmap.Mixfile do
       {:nimble_csv, "~> 0.3"},
 
       # Authentication
-      {:bcrypt_elixir, "~> 2.0"},
+      {:bcrypt_elixir, "~> 3.0"},
       {:guardian, "~> 1.0"},
 
       # limited envs:
